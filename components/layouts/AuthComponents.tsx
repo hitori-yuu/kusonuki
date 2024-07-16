@@ -1,7 +1,12 @@
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { signIn } from "@/auth";
 import { signOut } from "@/auth";
+
+import {
+    LogOut,
+    User,
+} from "lucide-react";
 
 export function SignIn({
   provider,
@@ -13,7 +18,9 @@ export function SignIn({
       await signIn(provider);
     }}>
 
-      <Button {...props}>LINEでログイン</Button>
+    <Button variant="ghost" {...props}>
+        <User />
+    </Button>
     </form>
   );
 }
@@ -29,6 +36,7 @@ export function SignOut({
         await signOut();
       }}>
       <Button variant="ghost" className="w-full p-0" {...props}>
+      <LogOut className="mr-2 h-4 w-4" />
         ログアウト
       </Button>
     </form>

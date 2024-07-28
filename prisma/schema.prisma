@@ -1,5 +1,6 @@
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -7,6 +8,8 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-// DB (Accounts)
-
-// DB
+model User {
+    id    Int     @id @default(autoincrement())
+    email String  @unique
+    name  String?
+}

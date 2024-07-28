@@ -1,14 +1,22 @@
-import Timetable from "@/components/layouts/Timetable";
-import UserData from "@/components/layouts/UserData";
-import { SessionProvider } from "next-auth/react";
+"use client";
+import { useLiff } from "@/components/layouts/LiffProvider";
+import { Profile } from "@liff/get-profile";
 
-export default async function Home() {
-	return (
-		<div>
-			<SessionProvider>
-				<UserData />
-			</SessionProvider>
-			<Timetable />
-		</div>
-	);
+import { useEffect, useState } from "react";
+
+export default function Home() {
+	const [profile, setProfile] = useState<Profile | null>(null);
+	const { liff } = useLiff();
+
+	useEffect(() => {
+		if (liff?.isLoggedIn()) {
+			(async () => {
+				const profile = await liff.getProfile();
+				setProfile(profile);
+			})();
+		}
+	}, [liff]);
+
+	console.log(profile);
+	return <div></div>;
 }

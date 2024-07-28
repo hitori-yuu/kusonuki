@@ -1,43 +1,48 @@
 "use client";
+import React, { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
+import { Liff } from "@line/liff";
 
-import liff, { type Liff } from "@line/liff";
-import { createContext, useState, useEffect, FC, ReactNode, useContext } from "react";
-
-type LiffContextType = {
-	liffState: Liff | null;
+const LiffContext = createContext<{
+	liff: Liff | null;
 	liffError: string | null;
-};
+}>({ liff: null, liffError: null });
 
-const LiffContext = createContext<LiffContextType>({
-	liffState: null,
-	liffError: null,
-});
+export const useLiff = () => useContext(LiffContext);
 
-export const useLiff = (): LiffContextType => {
-	const context = useContext(LiffContext);
-	return context;
-};
-
-/**
- * Liff スターターテンプレートがあるのでこちらを参考にしています
- * @see https://github.com/line/create-liff-app/blob/main/templates/nextjs-ts/pages/_app.tsx
- */
-export const LiffProvider: FC<{ children: ReactNode }> = ({ children }) => {
-	const [liffState, setliffState] = useState<Liff | null>(null);
+export const LiffProvider: FC<PropsWithChildren<{ liffId: string }>> = ({ children, liffId }) => {
+	const [liff, setLiff] = useState<Liff | null>(null);
 	const [liffError, setLiffError] = useState<string | null>(null);
 
-	useEffect(() => {
-		liff.init(
-			{ liffId: process.env.NEXT_PUBLIC_LIFF_ID || "" },
-			() => {
-				setliffState(liff);
-			}, // 成功時に liff をセット
-			(error) => {
-				console.error("LIFF initialization failed", error);
-				setLiffError(error.toString()); // エラー時にエラーメッセージをセット
-			}
-		);
-	}, []);
+	const initLiff = useCallback(async () => {
+		try {
+			const liffModule = await import("@line/liff");
+			const liff = liffModule.default;
+			console.log("LIFF init...");
 
-	return <LiffContext.Provider value={{ liffState, liffError }}>{children}</LiffContext.Provider>;
+			await liff.init({ liffId });
+
+			console.log("LIFF init succeeded.");
+			setLiff(liff);
+		} catch (error) {
+			console.log("LIFF init failed.");
+			setLiffError((error as Error).toString());
+		}
+	}, [liffId]);
+
+	// init Liff
+	useEffect(() => {
+		console.log("LIFF init start...");
+		initLiff();
+	}, [initLiff]);
+
+	return (
+		<LiffContext.Provider
+			value={{
+				liff,
+				liffError,
+			}}
+		>
+			{children}
+		</LiffContext.Provider>
+	);
 };

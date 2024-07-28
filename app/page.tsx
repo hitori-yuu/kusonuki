@@ -18,5 +18,5 @@ export default function Home() {
 	}, [liff]);
 
 	console.log(profile);
-	return <div></div>;
+	return <div>{JSON.stringify(profile, null, 2)}</div>;
 }

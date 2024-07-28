@@ -1,18 +1,22 @@
-import Timetable from "@/components/layouts/Timetable";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+"use client";
+import { useLiff } from "@/components/layouts/LiffProvider";
+import { Profile } from "@liff/get-profile";
 
+import { useEffect, useState } from "react";
 
-export default async function Home() {
-  return (
-    <div className="min-h-screen bg-white">
-      <Timetable />
-    </div>
-  )
+export default function Home() {
+	const [profile, setProfile] = useState<Profile | null>(null);
+	const { liff } = useLiff();
+
+	useEffect(() => {
+		if (liff?.isLoggedIn()) {
+			(async () => {
+				const profile = await liff.getProfile();
+				setProfile(profile);
+			})();
+		}
+	}, [liff]);
+
+	console.log(profile);
+	return <div></div>;
 }

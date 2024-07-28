@@ -1,15 +1,13 @@
-import React from 'react'
-import UserButton from './UserButton'
+import React from "react";
 
 const Header = () => {
-  return (
-    <header className="sticky flex justify-center border-b">
-        <div className="flex items-center justify-between w-full h-16 max-w-3xl px-4 mx-auto sm:px-6">
-            <p>テスト</p>
-            <UserButton />
-        </div>
-    </header>
-  )
-}
+	return (
+		<header className="sticky flex justify-center border-b">
+			<div className="flex items-center justify-between w-full h-16 max-w-3xl px-4 mx-auto sm:px-6">
+				<p>テスト</p>
+			</div>
+		</header>
+	);
+};
 
-export default Header
+export default Header;

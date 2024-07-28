@@ -17,7 +17,6 @@ model User {
     isAvailable Boolean      @default(true)
     createdAt   DateTime     @default(now())
     updatedAt   DateTime     @updatedAt
-    token       String?
     Assignment  Assignment[]
     Test        Test[]
     Change      Change[]

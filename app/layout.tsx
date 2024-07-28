@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<div className="flex flex-col justify-between w-full h-full min-h-screen">
 					<Header />
 					<main className="flex-auto w-full max-w-3xl px-4 py-4 mx-auto sm:px-6 md:px-6 md:py-6">
-						<LiffProvider liffId={process.env.NEXT_PUBLIC_LIFF_ID || ""}>{children}</LiffProvider>
+						<LiffProvider>{children}</LiffProvider>
 					</main>
 					<Footer />
 				</div>

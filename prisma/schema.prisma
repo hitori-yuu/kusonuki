@@ -9,7 +9,98 @@ datasource db {
 }
 
 model User {
-    id    Int     @id @default(autoincrement())
-    email String  @unique
-    name  String?
+    id          String       @id
+    displayName String?
+    pictureUrl  String?
+    role        Role         @default(DEFAULT)
+    isLinked    Boolean      @default(false)
+    isAvailable Boolean      @default(true)
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+    Assignment  Assignment[]
+    Test        Test[]
+    Change      Change[]
+    Timetable   Timetable[]
+}
+
+model Student {
+    name        String   @id
+    lastName    String
+    firstName   String
+    grade       Int
+    isLinked    Boolean  @default(false)
+    isAvailable Boolean  @default(true)
+    userId      String   @unique
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+model Teacher {
+    name      String   @id
+    subject   String
+    userId    String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Assignment {
+    id        Int      @id @default(autoincrement())
+    name      String
+    subject   String
+    deadline  DateTime
+    grade     Int
+    group     String
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Test {
+    id                 Int      @id @default(autoincrement())
+    name               String
+    subject            String
+    implementationDate DateTime
+    grade              Int
+    group              String
+    author             User     @relation(fields: [authorId], references: [id])
+    authorId           String
+    createdAt          DateTime @default(now())
+    updatedAt          DateTime @updatedAt
+}
+
+model Change {
+    id        Int      @id @default(autoincrement())
+    date      DateTime @db.Date
+    period    Int
+    subject   String
+    grade     Int
+    group     String
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Timetable {
+    id        Int      @id @default(autoincrement())
+    week      String
+    day       String
+    grade     Int
+    group     String
+    first     String
+    second    String
+    third     String
+    fourth    String
+    fifth     String
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum Role {
+    DEFAULT
+    EDITOR
+    ADMIN
 }

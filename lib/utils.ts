@@ -1,6 +1,16 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import prisma from "./prismaClient"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  	return twMerge(clsx(inputs))
+}
+
+export async function LiffUser(userId: string) {
+	const user = await prisma.user.findUnique({
+		where: {
+			id: userId
+		}
+	});
+	return user;
 }

@@ -1,7 +1,7 @@
 {
-	"theme_color": "#c1e4e9",
-	"background_color": "#c1e4e9",
-	"display": "fullscreen",
+	"display": "standalone",
+	"theme_color": "#44617b",
+	"background_color": "#44617b",
 	"scope": "/",
 	"start_url": "/",
 	"name": "\u304f\u305d\u306c\u304dbot",

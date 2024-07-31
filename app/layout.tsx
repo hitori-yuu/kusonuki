@@ -21,13 +21,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="ja">
 			<head>
-				<meta name="apple-mobile-web-app-title" content="くそぬきbot"></meta>
-				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"></meta>
-				<link rel="icon" href="/icon-192x192.png" />
-				<link rel="apple-touch-icon" href="/icon-192x192.png" />
+				{/* 一般 */}
 				<link rel="manifest" href="/manifest.json" />
-				<link rel="apple-touch-icon" href="/icon.png"></link>
 				<meta name="theme-color" content="#b8e986" />
+				<link rel="icon" sizes="192x192" href="/icon-192x192.png" />
+				<link rel="icon" href="/favicon.ico" />
+
+				{/* safari */}
+				<meta name="apple-mobile-web-app-capable" content="yes" />
+				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+				<meta name="apple-mobile-web-app-title" content="くそぬきbot" />
+				<link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
 			</head>
 			<body className={inter.className}>
 				<LiffProvider liffId={process.env.NEXT_PUBLIC_LIFF_ID || ""}>

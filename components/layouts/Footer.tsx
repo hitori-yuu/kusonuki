@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import { Home, User, Settings, Info } from "lucide-react";
@@ -25,7 +27,7 @@ const Footer = () => {
 };
 
 const vibratePatternOnClick = () => {
-	window.navigator?.vibrate?.([50, 200, 50, 200]);
+	window.navigator.vibrate([50, 200, 50, 200]);
 };
 
 export default Footer;

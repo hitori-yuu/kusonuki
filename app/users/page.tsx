@@ -4,7 +4,7 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 async function getData(): Promise<UserData[]> {
-	const response = await fetch(`${process.env.API_URL}users`, {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}users`, {
 		cache: "no-store",
 	});
 

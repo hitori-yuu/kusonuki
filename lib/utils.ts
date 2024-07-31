@@ -7,10 +7,12 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export async function LiffUser(userId: string) {
+	console.log(userId)
 	const user = await prisma.user.findUnique({
 		where: {
 			id: userId
 		}
 	});
+	console.log(user)
 	return user;
 }

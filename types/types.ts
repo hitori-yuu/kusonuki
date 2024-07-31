@@ -3,6 +3,7 @@ export interface UserData {
     displayName: string;
     pictureUrl:  string;
     role: string;
+    studentName: string;
     isLinked: boolean;
     isAvailable: boolean;
     createdAt: Date;

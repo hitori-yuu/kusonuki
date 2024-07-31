@@ -50,16 +50,16 @@ export function ProfileData() {
 			{profile && user && (
 				<>
 					<h2 className="text-center text-lg font-bold py-5">{profile.displayName}</h2>
-					<div className="flex justify-between">
-						<Avatar className="h-10 w-10">
+					<div className="flex items-center justify-around">
+						<Avatar className="h-full w-20 max-w-64">
 							{profile.pictureUrl && (
 								<AvatarImage src={profile.pictureUrl} alt={profile.displayName ?? ""} />
 							)}
 							<AvatarFallback>{profile.displayName}</AvatarFallback>
 						</Avatar>
 						<div className="flex">
-							<div className="block px-10 text-center">
-								<p className="text-lg font-semibold">{user.role}</p>
+							<div className="block px-2 text-center">
+								<p className="font-semibold py-1">{user.role}</p>
 								<HoverCard>
 									<HoverCardTrigger>
 										<p>権限</p>
@@ -67,8 +67,8 @@ export function ProfileData() {
 									<HoverCardContent>ユーザーが所持している権限の情報です。</HoverCardContent>
 								</HoverCard>
 							</div>
-							<div className="block px-10 text-center">
-								<p className="text-lg font-semibold">{user?.isLinked ? "連携済" : "未連携"}</p>
+							<div className="block px-2 text-center">
+								<p className="font-semibold py-1">{user?.isLinked ? "連携済" : "未連携"}</p>
 								<HoverCard>
 									<HoverCardTrigger>
 										<p>連携状態</p>
@@ -83,8 +83,8 @@ export function ProfileData() {
 									)}
 								</HoverCard>
 							</div>
-							<div className="block px-10 text-center">
-								<p className="text-lg font-semibold">{user?.isAvailable ? "利用可能" : "利用不可"}</p>
+							<div className="block px-2 text-center">
+								<p className="font-semibold py-1">{user?.isAvailable ? "利用可能" : "利用不可"}</p>
 								<HoverCard>
 									<HoverCardTrigger>
 										<p>利用状態</p>

@@ -19,11 +19,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Settings, User, Speech, UsersRound } from "lucide-react";
 import { useLiff } from "@/components/layouts/LiffProvider";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { useTheme } from "next-themes";
 import { Profile } from "@liff/get-profile";
 import { UserData } from "@/types/types";
+import ThemeChanger from "./ThemeChanger";
 
 export function UserButton() {
 	const [profile, setProfile] = useState<Profile | null>(null);
+	const { setTheme, resolvedTheme } = useTheme();
 	const { liff } = useLiff();
 
 	useEffect(() => {
@@ -32,6 +36,13 @@ export function UserButton() {
 				const profile = await liff.getProfile();
 				setProfile(profile);
 			})();
+		} else {
+			const profile = {
+				userId: "test",
+				displayName: "ゆう",
+				pictureUrl: "https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
+			};
+			setProfile(profile);
 		}
 	}, [liff]);
 
@@ -87,10 +98,24 @@ export function UserButton() {
 								<span>Teachers</span>
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
+						<DropdownMenuSeparator />
+						<DropdownMenuGroup>
+							{resolvedTheme === "light" ? (
+								<DropdownMenuItem onClick={() => setTheme("dark")}>
+									<MoonIcon className="mr-2 h-4 w-4" />
+									<span>Change Dark Theme</span>
+								</DropdownMenuItem>
+							) : (
+								<DropdownMenuItem onClick={() => setTheme("light")}>
+									<SunIcon className="mr-2 h-4 w-4" />
+									<span>Change Light Theme</span>
+								</DropdownMenuItem>
+							)}
+						</DropdownMenuGroup>
 					</DropdownMenuContent>
 				</DropdownMenu>
 			)}
-			{!profile && <Button onClick={() => liff?.login()}>ログイン</Button>}
+			{/* {!profile && <Button onClick={() => liff?.login()}>ログイン</Button>} */}
 		</div>
 	);
 }

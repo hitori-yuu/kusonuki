@@ -1,43 +1,32 @@
-/*
-  Warnings:
-
-  - The primary key for the `User` table will be changed. If it partially fails, the table could be left without primary key constraint.
-  - You are about to drop the column `email` on the `User` table. All the data in the column will be lost.
-  - You are about to drop the column `name` on the `User` table. All the data in the column will be lost.
-  - Added the required column `updatedAt` to the `User` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "Role" AS ENUM ('DEFAULT', 'EDITOR', 'ADMIN');
 
--- DropIndex
-DROP INDEX "User_email_key";
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "displayName" TEXT,
+    "pictureUrl" TEXT,
+    "role" "Role" NOT NULL DEFAULT 'DEFAULT',
+    "isLinked" BOOLEAN NOT NULL DEFAULT false,
+    "isAvailable" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
--- AlterTable
-ALTER TABLE "User" DROP CONSTRAINT "User_pkey",
-DROP COLUMN "email",
-DROP COLUMN "name",
-ADD COLUMN     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-ADD COLUMN     "displayName" TEXT,
-ADD COLUMN     "isAvailable" BOOLEAN NOT NULL DEFAULT true,
-ADD COLUMN     "isLinked" BOOLEAN NOT NULL DEFAULT false,
-ADD COLUMN     "pictureUrl" TEXT,
-ADD COLUMN     "role" "Role" NOT NULL DEFAULT 'DEFAULT',
-ADD COLUMN     "updatedAt" TIMESTAMP(3) NOT NULL,
-ALTER COLUMN "id" DROP DEFAULT,
-ALTER COLUMN "id" SET DATA TYPE TEXT,
-ADD CONSTRAINT "User_pkey" PRIMARY KEY ("id");
-DROP SEQUENCE "User_id_seq";
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Student" (
     "name" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
-    "firstName" TEXT NOT NULL,
+    "lastName" TEXT,
+    "firstName" TEXT,
     "grade" INTEGER NOT NULL,
+    "group" TEXT NOT NULL,
+    "number" INTEGER NOT NULL,
+    "groupList" TEXT[],
+    "numberList" INTEGER[],
     "isLinked" BOOLEAN NOT NULL DEFAULT false,
     "isAvailable" BOOLEAN NOT NULL DEFAULT true,
-    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -118,9 +107,6 @@ CREATE TABLE "Timetable" (
 
     CONSTRAINT "Timetable_pkey" PRIMARY KEY ("id")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "Student_userId_key" ON "Student"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Teacher_userId_key" ON "Teacher"("userId");

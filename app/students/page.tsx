@@ -1,0 +1,21 @@
+import React from "react";
+import { StudentData } from "@/types/types";
+import { columns } from "./columns";
+import { DataTable } from "./data-table";
+
+async function getData(): Promise<StudentData[]> {
+	const response = await fetch("http://localhost:3000/api/students", {
+		cache: "no-store",
+	});
+
+	const studentAllData: StudentData[] = await response.json();
+
+	return studentAllData;
+}
+
+const page = async () => {
+	const data = await getData();
+	return <DataTable columns={columns} data={data} />;
+};
+
+export default page;

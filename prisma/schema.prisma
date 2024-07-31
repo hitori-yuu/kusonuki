@@ -23,15 +23,22 @@ model User {
 }
 
 model Student {
-    name        String   @id
-    lastName    String
-    firstName   String
-    grade       Int
-    isLinked    Boolean  @default(false)
-    isAvailable Boolean  @default(true)
-    userId      String   @unique
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    name         String   @id
+    lastName     String?
+    firstName    String?
+    grade        Int
+    group        String
+    number       Int
+    firstGroup   String?
+    secondGroup  String?
+    thirdGroup   String?
+    firstNumber  Int?
+    secondNumber Int?
+    thirdNumber  Int?
+    isLinked     Boolean  @default(false)
+    isAvailable  Boolean  @default(true)
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
 }
 
 model Teacher {

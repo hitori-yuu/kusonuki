@@ -12,6 +12,7 @@ model User {
     displayName String?
     pictureUrl  String?
     role        Role         @default(DEFAULT)
+    studentName String?
     isLinked    Boolean      @default(false)
     isAvailable Boolean      @default(true)
     createdAt   DateTime     @default(now())

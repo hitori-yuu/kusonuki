@@ -15,11 +15,17 @@ const Footer = () => {
 			{footerItems.map((item, index) => (
 				<a key={index} href={item.href} className="flex flex-col items-center">
 					<item.icon className="w-6 h-6 mb-1" />
-					<span className="text-sm">{item.label}</span>
+					<span onClick={vibratePatternOnClick} className="text-sm">
+						{item.label}
+					</span>
 				</a>
 			))}
 		</footer>
 	);
+};
+
+const vibratePatternOnClick = () => {
+	window.navigator?.vibrate?.([50, 200, 50, 200]);
 };
 
 export default Footer;

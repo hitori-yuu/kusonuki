@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { UserData } from "@/types/types";
 
 async function getUserData(userId: string): Promise<UserData> {
-	const response = await fetch(`http://localhost:3000/api/users/${userId}`);
+	const response = await fetch(`${process.env.API_URL}users/${userId}`);
 
 	const userData: UserData = await response.json();
 

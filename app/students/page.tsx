@@ -1,7 +1,7 @@
 import React from "react";
 import { StudentData } from "@/types/types";
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/components/layouts/DataTable";
 
 async function getData(): Promise<StudentData[]> {
 	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}students`, {

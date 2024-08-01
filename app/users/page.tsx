@@ -1,7 +1,7 @@
 import React from "react";
 import { UserData } from "@/types/types";
 import { columns } from "./columns";
-import { DataTable } from "./data-table";
+import { DataTable } from "@/components/layouts/DataTable";
 
 async function getData(): Promise<UserData[]> {
 	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}users`, {

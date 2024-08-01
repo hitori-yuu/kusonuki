@@ -49,13 +49,21 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		},
 	});
 
+	var filterColumn: any;
+	if (table.getColumn("displayName")) {
+		filterColumn = table.getColumn("displayName");
+	} else if (table.getColumn("name")) {
+		filterColumn = table.getColumn("name");
+	}
 	return (
 		<div>
 			<div className="flex items-center py-4">
 				<Input
 					placeholder="Filter names..."
-					value={(table.getColumn("displayName")?.getFilterValue() as string) ?? ""}
-					onChange={(event) => table.getColumn("displayName")?.setFilterValue(event.target.value)}
+					value={(filterColumn?.getFilterValue() as string) ?? ""}
+					onChange={(event) => {
+						filterColumn?.setFilterValue(event.target.value);
+					}}
 					className="max-w-sm"
 				/>
 				<DropdownMenu>
@@ -121,19 +129,28 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					</TableBody>
 				</Table>
 			</div>
-			<div className="flex items-center justify-end space-x-2 py-4">
-				<Button
-					variant="outline"
-					size="sm"
-					onClick={() => table.previousPage()}
-					disabled={!table.getCanPreviousPage()}
-				>
-					Previous
-				</Button>
-				<Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-					Next
-				</Button>
-			</div>
+			{table.getRowModel().rows?.length >= 10 ? (
+				<div className="flex items-center justify-end space-x-2 py-4">
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={() => table.previousPage()}
+						disabled={!table.getCanPreviousPage()}
+					>
+						Previous
+					</Button>
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={() => table.nextPage()}
+						disabled={!table.getCanNextPage()}
+					>
+						Next
+					</Button>
+				</div>
+			) : (
+				<div></div>
+			)}
 		</div>
 	);
 }

@@ -5,6 +5,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { LiffProvider } from "@/components/layouts/LiffProvider";
 import { ThemeProvider } from "@/components/layouts/ThemeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							<main className="flex-auto w-full max-w-3xl px-4 py-4 mx-auto sm:px-6 md:px-6 md:py-6">
 								{children}
 							</main>
+							<Toaster />
 							<Footer />
 						</div>
 					</ThemeProvider>

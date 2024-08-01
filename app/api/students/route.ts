@@ -10,7 +10,6 @@ export async function GET(req: Request) {
             {
                 number: 'asc',
             },
-
         ]
     })
     return NextResponse.json(allStudent)

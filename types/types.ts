@@ -29,3 +29,15 @@ export interface StudentData {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface AssignmentData {
+    id: number;
+    name: string;
+    subject:  string;
+    deadline: Date;
+    grade: number;
+    group: string;
+    authorId: string;
+    createdAt: Date;
+    updatedAt: Date;
+}

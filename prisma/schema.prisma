@@ -55,8 +55,8 @@ model Assignment {
     name      String
     subject   String
     deadline  DateTime
-    grade     Int
-    group     String
+    grade     Int      @default(2)
+    group     String   @default("H")
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
     createdAt DateTime @default(now())
@@ -68,8 +68,8 @@ model Test {
     name               String
     subject            String
     implementationDate DateTime
-    grade              Int
-    group              String
+    grade              Int      @default(2)
+    group              String   @default("H")
     author             User     @relation(fields: [authorId], references: [id])
     authorId           String
     createdAt          DateTime @default(now())
@@ -81,8 +81,8 @@ model Change {
     date      DateTime @db.Date
     period    Int
     subject   String
-    grade     Int
-    group     String
+    grade     Int      @default(2)
+    group     String   @default("H")
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
     createdAt DateTime @default(now())
@@ -93,8 +93,8 @@ model Timetable {
     id        Int      @id @default(autoincrement())
     week      String
     day       String
-    grade     Int
-    group     String
+    grade     Int      @default(2)
+    group     String   @default("H")
     first     String
     second    String
     third     String

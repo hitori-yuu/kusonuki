@@ -1,12 +1,21 @@
 import prisma from "@/lib/prismaClient";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-    // GET /api/users/[id] リクエストの処理
-}
+export async function GET(req: Request,
+    { params }: { params: { name: string }}
+) {
+    const name = params.name
+    const studentData = await prisma.student.findUnique({
+        where: {
+            name: name,
+        }
+    });
+    return NextResponse.json(studentData)
+};
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
-    const { name, group, number, grade } = await req.json();
+export async function POST(req: NextRequest, { params }: { params: { name: string } }) {
+    const name = params.name
+    const { group, number, grade } = await req.json();
     let student;
 
     if (grade == 1) {

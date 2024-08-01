@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "Assignment" ALTER COLUMN "grade" SET DEFAULT 2,
+ALTER COLUMN "group" SET DEFAULT 'H';
+
+-- AlterTable
+ALTER TABLE "Change" ALTER COLUMN "grade" SET DEFAULT 2,
+ALTER COLUMN "group" SET DEFAULT 'H';
+
+-- AlterTable
+ALTER TABLE "Test" ALTER COLUMN "grade" SET DEFAULT 2,
+ALTER COLUMN "group" SET DEFAULT 'H';
+
+-- AlterTable
+ALTER TABLE "Timetable" ALTER COLUMN "grade" SET DEFAULT 2,
+ALTER COLUMN "group" SET DEFAULT 'H';

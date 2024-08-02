@@ -7,6 +7,8 @@ import {
 	VisibilityState,
 	flexRender,
 	getCoreRowModel,
+	getFacetedRowModel,
+	getFacetedUniqueValues,
 	getFilteredRowModel,
 	getPaginationRowModel,
 	getSortedRowModel,
@@ -17,45 +19,76 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import AssignmentForm from "@/components/layouts/AssignmentForm";
+import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
+import { Cross2Icon } from "@radix-ui/react-icons";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 }
 
+export const subjects = [
+	{
+		label: "英語コミュニケーション",
+		value: "英語コミュニケーション",
+	},
+	{
+		label: "古典探求",
+		value: "古典探求",
+	},
+	{
+		label: "歴史総合[日]",
+		value: "歴史総合[日]",
+	},
+];
+
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
-	const [sorting, setSorting] = React.useState<SortingState>([]);
-	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+	const [rowSelection, setRowSelection] = React.useState({});
 	const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+	const [sorting, setSorting] = React.useState<SortingState>([]);
 
 	const table = useReactTable({
 		data,
 		columns,
-		onSortingChange: setSorting,
-		onColumnFiltersChange: setColumnFilters,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		onColumnVisibilityChange: setColumnVisibility,
 		state: {
 			sorting,
-			columnFilters,
 			columnVisibility,
+			rowSelection,
+			columnFilters,
 		},
+		enableRowSelection: true,
+		onRowSelectionChange: setRowSelection,
+		onSortingChange: setSorting,
+		onColumnFiltersChange: setColumnFilters,
+		onColumnVisibilityChange: setColumnVisibility,
+		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		getFacetedRowModel: getFacetedRowModel(),
+		getFacetedUniqueValues: getFacetedUniqueValues(),
 	});
+	const isFiltered = table.getState().columnFilters.length > 0;
 
 	return (
 		<div>
 			<div className="flex items-center py-4">
 				<Input
-					placeholder="Filter names..."
+					placeholder="Filter assignments..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-					onChange={(event) => {
-						table.getColumn("name")?.setFilterValue(event.target.value);
-					}}
-					className="max-w-sm"
+					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+					className="h-8 w-[150px] lg:w-[250px] mx-2"
 				/>
+				{table.getColumn("subject") && (
+					<DataTableFacetedFilter column={table.getColumn("subject")} title="Subject" options={subjects} />
+				)}
+				{isFiltered && (
+					<Button variant="ghost" onClick={() => table.resetColumnFilters()} className="h-8 px-2 lg:px-3">
+						Reset
+						<Cross2Icon className="ml-2 h-4 w-4" />
+					</Button>
+				)}
 				<Sheet>
 					<SheetTrigger asChild>
 						<Button variant="outline" className="ml-auto">

@@ -24,8 +24,7 @@ export async function POST(req: NextRequest, { params }: { params: { name: strin
                 name: name,
             },
             data: {
-                firstGroup: group,
-                firstNumber: number,
+                firstGroupNumber: group + number,
             }
         });
     } else if (grade == 2) {
@@ -34,8 +33,7 @@ export async function POST(req: NextRequest, { params }: { params: { name: strin
                 name: name,
             },
             data: {
-                secondGroup: group,
-                secondNumber: number,
+                secondGroupNumber: group + number,
             }
         });
     } else {
@@ -44,8 +42,7 @@ export async function POST(req: NextRequest, { params }: { params: { name: strin
                 name: name,
             },
             data: {
-                thirdGroup: group,
-                thirdNumber: number,
+                thirdGroupNumber: group + number,
             }
         });
     }

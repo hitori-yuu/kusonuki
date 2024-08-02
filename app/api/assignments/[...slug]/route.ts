@@ -1,5 +1,6 @@
 import prisma from '@/lib/prismaClient';
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
+import dayjs from 'dayjs';
 
 export async function GET(req: Request,
     { params }: { params: { slug: any }}
@@ -14,7 +15,7 @@ export async function GET(req: Request,
             AND: [{
                 deadline: {
                     lte: range,
-                    gte: new Date()
+                    gte: dayjs().subtract(1, 'day').toDate(),
                 },
             }]
         },

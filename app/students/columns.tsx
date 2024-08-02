@@ -26,8 +26,15 @@ export const columns: ColumnDef<StudentData>[] = [
 		},
 	},
 	{
-		accessorKey: "class",
-		header: "Class",
+		accessorKey: "grade",
+		header: ({ column }) => {
+			return (
+				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					Class
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			);
+		},
 		cell: ({ row }) => (
 			<div>
 				{row.original.grade}
@@ -40,12 +47,19 @@ export const columns: ColumnDef<StudentData>[] = [
 		header: "Number",
 	},
 	{
-		accessorKey: "1st",
-		header: "1st",
-		cell: ({ row }) => (
-			<div className="items-center">
-				{row.original.firstGroup} - {row.original.firstNumber}
-			</div>
-		),
+		accessorKey: "firstGroupNumber",
+		header: ({ column }) => {
+			return (
+				<Button
+					variant="ghost"
+					onClick={() => {
+						column.toggleSorting(column.getIsSorted() === "asc");
+					}}
+				>
+					1st
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			);
+		},
 	},
 ];

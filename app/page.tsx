@@ -1,6 +1,6 @@
-import { columns } from "./assignments/columns";
+import { columns } from "./home/AssignmentColumns";
+import { DataTable } from "./home/AssignmentDataTable";
 import { AssignmentData } from "@/types/types";
-import { DataTable } from "@/components/layouts/DataTable";
 
 async function getData(grade: number, group: string, range: Date): Promise<AssignmentData[]> {
 	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}assignments/${grade}/${group}/${range}`, {

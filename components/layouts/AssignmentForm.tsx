@@ -87,7 +87,7 @@ const AssignmentForm = () => {
 						<FormItem>
 							<FormLabel>Name</FormLabel>
 							<FormControl>
-								<Input placeholder="shadcn" {...field} />
+								<Input placeholder="Assignment name" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -105,9 +105,21 @@ const AssignmentForm = () => {
 										<SelectValue placeholder="Theme" />
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value="light">Light</SelectItem>
-										<SelectItem value="dark">Dark</SelectItem>
-										<SelectItem value="system">System</SelectItem>
+										<SelectItem value="数学">数学</SelectItem>
+										<SelectItem value="英語コミュニケーション">英語コミュニケーション</SelectItem>
+										<SelectItem value="論理表現">論理表現</SelectItem>
+										<SelectItem value="古典探求">古典探求</SelectItem>
+										<SelectItem value="論理国語">論理国語</SelectItem>
+										<SelectItem value="歴史総合[日]">歴史総合[日]</SelectItem>
+										<SelectItem value="歴史総合[世]">歴史総合[世]</SelectItem>
+										<SelectItem value="物理">物理</SelectItem>
+										<SelectItem value="生物">生物</SelectItem>
+										<SelectItem value="化学">化学</SelectItem>
+										<SelectItem value="家庭基礎">家庭基礎</SelectItem>
+										<SelectItem value="体育">体育</SelectItem>
+										<SelectItem value="保健">保健</SelectItem>
+										<SelectItem value="ヴェリタス">ヴェリタス</SelectItem>
+										<SelectItem value="H.R.">H.R.</SelectItem>
 									</SelectContent>
 								</Select>
 							</FormControl>

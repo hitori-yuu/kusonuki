@@ -17,12 +17,9 @@ export interface StudentData {
     grade: number;
     group: number;
     number: number;
-    firstGroup: string;
-    secondGroup: string;
-    thirdGroup: string;
-    firstNumber: number;
-    secondNumber: number;
-    thirdNumber: number;
+    firstGroupNumber: string;
+    secondGroupNumber: string;
+    thirdGroupNumber: string;
     isLinked: boolean;
     isAvailable: boolean;
     userId: string;

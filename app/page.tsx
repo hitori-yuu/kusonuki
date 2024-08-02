@@ -1,5 +1,5 @@
-import { columns } from "./assignments/columns";
-import { DataTable } from "./assignments/DataTable";
+import { columns } from "./home/AssignmentColumns";
+import { DataTable } from "./home/AssignmentDataTable";
 import { AssignmentData } from "@/types/types";
 
 async function getData(grade: number, group: string, range: Date): Promise<AssignmentData[]> {
@@ -15,7 +15,7 @@ const page = async () => {
 	var today = new Date();
 	const range = today.setDate(today.getDate() + 10);
 	const data = await getData(2, "H", new Date(range));
-	return <DataTable columns={columns} data={data} />; 
+	return <DataTable columns={columns} data={data} />;
 };
 
 export default page;

@@ -4,16 +4,7 @@ import { AssignmentData } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, CirclePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-
-import AssignmentForm from "@/components/layouts/AssignmentForm";
+import dayjs from "dayjs";
 
 const formatDate = (date: Date): string => {
 	const y: number = date.getFullYear();
@@ -49,20 +40,17 @@ export const columns: ColumnDef<AssignmentData>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			const date = new Date(row.getValue("deadline"));
-			const formatted = ("0" + (date.getMonth() + 1)).slice(-2) + "月" + ("0" + date.getDate()).slice(-2) + "日";
-			return <div>{formatted.replace(/0+(?=[0-9])/g, "")}</div>;
-			// const setDate: Date = new Date(row.getValue("deadline"));
-			// const nowDate: Date = new Date(formatDate(new Date()));
+			const dateTo = dayjs(new Date());
+			const dateFrom = dayjs(row.getValue("deadline"));
+			const diff = dateFrom.diff(dateTo, "day");
 
-			// const diffDay: number = Math.floor((nowDate.getTime() - setDate.getTime()) / 86400000);
-			// let diffDays: string;
-			// if (Math.abs(diffDay) == 0) {
-			// 	diffDays = "今日";
-			// } else {
-			// 	diffDays = `${Math.abs(diffDay)}日後`;
-			// }
-			// return <div>{diffDays}</div>;
+			let diffDays: string;
+			if (diff == 0) {
+				diffDays = "今日";
+			} else {
+				diffDays = `${diff}日後`;
+			}
+			return <div>{diffDays}</div>;
 		},
 	},
 ];

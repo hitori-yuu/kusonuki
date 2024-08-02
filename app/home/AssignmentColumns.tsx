@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, CirclePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import dayjs from "dayjs";
+import { DataTableColumnHeader } from "@/components/layouts/table/ColumnHeader";
 
 const formatDate = (date: Date): string => {
 	const y: number = date.getFullYear();
@@ -21,23 +22,13 @@ export const columns: ColumnDef<AssignmentData>[] = [
 	{
 		accessorKey: "subject",
 		header: ({ column }) => {
-			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					Subject
-					<ArrowUpDown className="ml-2 h-4 w-4" />
-				</Button>
-			);
+			return <DataTableColumnHeader column={column} title="Subject" />;
 		},
 	},
 	{
 		accessorKey: "deadline",
 		header: ({ column }) => {
-			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					Deadline
-					<ArrowUpDown className="ml-2 h-4 w-4" />
-				</Button>
-			);
+			return <DataTableColumnHeader column={column} title="Deadline" />;
 		},
 		cell: ({ row }) => {
 			const dateTo = dayjs(new Date());

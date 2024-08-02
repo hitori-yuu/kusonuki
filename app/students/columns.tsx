@@ -2,45 +2,39 @@
 
 import { StudentData } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { DataTableColumnHeader } from "@/components/layouts/table/ColumnHeader";
+import { groups } from "@/components/layouts/table/DataTables";
 
 export const columns: ColumnDef<StudentData>[] = [
 	{
 		accessorKey: "name",
 		header: ({ column }) => {
-			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					Name
-					<ArrowUpDown className="ml-2 h-4 w-4" />
-				</Button>
-			);
+			return <DataTableColumnHeader column={column} title="Name" />;
 		},
 	},
 	{
-		accessorKey: "grade",
-		header: ({ column }) => {
+		accessorKey: "group",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="Group" />,
+		cell: ({ row }) => {
+			const grade = row.original.grade;
+			const group = groups.find((group) => group.value === row.getValue("group"));
+
+			if (!group) {
+				return null;
+			}
+
 			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					Class
-					<ArrowUpDown className="ml-2 h-4 w-4" />
-				</Button>
+				<div className="flex w-[100px] items-center">
+					<span>
+						{grade}
+						{group.label}
+					</span>
+				</div>
 			);
 		},
-		cell: ({ row }) => (
-			<div>
-				{row.original.grade}
-				{row.original.group}
-			</div>
-		),
+		filterFn: (row, id, value) => {
+			return value.includes(row.getValue(id));
+		},
 	},
 	{
 		accessorKey: "number",
@@ -49,17 +43,7 @@ export const columns: ColumnDef<StudentData>[] = [
 	{
 		accessorKey: "firstGroupNumber",
 		header: ({ column }) => {
-			return (
-				<Button
-					variant="ghost"
-					onClick={() => {
-						column.toggleSorting(column.getIsSorted() === "asc");
-					}}
-				>
-					1st
-					<ArrowUpDown className="ml-2 h-4 w-4" />
-				</Button>
-			);
+			return <DataTableColumnHeader column={column} title="1st" />;
 		},
 	},
 ];

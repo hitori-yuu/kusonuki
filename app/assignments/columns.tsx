@@ -42,21 +42,4 @@ export const columns: ColumnDef<AssignmentData>[] = [
 			);
 		},
 	},
-	{
-		accessorKey: "Add",
-		header: () => {
-			return (
-				<Dialog>
-					<DialogTrigger>
-						<CirclePlus className="mt-2" />
-					</DialogTrigger>
-					<DialogContent>
-						<DialogHeader>
-							<AssignmentForm />
-						</DialogHeader>
-					</DialogContent>
-				</Dialog>
-			);
-		},
-	},
 ];

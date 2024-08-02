@@ -63,9 +63,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						</Button>
 					</SheetTrigger>
 					<SheetContent>
-						<SheetHeader>
-							<AssignmentForm />
-						</SheetHeader>
+						<AssignmentForm />
 					</SheetContent>
 				</Sheet>
 			</div>

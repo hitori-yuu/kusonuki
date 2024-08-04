@@ -1,3 +1,4 @@
+import WeekData from "@/components/layouts/WeekData";
 import { columns } from "./home/AssignmentColumns";
 import { DataTable } from "./home/AssignmentDataTable";
 import { AssignmentData } from "@/types/types";
@@ -15,7 +16,12 @@ const page = async () => {
 	var today = new Date();
 	const range = today.setDate(today.getDate() + 10);
 	const data = await getData(2, "H", new Date(range));
-	return <DataTable columns={columns} data={data} />;
+	return (
+		<div>
+			<WeekData />
+			<DataTable columns={columns} data={data} />
+		</div>
+	);
 };
 
 export default page;

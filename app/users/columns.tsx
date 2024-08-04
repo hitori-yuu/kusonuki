@@ -13,17 +13,14 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DataTableColumnHeader } from "@/components/layouts/table/ColumnHeader";
+import { roles } from "@/components/layouts/table/DataTables";
 
 export const columns: ColumnDef<UserData>[] = [
 	{
 		accessorKey: "displayName",
 		header: ({ column }) => {
-			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					Name
-					<ArrowUpDown className="ml-2 h-4 w-4" />
-				</Button>
-			);
+			return <DataTableColumnHeader column={column} title="Name" />;
 		},
 		cell: ({ row }) => (
 			<div className="flex items-center">
@@ -37,7 +34,23 @@ export const columns: ColumnDef<UserData>[] = [
 	},
 	{
 		accessorKey: "role",
-		header: "Role",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
+		cell: ({ row }) => {
+			const priority = roles.find((role) => role.value === row.getValue("role"));
+
+			if (!priority) {
+				return null;
+			}
+
+			return (
+				<div className="flex items-center">
+					<span>{priority.label}</span>
+				</div>
+			);
+		},
+		filterFn: (row, id, value) => {
+			return value.includes(row.getValue(id));
+		},
 	},
 	{
 		accessorKey: "createdAt",

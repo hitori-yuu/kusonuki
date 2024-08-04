@@ -27,21 +27,6 @@ interface DataTableProps<TData, TValue> {
 	data: TData[];
 }
 
-export const subjects = [
-	{
-		label: "英語コミュニケーション",
-		value: "英語コミュニケーション",
-	},
-	{
-		label: "古典探求",
-		value: "古典探求",
-	},
-	{
-		label: "歴史総合[日]",
-		value: "歴史総合[日]",
-	},
-];
-
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = React.useState({});
 	const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -78,11 +63,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					placeholder="Filter assignments..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-					className="h-8 w-[150px] lg:w-[250px] mx-2"
+					className="h-8 w-[200px] lg:w-[250px] mx-2"
 				/>
-				{table.getColumn("subject") && (
-					<DataTableFacetedFilter column={table.getColumn("subject")} title="Subject" options={subjects} />
-				)}
 				{isFiltered && (
 					<Button variant="ghost" onClick={() => table.resetColumnFilters()} className="h-8 px-2 lg:px-3">
 						Reset

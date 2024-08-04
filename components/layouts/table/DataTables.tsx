@@ -36,3 +36,18 @@ export const groups = [
 		value: "I",
 	},
 ];
+
+export const roles = [
+	{
+		label: "DEFAULT",
+		value: "DEFAULT",
+	},
+	{
+		label: "EDITOR",
+		value: "EDITOR",
+	},
+	{
+		label: "ADMIN",
+		value: "ADMIN",
+	},
+];

@@ -24,11 +24,9 @@ export const columns: ColumnDef<StudentData>[] = [
 			}
 
 			return (
-				<div className="flex w-[100px] items-center">
-					<span>
-						{grade}
-						{group.label}
-					</span>
+				<div>
+					{grade}
+					{group.label}
 				</div>
 			);
 		},

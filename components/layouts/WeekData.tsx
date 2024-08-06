@@ -95,6 +95,9 @@ const WeekData = () => {
 				setStudent(student);
 			})();
 		}
+	}, [liff]);
+
+	useEffect(() => {
 		if (selectedDate) {
 			var grade: number = 2;
 			var group: string = "H";
@@ -119,7 +122,7 @@ const WeekData = () => {
 		if (selectedRef.current) {
 			selectedRef.current.scrollIntoView({ behavior: "smooth", inline: "center" });
 		}
-	}, [selectedDate, liff]);
+	}, [selectedDate]);
 
 	return (
 		<div>
@@ -140,76 +143,74 @@ const WeekData = () => {
 					))}
 				</div>
 			</div>
-			<div>
-				{timetable && (
-					<Card className="my-2">
-						<CardHeader>
-							<CardTitle>Timetable</CardTitle>
-							<CardDescription>
-								Timetable of {selectedDate} {timetable.day}
-							</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<Table>
-								<TableHeader>
-									<TableRow>
-										<TableHead>Times</TableHead>
-										<TableHead>Subjects</TableHead>
+			{timetable && (
+				<Card className="my-2">
+					<CardHeader>
+						<CardTitle>Timetable</CardTitle>
+						<CardDescription>
+							Timetable of {selectedDate} {timetable.day}
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead>Times</TableHead>
+									<TableHead>Subjects</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								<TableRow>
+									<TableHead>1.</TableHead>
+									<TableCell>{timetable.first}</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableHead>2.</TableHead>
+									<TableCell>{timetable.second}</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableHead>3.</TableHead>
+									<TableCell>{timetable.third}</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableHead>4.</TableHead>
+									<TableCell>{timetable.fourth}</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableHead>5.</TableHead>
+									<TableCell>{timetable.fifth}</TableCell>
+								</TableRow>
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+			)}
+			{test && test.length > 0 && (
+				<Card className="my-2">
+					<CardHeader>
+						<CardTitle>Test</CardTitle>
+						<CardDescription>News of {selectedDate}</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead>Name</TableHead>
+									<TableHead>Subject</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{test.map((item, index) => (
+									<TableRow key={index}>
+										<TableCell>{item.name}</TableCell>
+										<TableCell>{item.subject}</TableCell>
 									</TableRow>
-								</TableHeader>
-								<TableBody>
-									<TableRow>
-										<TableHead>1.</TableHead>
-										<TableCell>{timetable.first}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableHead>2.</TableHead>
-										<TableCell>{timetable.second}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableHead>3.</TableHead>
-										<TableCell>{timetable.third}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableHead>4.</TableHead>
-										<TableCell>{timetable.fourth}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableHead>5.</TableHead>
-										<TableCell>{timetable.fifth}</TableCell>
-									</TableRow>
-								</TableBody>
-							</Table>
-						</CardContent>
-					</Card>
-				)}
-				{test && test.length > 0 && (
-					<Card className="my-2">
-						<CardHeader>
-							<CardTitle>Test</CardTitle>
-							<CardDescription>News of {selectedDate}</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<Table>
-								<TableHeader>
-									<TableRow>
-										<TableHead>Name</TableHead>
-										<TableHead>Subject</TableHead>
-									</TableRow>
-								</TableHeader>
-								<TableBody>
-									{test.map((item, index) => (
-										<TableRow key={index}>
-											<TableCell>{item.name}</TableCell>
-											<TableCell>{item.subject}</TableCell>
-										</TableRow>
-									))}
-								</TableBody>
-							</Table>
-						</CardContent>
-					</Card>
-				)}
-			</div>
+								))}
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+			)}
 		</div>
 	);
 };

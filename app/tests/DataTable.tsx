@@ -60,12 +60,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
 	return (
 		<div>
-			<div className="flex items-center py-4">
+			<div className="overscroll-x-auto flex items-center py-4">
 				<Input
 					placeholder="Filter tests..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-					className="h-8 w-[150px] lg:w-[250px] mx-2"
+					className="h-8 w-[100px] lg:w-[250px] mr-2"
 				/>
 				{table.getColumn("subject") && (
 					<DataTableFacetedFilter column={table.getColumn("subject")} title="Subject" options={subjects} />
@@ -81,16 +81,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					</Button>
 				)}
 				<DataTableViewOptions table={table} />
-				<Sheet>
-					<SheetTrigger asChild>
-						<Button variant="outline" size="sm" className="ml-2 h-8 lg:flex">
-							Add
-						</Button>
-					</SheetTrigger>
-					<SheetContent>
-						<TestForm />
-					</SheetContent>
-				</Sheet>
 			</div>
 			<div className="rounded-md border">
 				<Table>

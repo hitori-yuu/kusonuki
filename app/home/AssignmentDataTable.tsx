@@ -63,7 +63,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					placeholder="Filter assignments..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-					className="h-8 w-[250px] lg:w-[300px]"
+					className="h-8 w-[200px]"
 				/>
 				{isFiltered && (
 					<Button variant="ghost" onClick={() => table.resetColumnFilters()} className="h-8 px-2 lg:px-3">
@@ -73,7 +73,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 				)}
 				<Sheet>
 					<SheetTrigger asChild>
-						<Button variant="outline" className="ml-auto">
+						<Button variant="outline" size="sm" className="ml-auto">
 							Add
 						</Button>
 					</SheetTrigger>

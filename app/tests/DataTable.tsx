@@ -15,12 +15,14 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import AssignmentForm from "@/components/layouts/AssignmentForm";
+import { DataTableViewOptions } from "@/components/layouts/table/ViewOptions";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
+import { groups, subjects } from "@/components/layouts/table/DataTables";
+import TestForm from "@/components/layouts/TestForm";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -60,25 +62,33 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		<div>
 			<div className="flex items-center py-4">
 				<Input
-					placeholder="Filter assignments..."
+					placeholder="Filter tests..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-					className="h-8 w-[250px] lg:w-[300px]"
+					className="h-8 w-[150px] lg:w-[250px] mx-2"
 				/>
+				{table.getColumn("subject") && (
+					<DataTableFacetedFilter column={table.getColumn("subject")} title="Subject" options={subjects} />
+				)}
+				{table.getColumn("group") && (
+					<DataTableFacetedFilter column={table.getColumn("group")} title="Group" options={groups} />
+				)}
+
 				{isFiltered && (
 					<Button variant="ghost" onClick={() => table.resetColumnFilters()} className="h-8 px-2 lg:px-3">
 						Reset
 						<Cross2Icon className="ml-2 h-4 w-4" />
 					</Button>
 				)}
+				<DataTableViewOptions table={table} />
 				<Sheet>
 					<SheetTrigger asChild>
-						<Button variant="outline" className="ml-auto">
+						<Button variant="outline" size="sm" className="ml-2 h-8 lg:flex">
 							Add
 						</Button>
 					</SheetTrigger>
 					<SheetContent>
-						<AssignmentForm />
+						<TestForm />
 					</SheetContent>
 				</Sheet>
 			</div>

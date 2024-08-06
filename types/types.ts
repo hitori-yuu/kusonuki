@@ -15,7 +15,7 @@ export interface StudentData {
     lastName: string;
     firstName: string;
     grade: number;
-    group: number;
+    group: string;
     number: number;
     firstGroupNumber: string;
     secondGroupNumber: string;
@@ -32,6 +32,34 @@ export interface AssignmentData {
     name: string;
     subject:  string;
     deadline: Date;
+    grade: number;
+    group: string;
+    authorId: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface TimetableData {
+    id: number;
+    week: string;
+    day: string;
+    grade: number;
+    group: string;
+    first: string;
+    second: string;
+    third: string;
+    fourth: string;
+    fifth: string;
+    authorId: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface TestData {
+    id: number;
+    name: string;
+    subject: string;
+    implementationDate: Date;
     grade: number;
     group: string;
     authorId: string;

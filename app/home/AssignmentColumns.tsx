@@ -31,8 +31,8 @@ export const columns: ColumnDef<AssignmentData>[] = [
 			return <DataTableColumnHeader column={column} title="Deadline" />;
 		},
 		cell: ({ row }) => {
-			const dateTo = dayjs(new Date());
-			const dateFrom = dayjs(row.getValue("deadline"));
+			const dateTo = dayjs(new Date()).startOf("day");
+			const dateFrom = dayjs(row.getValue("deadline")).startOf("day");
 			const diff = dateFrom.diff(dateTo, "day");
 
 			let diffDays: string;

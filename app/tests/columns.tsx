@@ -1,11 +1,11 @@
 "use client";
 
-import { AssignmentData } from "@/types/types";
+import { TestData } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/layouts/table/ColumnHeader";
 import { groups, subjects } from "@/components/layouts/table/DataTables";
 
-export const columns: ColumnDef<AssignmentData>[] = [
+export const columns: ColumnDef<TestData>[] = [
 	{
 		accessorKey: "name",
 		header: ({ column }) => {
@@ -45,21 +45,17 @@ export const columns: ColumnDef<AssignmentData>[] = [
 				return null;
 			}
 
-			return (
-				<div>
-					{subject.label}
-				</div>
-			);
+			return <div>{subject.label}</div>;
 		},
 		filterFn: (row, id, value) => {
 			return value.includes(row.getValue(id));
 		},
 	},
 	{
-		accessorKey: "deadline",
-		header: ({ column }) => <DataTableColumnHeader column={column} title="Deadline" />,
+		accessorKey: "implementationDate",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="implementationDate" />,
 		cell: ({ row }) => {
-			const date = new Date(row.getValue("deadline"));
+			const date = new Date(row.getValue("implementationDate"));
 			const formatted = date.toLocaleDateString();
 			return <div>{formatted}</div>;
 		},

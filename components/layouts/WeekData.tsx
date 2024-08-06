@@ -119,7 +119,7 @@ const WeekData = () => {
 		if (selectedRef.current) {
 			selectedRef.current.scrollIntoView({ behavior: "smooth", inline: "center" });
 		}
-	}, [selectedDate]);
+	}, [selectedDate, liff]);
 
 	return (
 		<div>

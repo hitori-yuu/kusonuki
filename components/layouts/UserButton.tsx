@@ -93,10 +93,27 @@ export function UserButton() {
 									<span>Students</span>
 								</DropdownMenuItem>
 							</a>
-							<DropdownMenuItem disabled>
-								<Speech className="mr-2 h-4 w-4" />
-								<span>Teachers</span>
-							</DropdownMenuItem>
+							<a href="/teachers">
+								<DropdownMenuItem disabled>
+									<Speech className="mr-2 h-4 w-4" />
+									<span>Teachers</span>
+								</DropdownMenuItem>
+							</a>
+						</DropdownMenuGroup>
+						<DropdownMenuSeparator />
+						<DropdownMenuGroup>
+							<a href="/assignments">
+								<DropdownMenuItem>
+									<UsersRound className="mr-2 h-4 w-4" />
+									<span>Assignments</span>
+								</DropdownMenuItem>
+							</a>
+							<a href="/tests">
+								<DropdownMenuItem>
+									<UsersRound className="mr-2 h-4 w-4" />
+									<span>Tests</span>
+								</DropdownMenuItem>
+							</a>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>

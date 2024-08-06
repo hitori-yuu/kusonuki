@@ -13,11 +13,13 @@ export async function GET(req: Request) {
 };
 
 export async function POST(req: Request) {
-    const { name, subject, deadline, authorId } = await req.json();
+    const { name, grade, group, subject, deadline, authorId } = await req.json();
 
     const assignment = await prisma.assignment.create({
         data: {
             name,
+            grade,
+            group,
             subject,
             deadline,
             authorId

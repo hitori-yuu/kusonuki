@@ -7,6 +7,9 @@ import { LiffProvider } from "@/components/layouts/LiffProvider";
 import { ThemeProvider } from "@/components/layouts/ThemeProvider";
 import { Toaster } from "@/components/ui/toaster";
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
+
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
 
@@ -35,6 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
 			</head>
 			<body className={inter.className}>
+				<SpeedInsights />
+				<Analytics />
 				<LiffProvider liffId={process.env.NEXT_PUBLIC_LIFF_ID || ""}>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 						<div className="flex flex-col justify-between w-full h-full min-h-screen">

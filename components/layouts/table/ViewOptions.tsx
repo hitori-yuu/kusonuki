@@ -22,11 +22,11 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button variant="outline" size="sm" className="ml-auto h-8 lg:flex">
-					<MixerHorizontalIcon className="mr-2 h-4 w-4" />
-					View
+					<MixerHorizontalIcon className="mr-0 h-4 w-4 sm:mr-2" />
+					<span className="hidden sm:inline">View</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="w-[200px] max-w-fit">
+			<DropdownMenuContent align="end" className="w-[150px] sm:w-[200px]">
 				<DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				{table

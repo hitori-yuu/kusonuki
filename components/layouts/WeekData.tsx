@@ -44,14 +44,14 @@ const WeekData = () => {
 	const [profile, setProfile] = useState<Profile | null>(null);
 	const [user, setUser] = useState<UserData | null>(null);
 	const [student, setStudent] = useState<StudentData | null>();
-	const { liff } = useLiff();
-	const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
+	const [timetable, setTimetable] = useState<TimetableData | null>();
+	const [test, setTest] = useState<TestData[] | null>();
 	const today = new Date();
 	const [selectedDate, setSelectedDate] = useState<string>(
 		String(today.getMonth() + 1).slice(-2) + "/" + String(today.getDate()).slice(-2)
 	);
-	const [timetable, setTimetable] = useState<TimetableData>();
-	const [test, setTest] = useState<TestData[]>();
+	const { liff } = useLiff();
+	const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 	const selectedRef = useRef<HTMLDivElement | null>(null);
 	today.setDate(today.getDate() - today.getDay());
 
@@ -106,6 +106,9 @@ const WeekData = () => {
 				group = student.group;
 			}
 			(async () => {
+				await getTestData(grade, group, new Date(today.getFullYear() + "/" + selectedDate)).then((data) => {
+					setTest(data);
+				});
 				await getTimetableData(
 					grade,
 					group,
@@ -113,9 +116,6 @@ const WeekData = () => {
 					daysOfWeek[new Date(selectedDate).getDay()]
 				).then((data) => {
 					setTimetable(data[0]);
-				});
-				await getTestData(grade, group, new Date(today.getFullYear() + "/" + selectedDate)).then((data) => {
-					setTest(data);
 				});
 			})();
 		}
@@ -143,22 +143,20 @@ const WeekData = () => {
 					))}
 				</div>
 			</div>
-			{timetable && (
-				<Card className="my-2">
-					<CardHeader>
-						<CardTitle>Timetable</CardTitle>
-						<CardDescription>
-							Timetable of {selectedDate} {timetable.day}
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<Table>
-							<TableHeader>
-								<TableRow>
-									<TableHead>Times</TableHead>
-									<TableHead>Subjects</TableHead>
-								</TableRow>
-							</TableHeader>
+			<Card className="my-2">
+				<CardHeader>
+					<CardTitle>Timetable</CardTitle>
+					<CardDescription>Timetable of {selectedDate}</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<Table>
+						<TableHeader>
+							<TableRow>
+								<TableHead>Times</TableHead>
+								<TableHead>Subjects</TableHead>
+							</TableRow>
+						</TableHeader>
+						{timetable ? (
 							<TableBody>
 								<TableRow>
 									<TableHead>1.</TableHead>
@@ -181,10 +179,19 @@ const WeekData = () => {
 									<TableCell>{timetable.fifth}</TableCell>
 								</TableRow>
 							</TableBody>
-						</Table>
-					</CardContent>
-				</Card>
-			)}
+						) : (
+							<TableBody>
+								<TableRow>
+									<TableCell colSpan={2} className="text-center">
+										None
+									</TableCell>
+								</TableRow>
+							</TableBody>
+						)}
+					</Table>
+				</CardContent>
+			</Card>
+
 			{test && test.length > 0 && (
 				<Card className="my-2">
 					<CardHeader>

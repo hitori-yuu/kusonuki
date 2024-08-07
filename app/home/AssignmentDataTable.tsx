@@ -63,10 +63,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					placeholder="Filter assignments..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-					className="h-8 w-[200px]"
+					className="h-8 w-[150px] sm:w-[200px]"
 				/>
 				{isFiltered && (
-					<Button variant="ghost" onClick={() => table.resetColumnFilters()} className="h-8 px-2 lg:px-3">
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => table.resetColumnFilters()}
+						className="h-8 ml-1 px-2 lg:px-3"
+					>
 						Reset
 						<Cross2Icon className="ml-2 h-4 w-4" />
 					</Button>

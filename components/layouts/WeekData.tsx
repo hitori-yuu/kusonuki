@@ -7,18 +7,14 @@ import { StudentData, TestData, TimetableData, UserData } from "@/types/types";
 import { useLiff } from "./LiffProvider";
 import { Profile } from "@liff/get-profile";
 
-async function getTimetableData(grade: number, group: String, week: String, day: String): Promise<TimetableData[]> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}timetables/${grade}/${group}/${week}/${day}`, {
-		cache: "no-store",
-	});
-	const timetableData: TimetableData[] = await response.json();
+async function getTimetableData(grade: number, group: String, week: String, day: String): Promise<TimetableData> {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}timetables/${grade}/${group}/${week}/${day}`);
+	const timetableData: TimetableData = await response.json();
 
 	return timetableData;
 }
 async function getTestData(grade: number, group: String, date: Date): Promise<TestData[]> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}tests/${grade}/${group}/${date}`, {
-		cache: "no-store",
-	});
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}tests/${grade}/${group}/${date}`);
 	const testData: TestData[] = await response.json();
 
 	return testData;
@@ -26,7 +22,6 @@ async function getTestData(grade: number, group: String, date: Date): Promise<Te
 
 async function getUserData(userId: string): Promise<UserData> {
 	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}users/${userId}`);
-
 	const userData: UserData = await response.json();
 
 	return userData;
@@ -34,7 +29,6 @@ async function getUserData(userId: string): Promise<UserData> {
 
 async function getStudentData(studentName: string): Promise<StudentData> {
 	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}students/${studentName}`);
-
 	const studentData: StudentData = await response.json();
 
 	return studentData;
@@ -115,7 +109,7 @@ const WeekData = () => {
 					typeWeek(new Date(selectedDate)),
 					daysOfWeek[new Date(selectedDate).getDay()]
 				).then((data) => {
-					setTimetable(data[0]);
+					setTimetable(data);
 				});
 			})();
 		}

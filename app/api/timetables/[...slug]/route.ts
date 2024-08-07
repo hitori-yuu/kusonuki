@@ -8,7 +8,7 @@ export async function GET(req: Request,
     const group = params.slug[1];
     const week = params.slug[2];
     const day = params.slug[3];
-    const allTimetable = await prisma.timetable.findMany({
+    const allTimetable = await prisma.timetable.findFirst({
         where: {
             grade: parseInt(grade),
             group: group,

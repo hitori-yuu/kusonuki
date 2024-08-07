@@ -11,10 +11,10 @@ const nextConfigFunction = async (phase) => {
 			dest: "public",
 			runtimeCaching: [
 				{
-					urlPattern: /^https:\/\/example.com\/.*$/,
+					urlPattern: /^https:\/\/kusonuki.vercel.app\/.*$/,
 					handler: "NetworkFirst",
 					options: {
-						cacheName: "example-cache",
+						cacheName: "kusonuki-app-cache",
 						expiration: {
 							maxEntries: 50,
 							maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days

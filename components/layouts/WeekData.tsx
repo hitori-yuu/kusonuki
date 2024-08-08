@@ -8,6 +8,7 @@ import { useLiff } from "./LiffProvider";
 import { Profile } from "@liff/get-profile";
 
 async function getTimetableData(grade: number, group: String, week: String, day: String): Promise<TimetableData> {
+	console.log(week, day);
 	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}timetables/${grade}/${group}/${week}/${day}`);
 	const timetableData: TimetableData = await response.json();
 
@@ -63,6 +64,9 @@ const WeekData = () => {
 		};
 	});
 
+	var grade: number = 2;
+	var group: string = "H";
+
 	useEffect(() => {
 		if (liff?.isLoggedIn()) {
 			(async () => {
@@ -93,8 +97,6 @@ const WeekData = () => {
 
 	useEffect(() => {
 		if (selectedDate) {
-			var grade: number = 2;
-			var group: string = "H";
 			if (student) {
 				grade = student.grade;
 				group = student.group;
@@ -120,6 +122,11 @@ const WeekData = () => {
 
 	return (
 		<div>
+			<p className="text-center">{grade}年{group}組 {today.getFullYear() + "/" + selectedDate} {typeWeek(new Date(selectedDate))}週{daysOfWeek[new Date(selectedDate).getDay()]}曜日</p>
+			<div className="flex flex-col rounded-md">
+				<div className="p-2 font-bold rounded-t-md">Timetable</div>
+				<pre className="py-3 px-4 whitespace-pre-wrap break-all">{JSON.stringify(timetable, null, 2)}</pre>
+			</div>
 			<div className="overflow-x-auto whitespace-no-wrap">
 				<div className="flex items-center space-x-4 xl:justify-around">
 					{days.map(({ dateString, dayOfWeek }) => (

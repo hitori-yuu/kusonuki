@@ -6,13 +6,27 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useLiff } from "./LiffProvider";
 import { Profile } from "@liff/get-profile";
@@ -50,7 +64,8 @@ const AssignmentForm = () => {
 			const profile = {
 				userId: "Ud713d7bf56b49d0f40c0712335f625ba",
 				displayName: "TEST USER",
-				pictureUrl: "https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
+				pictureUrl:
+					"https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
 			};
 			setProfile(profile);
 		}
@@ -106,7 +121,9 @@ const AssignmentForm = () => {
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value="数学">数学</SelectItem>
-										<SelectItem value="英語コミュニケーション">英語コミュニケーション</SelectItem>
+										<SelectItem value="英語コミュニケーション">
+											英語コミュニケーション
+										</SelectItem>
 										<SelectItem value="論理表現">論理表現</SelectItem>
 										<SelectItem value="古典探求">古典探求</SelectItem>
 										<SelectItem value="論理国語">論理国語</SelectItem>
@@ -140,10 +157,14 @@ const AssignmentForm = () => {
 											variant={"outline"}
 											className={cn(
 												"w-[240px] pl-3 text-left font-normal",
-												!field.value && "text-muted-foreground"
+												!field.value && "text-muted-foreground",
 											)}
 										>
-											{field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+											{field.value ? (
+												format(field.value, "PPP")
+											) : (
+												<span>Pick a date</span>
+											)}
 											<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
 										</Button>
 									</FormControl>

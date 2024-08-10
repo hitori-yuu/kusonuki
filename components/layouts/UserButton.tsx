@@ -40,7 +40,8 @@ export function UserButton() {
 			const profile = {
 				userId: "Ud713d7bf56b49d0f40c0712335f625ba",
 				displayName: "TEST USER",
-				pictureUrl: "https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
+				pictureUrl:
+					"https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
 			};
 			setProfile(profile);
 		}
@@ -55,7 +56,10 @@ export function UserButton() {
 						<Button variant="ghost" className="relative w-8 h-8 rounded-full">
 							<Avatar className="w-8 h-8">
 								{profile.pictureUrl && (
-									<AvatarImage src={profile.pictureUrl} alt={profile.displayName ?? ""} />
+									<AvatarImage
+										src={profile.pictureUrl}
+										alt={profile.displayName ?? ""}
+									/>
 								)}
 								<AvatarFallback>{profile.displayName}</AvatarFallback>
 							</Avatar>
@@ -64,8 +68,12 @@ export function UserButton() {
 					<DropdownMenuContent className="max-w-fit" align="end" forceMount>
 						<DropdownMenuLabel className="font-normal">
 							<div className="flex flex-col space-y-1">
-								<p className="text-sm font-medium leading-none">{profile.displayName}</p>
-								<p className="text-xs leading-none text-muted-foreground">{profile.userId}</p>
+								<p className="text-sm font-medium leading-none">
+									{profile.displayName}
+								</p>
+								<p className="text-xs leading-none text-muted-foreground">
+									{profile.userId}
+								</p>
 							</div>
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />

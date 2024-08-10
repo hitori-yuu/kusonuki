@@ -2,28 +2,28 @@ import prisma from "@/lib/prismaClient";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-    const allAssignment = await prisma.assignment.findMany({
-        orderBy: [
-            {
-                deadline: 'desc',
-            },
-        ]
-    })
-    return NextResponse.json(allAssignment)
-};
+	const allAssignment = await prisma.assignment.findMany({
+		orderBy: [
+			{
+				deadline: "desc",
+			},
+		],
+	});
+	return NextResponse.json(allAssignment);
+}
 
 export async function POST(req: Request) {
-    const { name, grade, group, subject, deadline, authorId } = await req.json();
+	const { name, grade, group, subject, deadline, authorId } = await req.json();
 
-    const assignment = await prisma.assignment.create({
-        data: {
-            name,
-            grade,
-            group,
-            subject,
-            deadline,
-            authorId
-        }
-    });
-    return NextResponse.json(assignment)
-};
+	const assignment = await prisma.assignment.create({
+		data: {
+			name,
+			grade,
+			group,
+			subject,
+			deadline,
+			authorId,
+		},
+	});
+	return NextResponse.json(assignment);
+}

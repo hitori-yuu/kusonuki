@@ -53,7 +53,9 @@ export const columns: ColumnDef<TestData>[] = [
 	},
 	{
 		accessorKey: "implementationDate",
-		header: ({ column }) => <DataTableColumnHeader column={column} title="implementationDate" />,
+		header: ({ column }) => (
+			<DataTableColumnHeader column={column} title="implementationDate" />
+		),
 		cell: ({ row }) => {
 			const date = new Date(row.getValue("implementationDate"));
 			const formatted = date.toLocaleDateString();

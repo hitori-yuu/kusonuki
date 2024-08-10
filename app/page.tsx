@@ -2,12 +2,23 @@ import WeekData from "@/components/layouts/WeekData";
 import { columns } from "./home/AssignmentColumns";
 import { DataTable } from "./home/AssignmentDataTable";
 import { AssignmentData } from "@/types/types";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import LiffUser from "@/components/layouts/LiffUser";
 
 async function getData(grade: number, group: string, range: Date): Promise<AssignmentData[]> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}assignments/${grade}/${group}/${range}`, {
-		cache: "no-store",
-	});
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_API_URL}assignments/${grade}/${group}/${range}`,
+		{
+			cache: "no-store",
+		},
+	);
 	const assignmentData: AssignmentData[] = await response.json();
 
 	return assignmentData;
@@ -20,6 +31,7 @@ const page = async () => {
 	return (
 		<div>
 			<WeekData />
+			<LiffUser />
 			<Card className="my-2">
 				<CardHeader>
 					<CardTitle>Assignment</CardTitle>

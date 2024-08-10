@@ -36,7 +36,8 @@ export function ProfileData() {
 				const profile = {
 					userId: "Ud713d7bf56b49d0f40c0712335f625ba",
 					displayName: "TEST USER",
-					pictureUrl: "https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
+					pictureUrl:
+						"https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
 				};
 				const user = await getUserData(profile.userId);
 				setProfile(profile);
@@ -53,7 +54,10 @@ export function ProfileData() {
 					<div className="flex items-center justify-around">
 						<Avatar className="h-full w-20 max-w-64">
 							{profile.pictureUrl && (
-								<AvatarImage src={profile.pictureUrl} alt={profile.displayName ?? ""} />
+								<AvatarImage
+									src={profile.pictureUrl}
+									alt={profile.displayName ?? ""}
+								/>
 							)}
 							<AvatarFallback>{profile.displayName}</AvatarFallback>
 						</Avatar>
@@ -64,11 +68,15 @@ export function ProfileData() {
 									<HoverCardTrigger>
 										<p>権限</p>
 									</HoverCardTrigger>
-									<HoverCardContent>ユーザーが所持している権限の情報です。</HoverCardContent>
+									<HoverCardContent>
+										ユーザーが所持している権限の情報です。
+									</HoverCardContent>
 								</HoverCard>
 							</div>
 							<div className="block px-2 text-center">
-								<p className="font-semibold py-1">{user?.isLinked ? "連携済" : "未連携"}</p>
+								<p className="font-semibold py-1">
+									{user?.isLinked ? "連携済" : "未連携"}
+								</p>
 								<HoverCard>
 									<HoverCardTrigger>
 										<p>連携状態</p>
@@ -84,12 +92,16 @@ export function ProfileData() {
 								</HoverCard>
 							</div>
 							<div className="block px-2 text-center">
-								<p className="font-semibold py-1">{user?.isAvailable ? "利用可能" : "利用不可"}</p>
+								<p className="font-semibold py-1">
+									{user?.isAvailable ? "利用可能" : "利用不可"}
+								</p>
 								<HoverCard>
 									<HoverCardTrigger>
 										<p>利用状態</p>
 									</HoverCardTrigger>
-									<HoverCardContent>アプリケーションを利用可能かの情報です。</HoverCardContent>
+									<HoverCardContent>
+										アプリケーションを利用可能かの情報です。
+									</HoverCardContent>
 								</HoverCard>
 							</div>
 						</div>

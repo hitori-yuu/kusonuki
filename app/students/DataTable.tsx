@@ -14,7 +14,14 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DataTableViewOptions } from "@/components/layouts/table/ViewOptions";
@@ -62,11 +69,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 				<Input
 					placeholder="Filter students..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+					onChange={(event) =>
+						table.getColumn("name")?.setFilterValue(event.target.value)
+					}
 					className="h-8 w-[150px] lg:w-[250px] mx-2"
 				/>
 				{table.getColumn("group") && (
-					<DataTableFacetedFilter column={table.getColumn("group")} title="Group" options={groups} />
+					<DataTableFacetedFilter
+						column={table.getColumn("group")}
+						title="Group"
+						options={groups}
+					/>
 				)}
 
 				{isFiltered && (
@@ -92,7 +105,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(header.column.columnDef.header, header.getContext())}
+												: flexRender(
+														header.column.columnDef.header,
+														header.getContext(),
+													)}
 										</TableHead>
 									);
 								})}
@@ -102,10 +118,16 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+								<TableRow
+									key={row.id}
+									data-state={row.getIsSelected() && "selected"}
+								>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
+											{flexRender(
+												cell.column.columnDef.cell,
+												cell.getContext(),
+											)}
 										</TableCell>
 									))}
 								</TableRow>

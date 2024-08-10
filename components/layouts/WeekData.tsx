@@ -1,21 +1,43 @@
 "use client";
 import { typeWeek } from "@/lib/utils";
 import React, { useState, useEffect, useRef } from "react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { StudentData, TestData, TimetableData, UserData } from "@/types/types";
 import { useLiff } from "./LiffProvider";
-import { Profile } from "@liff/get-profile";
 
-async function getTimetableData(grade: number, group: String, week: String, day: String): Promise<TimetableData> {
-	console.log(week, day);
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}timetables/${grade}/${group}/${week}/${day}`);
+async function getTimetableData(
+	grade: number,
+	group: String,
+	week: String,
+	day: String,
+): Promise<TimetableData> {
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_API_URL}timetables/${grade}/${group}/${week}/${day}`,
+	);
 	const timetableData: TimetableData = await response.json();
 
 	return timetableData;
 }
 async function getTestData(grade: number, group: String, date: Date): Promise<TestData[]> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}tests/${grade}/${group}/${date}`);
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_API_URL}tests/${grade}/${group}/${date}`,
+	);
 	const testData: TestData[] = await response.json();
 
 	return testData;
@@ -36,14 +58,13 @@ async function getStudentData(studentName: string): Promise<StudentData> {
 }
 
 const WeekData = () => {
-	const [profile, setProfile] = useState<Profile | null>(null);
 	const [user, setUser] = useState<UserData | null>(null);
 	const [student, setStudent] = useState<StudentData | null>();
 	const [timetable, setTimetable] = useState<TimetableData | null>();
 	const [test, setTest] = useState<TestData[] | null>();
 	const today = new Date();
 	const [selectedDate, setSelectedDate] = useState<string>(
-		String(today.getMonth() + 1).slice(-2) + "/" + String(today.getDate()).slice(-2)
+		String(today.getMonth() + 1).slice(-2) + "/" + String(today.getDate()).slice(-2),
 	);
 	const { liff } = useLiff();
 	const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
@@ -71,17 +92,13 @@ const WeekData = () => {
 		if (liff?.isLoggedIn()) {
 			(async () => {
 				const profile = await liff.getProfile();
-				setProfile(profile);
 				const user = await getUserData(profile?.userId);
 				setUser(user);
 			})();
 		} else {
 			const profile = {
 				userId: "Ud713d7bf56b49d0f40c0712335f625ba",
-				displayName: "TEST USER",
-				pictureUrl: "https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
 			};
-			setProfile(profile);
 			(async () => {
 				const user = await getUserData(profile?.userId);
 				setUser(user);
@@ -102,15 +119,20 @@ const WeekData = () => {
 				group = student.group;
 			}
 			(async () => {
-				await getTestData(grade, group, new Date(today.getFullYear() + "/" + selectedDate)).then((data) => {
+				await getTestData(
+					grade,
+					group,
+					new Date(today.getFullYear() + "/" + selectedDate),
+				).then((data) => {
 					setTest(data);
 				});
 				await getTimetableData(
 					grade,
 					group,
 					typeWeek(new Date(selectedDate)),
-					daysOfWeek[new Date(selectedDate).getDay()]
+					daysOfWeek[new Date(selectedDate).getDay()],
 				).then((data) => {
+					console.log(data);
 					setTimetable(data);
 				});
 			})();
@@ -122,10 +144,16 @@ const WeekData = () => {
 
 	return (
 		<div>
-			<p className="text-center">{grade}年{group}組 {today.getFullYear() + "/" + selectedDate} {typeWeek(new Date(selectedDate))}週{daysOfWeek[new Date(selectedDate).getDay()]}曜日</p>
+			<p className="text-center">
+				{grade}年{group}組 {today.getFullYear() + "/" + selectedDate}{" "}
+				{typeWeek(new Date(selectedDate))}週{daysOfWeek[new Date(selectedDate).getDay()]}
+				曜日
+			</p>
 			<div className="flex flex-col rounded-md">
 				<div className="p-2 font-bold rounded-t-md">Timetable</div>
-				<pre className="py-3 px-4 whitespace-pre-wrap break-all">{JSON.stringify(timetable, null, 2)}</pre>
+				<pre className="py-3 px-4 whitespace-pre-wrap break-all">
+					{JSON.stringify(timetable, null, 2)}
+				</pre>
 			</div>
 			<div className="overflow-x-auto whitespace-no-wrap">
 				<div className="flex items-center space-x-4 xl:justify-around">

@@ -17,7 +17,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
 	const { name, group, number, grade } = await req.json();
-	const user = await prisma.student.create({
+	const student = await prisma.student.create({
 		data: {
 			name,
 			group,
@@ -25,5 +25,5 @@ export async function POST(req: Request) {
 			grade,
 		},
 	});
-	return NextResponse.json(user);
+	return NextResponse.json(student);
 }

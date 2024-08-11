@@ -66,3 +66,14 @@ export interface TestData {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface ScheduleData {
+	id: number;
+	grade: number;
+	group: string;
+	content: string;
+	date: Date;
+	authorId: string;
+	createdAt: Date;
+	updatedAt: Date;
+}

@@ -45,11 +45,7 @@ export const columns: ColumnDef<AssignmentData>[] = [
 				return null;
 			}
 
-			return (
-				<div>
-					{subject.label}
-				</div>
-			);
+			return <div>{subject.label}</div>;
 		},
 		filterFn: (row, id, value) => {
 			return value.includes(row.getValue(id));

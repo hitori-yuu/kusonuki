@@ -14,10 +14,24 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet";
 import AssignmentForm from "@/components/layouts/AssignmentForm";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
@@ -62,7 +76,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 				<Input
 					placeholder="Filter assignments..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-					onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+					onChange={(event) =>
+						table.getColumn("name")?.setFilterValue(event.target.value)
+					}
 					className="h-8 w-[150px] sm:w-[200px]"
 				/>
 				{isFiltered && (
@@ -97,7 +113,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(header.column.columnDef.header, header.getContext())}
+												: flexRender(
+														header.column.columnDef.header,
+														header.getContext(),
+													)}
 										</TableHead>
 									);
 								})}
@@ -107,10 +126,16 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+								<TableRow
+									key={row.id}
+									data-state={row.getIsSelected() && "selected"}
+								>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(cell.column.columnDef.cell, cell.getContext())}
+											{flexRender(
+												cell.column.columnDef.cell,
+												cell.getContext(),
+											)}
 										</TableCell>
 									))}
 								</TableRow>

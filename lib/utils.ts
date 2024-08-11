@@ -1,41 +1,39 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
-import prisma from "./prismaClient"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+import prisma from "./prismaClient";
 
 export function cn(...inputs: ClassValue[]) {
-  	return twMerge(clsx(inputs))
+	return twMerge(clsx(inputs));
 }
 
 export async function LiffUser(userId: string) {
-	console.log(userId)
 	const user = await prisma.user.findUnique({
 		where: {
-			id: userId
-		}
+			id: userId,
+		},
 	});
-	console.log(user)
 	return user;
 }
 
 export async function User(userId: string) {
 	const user = await prisma.user.findUnique({
 		where: {
-			id: userId
-		}
+			id: userId,
+		},
 	});
 
 	return user;
-};
+}
 
 export async function Student(studentName: string) {
 	const student = await prisma.student.findUnique({
 		where: {
-			name: studentName
-		}
+			name: studentName,
+		},
 	});
 
 	return student;
-};
+}
 
 export async function isLinked(userId: string) {
 	if (await isUser(userId)) {
@@ -53,20 +51,20 @@ export async function isLinked(userId: string) {
 export async function isUser(userId: string) {
 	const user = await prisma.user.findUnique({
 		where: {
-			id: userId
-		}
+			id: userId,
+		},
 	});
 
 	if (user) {
 		return true;
 	} else {
-		return false
+		return false;
 	}
-};
+}
 
 export function typeWeek(date: Date = new Date()): String {
 	// 基準日（A週の開始日）
-	const baseDate = new Date('2024-01-01'); // 例えば2024年1月1日をA週の開始日とする
+	const baseDate = new Date("2024-01-01"); // 例えば2024年1月1日をA週の開始日とする
 
 	// 日付のみにフォーカスするために時刻部分をクリア
 	baseDate.setHours(0, 0, 0, 0);
@@ -82,4 +80,4 @@ export function typeWeek(date: Date = new Date()): String {
 	} else {
 		return "B";
 	}
-};
+}

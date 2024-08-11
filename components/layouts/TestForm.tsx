@@ -31,6 +31,7 @@ import { useRouter } from "next/navigation";
 import { useLiff } from "./LiffProvider";
 import { Profile } from "@liff/get-profile";
 import { StudentData, UserData } from "@/types/types";
+import { useUser } from "@/hooks/useUser";
 
 const formSchema = z.object({
 	name: z.string().min(2, {
@@ -40,28 +41,9 @@ const formSchema = z.object({
 	implementationDate: z.date(),
 });
 
-async function getUserData(userId: string): Promise<UserData> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}users/${userId}`);
-
-	const userData: UserData = await response.json();
-
-	return userData;
-}
-
-async function getStudentData(studentName: string): Promise<StudentData> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}students/${studentName}`);
-
-	const studentData: StudentData = await response.json();
-
-	return studentData;
-}
-
 const TestForm = () => {
 	const router = useRouter();
-	const [profile, setProfile] = useState<Profile | null>(null);
-	const [user, setUser] = useState<UserData | null>(null);
-	const [student, setStudent] = useState<StudentData | null>();
-	const { liff } = useLiff();
+	const { user, student, liff } = useUser();
 	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -73,38 +55,9 @@ const TestForm = () => {
 		},
 	});
 
-	useEffect(() => {
-		if (liff?.isLoggedIn()) {
-			(async () => {
-				const profile = await liff.getProfile();
-				setProfile(profile);
-				const user = await getUserData(profile?.userId);
-				setUser(user);
-			})();
-		} else {
-			const profile = {
-				userId: "Ud713d7bf56b49d0f40c0712335f625ba",
-				displayName: "TEST USER",
-				pictureUrl:
-					"https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
-			};
-			setProfile(profile);
-			(async () => {
-				const user = await getUserData(profile?.userId);
-				setUser(user);
-			})();
-		}
-		if (user?.isLinked) {
-			(async () => {
-				const student = await getStudentData(user?.studentName);
-				setStudent(student);
-			})();
-		}
-	}, [liff]);
-
 	async function onSubmit(value: z.infer<typeof formSchema>) {
 		const { name, subject, implementationDate } = value;
-		const authorId = profile?.userId;
+		const authorId = user?.id;
 		var grade: number, group: string;
 		if (student) {
 			grade = student.grade;

@@ -19,7 +19,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 import { StudentData, TestData, TimetableData, UserData } from "@/types/types";
-import { useLiff } from "./LiffProvider";
+import { useUser } from "@/hooks/useUser";
 
 async function getTimetableData(
 	grade: number,
@@ -43,30 +43,14 @@ async function getTestData(grade: number, group: String, date: Date): Promise<Te
 	return testData;
 }
 
-async function getUserData(userId: string): Promise<UserData> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}users/${userId}`);
-	const userData: UserData = await response.json();
-
-	return userData;
-}
-
-async function getStudentData(studentName: string): Promise<StudentData> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}students/${studentName}`);
-	const studentData: StudentData = await response.json();
-
-	return studentData;
-}
-
 const WeekData = () => {
-	const [user, setUser] = useState<UserData | null>(null);
-	const [student, setStudent] = useState<StudentData | null>();
+	const { user, student, liff } = useUser();
 	const [timetable, setTimetable] = useState<TimetableData | null>();
 	const [test, setTest] = useState<TestData[] | null>();
 	const today = new Date();
 	const [selectedDate, setSelectedDate] = useState<string>(
 		String(today.getMonth() + 1).slice(-2) + "/" + String(today.getDate()).slice(-2),
 	);
-	const { liff } = useLiff();
 	const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 	const selectedRef = useRef<HTMLDivElement | null>(null);
 	today.setDate(today.getDate() - today.getDay());
@@ -89,30 +73,6 @@ const WeekData = () => {
 	var group: string = "H";
 
 	useEffect(() => {
-		if (liff?.isLoggedIn()) {
-			(async () => {
-				const profile = await liff.getProfile();
-				const user = await getUserData(profile?.userId);
-				setUser(user);
-			})();
-		} else {
-			const profile = {
-				userId: "Ud713d7bf56b49d0f40c0712335f625ba",
-			};
-			(async () => {
-				const user = await getUserData(profile?.userId);
-				setUser(user);
-			})();
-		}
-		if (user?.isLinked) {
-			(async () => {
-				const student = await getStudentData(user?.studentName);
-				setStudent(student);
-			})();
-		}
-	}, [liff]);
-
-	useEffect(() => {
 		if (selectedDate) {
 			if (student) {
 				grade = student.grade;
@@ -132,7 +92,6 @@ const WeekData = () => {
 					typeWeek(new Date(selectedDate)),
 					daysOfWeek[new Date(selectedDate).getDay()],
 				).then((data) => {
-					console.log(data);
 					setTimetable(data);
 				});
 			})();
@@ -149,12 +108,6 @@ const WeekData = () => {
 				{typeWeek(new Date(selectedDate))}週{daysOfWeek[new Date(selectedDate).getDay()]}
 				曜日
 			</p>
-			<div className="flex flex-col rounded-md">
-				<div className="p-2 font-bold rounded-t-md">Timetable</div>
-				<pre className="py-3 px-4 whitespace-pre-wrap break-all">
-					{JSON.stringify(timetable, null, 2)}
-				</pre>
-			</div>
 			<div className="overflow-x-auto whitespace-no-wrap">
 				<div className="flex items-center space-x-4 xl:justify-around">
 					{days.map(({ dateString, dayOfWeek }) => (

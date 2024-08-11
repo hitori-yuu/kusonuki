@@ -30,6 +30,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useLiff } from "./LiffProvider";
 import { Profile } from "@liff/get-profile";
+import { useUser } from "@/hooks/useUser";
 
 const formSchema = z.object({
 	name: z.string().min(2, {
@@ -41,8 +42,7 @@ const formSchema = z.object({
 
 const AssignmentForm = () => {
 	const router = useRouter();
-	const [profile, setProfile] = useState<Profile | null>(null);
-	const { liff } = useLiff();
+	const { user, student, liff } = useUser();
 	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -54,26 +54,9 @@ const AssignmentForm = () => {
 		},
 	});
 
-	useEffect(() => {
-		if (liff?.isLoggedIn()) {
-			(async () => {
-				const profile = await liff.getProfile();
-				setProfile(profile);
-			})();
-		} else {
-			const profile = {
-				userId: "Ud713d7bf56b49d0f40c0712335f625ba",
-				displayName: "TEST USER",
-				pictureUrl:
-					"https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
-			};
-			setProfile(profile);
-		}
-	}, [liff]);
-
 	async function onSubmit(value: z.infer<typeof formSchema>) {
 		const { name, subject, deadline } = value;
-		const authorId = profile?.userId;
+		const authorId = user?.id;
 		try {
 			await fetch(`${process.env.NEXT_PUBLIC_API_URL}assignments`, {
 				method: "POST",

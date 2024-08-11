@@ -1,65 +1,25 @@
 "use client";
-import { useLiff } from "@/components/layouts/LiffProvider";
-import { Profile } from "@liff/get-profile";
-import { LiffUser } from "@/lib/utils";
-
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-
-import { useEffect, useState } from "react";
-import { UserData } from "@/types/types";
-
-async function getUserData(userId: string): Promise<UserData> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || ""}users/${userId}`);
-
-	const userData: UserData = await response.json();
-
-	return userData;
-}
+import { useUser } from "@/hooks/useUser";
 
 export function ProfileData() {
-	const [profile, setProfile] = useState<Profile | null>(null);
-	const [user, setUser] = useState<UserData | null>(null);
-	const { liff } = useLiff();
-
-	useEffect(() => {
-		if (liff?.isLoggedIn()) {
-			(async () => {
-				const profile = await liff.getProfile();
-				const user = await getUserData(profile.userId);
-				setProfile(profile);
-				setUser(user);
-			})();
-		} else {
-			(async () => {
-				const profile = {
-					userId: "Ud713d7bf56b49d0f40c0712335f625ba",
-					displayName: "TEST USER",
-					pictureUrl:
-						"https://i.pinimg.com/736x/77/5a/9a/775a9a4dc09ddc80a2595c49cd0a43a7.jpg",
-				};
-				const user = await getUserData(profile.userId);
-				setProfile(profile);
-				setUser(user);
-			})();
-		}
-	}, [liff]);
+	const { user, student, liff } = useUser();
 
 	return (
 		<div>
-			{profile && user && (
+			{user && (
 				<>
-					<h2 className="text-center text-lg font-bold py-5">{profile.displayName}</h2>
+					<h2 className="text-center text-lg font-bold py-5">{user.displayName}</h2>
 					<div className="flex items-center justify-around">
 						<Avatar className="h-full w-20 max-w-64">
-							{profile.pictureUrl && (
+							{user.pictureUrl && (
 								<AvatarImage
-									src={profile.pictureUrl}
-									alt={profile.displayName ?? ""}
+									src={user.pictureUrl}
+									alt={user.displayName ?? ""}
 								/>
 							)}
-							<AvatarFallback>{profile.displayName}</AvatarFallback>
+							<AvatarFallback>{user.displayName}</AvatarFallback>
 						</Avatar>
 						<div className="flex">
 							<div className="block px-2 text-center">

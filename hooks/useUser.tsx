@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useLiff } from "@/components/layouts/LiffProvider";
 import { StudentData, UserData } from "@/types/types";
 
-async function getUserData(userId: string): Promise<UserData> {
-	const response = await fetch(
-		`https://231f-240d-1a-da0-c200-bd03-7ba0-f8c4-933e.ngrok-free.app/api/users/${userId}`,
-	);
-	const userData: UserData = await response.json();
-	return userData;
-}
+const fetchData = async (url: string): Promise<any> => {
+	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url);
+	const data = await response.json();
+	return data;
+};
 
-async function getStudentData(studentName: string): Promise<StudentData> {
-	const response = await fetch(
-		`https://231f-240d-1a-da0-c200-bd03-7ba0-f8c4-933e.ngrok-free.app/api/students/${studentName}`,
-	);
-	const studentData: StudentData = await response.json();
-	return studentData;
-}
+const getUserData = async (userId: string): Promise<UserData> => {
+	const url = `users/${userId}`;
+	return fetchData(url);
+};
+
+const getStudentData = async (studentName: string): Promise<StudentData> => {
+	const url = `students/${studentName}`;
+	return fetchData(url);
+};
 
 export const useUser = () => {
 	const [user, setUser] = useState<UserData | null>(null);

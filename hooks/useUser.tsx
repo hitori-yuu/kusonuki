@@ -3,26 +3,31 @@ import { useLiff } from "@/components/layouts/LiffProvider";
 import { StudentData, UserData } from "@/types/types";
 
 async function getUserData(userId: string): Promise<UserData> {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}users/${userId}`);
-    const userData: UserData = await response.json();
-    return userData;
+	const response = await fetch(
+		`https://231f-240d-1a-da0-c200-bd03-7ba0-f8c4-933e.ngrok-free.app/api/users/${userId}`,
+	);
+	const userData: UserData = await response.json();
+	return userData;
 }
 
 async function getStudentData(studentName: string): Promise<StudentData> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}students/${studentName}`);
+	const response = await fetch(
+		`https://231f-240d-1a-da0-c200-bd03-7ba0-f8c4-933e.ngrok-free.app/api/students/${studentName}`,
+	);
 	const studentData: StudentData = await response.json();
 	return studentData;
 }
 
 export const useUser = () => {
-    const [user, setUser] = useState<UserData | null>(null);
-    const [student, setStudent] = useState<StudentData | null>(null);
-    const { liff } = useLiff();
+	const [user, setUser] = useState<UserData | null>(null);
+	const [student, setStudent] = useState<StudentData | null>(null);
+	const { liff } = useLiff();
 
-    useEffect(() => {
+	useEffect(() => {
 		const fetchData = async () => {
 			if (liff?.isLoggedIn()) {
 				const profile = await liff.getProfile();
+				console.log(profile);
 				const userData = await getUserData(profile.userId);
 				setUser(userData);
 
@@ -36,6 +41,5 @@ export const useUser = () => {
 		fetchData();
 	}, [liff]);
 
-    return {user, student, liff};
-}
-
+	return { user, student, liff };
+};

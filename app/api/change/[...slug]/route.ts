@@ -5,29 +5,25 @@ import dayjs from "dayjs";
 export async function GET(req: Request, { params }: { params: { slug: any } }) {
 	const grade = params.slug[0];
 	const group = params.slug[1];
-	const range = new Date(params.slug[2]);
-	const today = new Date();
-	range.setHours(0, 0, 0, 0);
-	today.setHours(0, 0, 0, 0);
-
-	const allAssignment = await prisma.assignment.findMany({
+	const inputDate = new Date(params.slug[2]);
+	const allChange = await prisma.change.findMany({
 		where: {
 			grade: parseInt(grade),
 			group: group,
 			AND: [
 				{
-					deadline: {
-						lte: range,
-						gte: today,
+					date: {
+						lte: inputDate,
+						gte: dayjs().subtract(1, "day").toDate(),
 					},
 				},
 			],
 		},
 		orderBy: [
 			{
-				deadline: "desc",
+				date: "desc",
 			},
 		],
 	});
-	return NextResponse.json(allAssignment);
+	return NextResponse.json(allChange);
 }

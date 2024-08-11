@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,25 +19,17 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 
 const formSchema = z.object({
-	name: z.string().min(2, {
-		message: "Name must be at least 2 characters.",
+	content: z.string().min(2, {
+		message: "Content must be at least 2 characters.",
 	}),
-	subject: z.string(),
-	deadline: z.date(),
+	date: z.date(),
 });
 
-const AssignmentForm = () => {
+const ScheduleForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
 	const { toast } = useToast();
@@ -46,27 +37,26 @@ const AssignmentForm = () => {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			name: "",
-			subject: "",
-			deadline: new Date(),
+			content: "",
+			date: new Date(),
 		},
 	});
 
 	async function onSubmit(value: z.infer<typeof formSchema>) {
-		const { name, subject, deadline } = value;
+		const { content, date } = value;
 		const authorId = user?.id;
 		try {
-			await fetch(`${process.env.NEXT_PUBLIC_API_URL}assignments`, {
+			await fetch(`${process.env.NEXT_PUBLIC_API_URL}schedule`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ name, subject, deadline, authorId }),
+				body: JSON.stringify({ content, date, authorId }),
 			});
 			router.push("/");
 			router.refresh();
 			toast({
-				description: "Added Assignment",
+				description: "Added Schedule",
 			});
 		} catch (error) {
 			console.log(error);
@@ -78,12 +68,12 @@ const AssignmentForm = () => {
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 				<FormField
 					control={form.control}
-					name="name"
+					name="content"
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Name</FormLabel>
 							<FormControl>
-								<Input placeholder="Assignment name" {...field} />
+								<Input placeholder="Schedule content" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -91,46 +81,10 @@ const AssignmentForm = () => {
 				/>
 				<FormField
 					control={form.control}
-					name="subject"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Subject</FormLabel>
-							<FormControl>
-								<Select onValueChange={field.onChange} defaultValue={field.value}>
-									<SelectTrigger className="w-[180px]">
-										<SelectValue placeholder="Theme" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectItem value="数学">数学</SelectItem>
-										<SelectItem value="英語コミュニケーション">
-											英語コミュニケーション
-										</SelectItem>
-										<SelectItem value="論理表現">論理表現</SelectItem>
-										<SelectItem value="古典探求">古典探求</SelectItem>
-										<SelectItem value="論理国語">論理国語</SelectItem>
-										<SelectItem value="歴史総合[日]">歴史総合[日]</SelectItem>
-										<SelectItem value="歴史総合[世]">歴史総合[世]</SelectItem>
-										<SelectItem value="物理">物理</SelectItem>
-										<SelectItem value="生物">生物</SelectItem>
-										<SelectItem value="化学">化学</SelectItem>
-										<SelectItem value="家庭基礎">家庭基礎</SelectItem>
-										<SelectItem value="体育">体育</SelectItem>
-										<SelectItem value="保健">保健</SelectItem>
-										<SelectItem value="ヴェリタス">ヴェリタス</SelectItem>
-										<SelectItem value="H.R.">H.R.</SelectItem>
-									</SelectContent>
-								</Select>
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="deadline"
+					name="date"
 					render={({ field }) => (
 						<FormItem className="flex flex-col">
-							<FormLabel>Deadline of assignment</FormLabel>
+							<FormLabel>Date of schedule</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
 									<FormControl>
@@ -170,4 +124,4 @@ const AssignmentForm = () => {
 	);
 };
 
-export default AssignmentForm;
+export default ScheduleForm;

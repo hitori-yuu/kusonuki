@@ -21,6 +21,8 @@ model User {
     Test        Test[]
     Change      Change[]
     Timetable   Timetable[]
+    Schedule Schedule[]
+    ScheduleWeek ScheduleWeek[]
 }
 
 model Student {
@@ -80,6 +82,28 @@ model Change {
     subject   String
     grade     Int      @default(2)
     group     String   @default("H")
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Schedule {
+    id        Int      @id @default(autoincrement())
+    date      DateTime @db.Date
+    grade     Int      @default(2)
+    group     String   @default("H")
+    content   String
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model ScheduleWeek {
+    id        Int      @id @default(autoincrement())
+    date      DateTime @db.Date
+    week      String
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
     createdAt DateTime @default(now())

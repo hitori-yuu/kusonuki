@@ -10,7 +10,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import LiffUser from "@/components/layouts/LiffUser";
 
 async function getData(grade: number, group: string, range: Date): Promise<AssignmentData[]> {
 	const response = await fetch(
@@ -31,7 +30,6 @@ const page = async () => {
 	return (
 		<div>
 			<WeekData />
-			<LiffUser />
 			<Card className="my-2">
 				<CardHeader>
 					<CardTitle>Assignment</CardTitle>

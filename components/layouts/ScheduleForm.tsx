@@ -44,7 +44,7 @@ const ScheduleForm = () => {
 
 	async function onSubmit(value: z.infer<typeof formSchema>) {
 		const { content, date } = value;
-		const authorId = user?.id;
+		const authorId = user?.id || "guest";
 		try {
 			await fetch(`${process.env.NEXT_PUBLIC_API_URL}schedule`, {
 				method: "POST",
@@ -91,7 +91,7 @@ const ScheduleForm = () => {
 										<Button
 											variant={"outline"}
 											className={cn(
-												"w-[240px] pl-3 text-left font-normal",
+												"pl-3 text-left font-normal",
 												!field.value && "text-muted-foreground",
 											)}
 										>
@@ -118,7 +118,9 @@ const ScheduleForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+				<Button type="submit" className="w-full">
+					Submit
+				</Button>
 			</form>
 		</Form>
 	);

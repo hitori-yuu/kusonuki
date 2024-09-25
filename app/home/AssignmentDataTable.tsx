@@ -24,14 +24,6 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
 import AssignmentForm from "@/components/layouts/AssignmentForm";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
@@ -79,7 +71,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					onChange={(event) =>
 						table.getColumn("name")?.setFilterValue(event.target.value)
 					}
-					className="h-8 w-[150px] sm:w-[200px]"
+					className="h-8"
 				/>
 				{isFiltered && (
 					<Button
@@ -92,16 +84,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						<Cross2Icon className="ml-2 h-4 w-4" />
 					</Button>
 				)}
-				<Sheet>
-					<SheetTrigger asChild>
-						<Button variant="outline" size="sm" className="ml-auto">
-							Add
-						</Button>
-					</SheetTrigger>
-					<SheetContent>
-						<AssignmentForm />
-					</SheetContent>
-				</Sheet>
 			</div>
 			<div className="rounded-md border">
 				<Table>

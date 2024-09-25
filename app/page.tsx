@@ -10,6 +10,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+import FormTabs from "@/components/layouts/FormTabs";
 
 async function getData(grade: number, group: string, range: Date): Promise<AssignmentData[]> {
 	const response = await fetch(
@@ -37,6 +38,15 @@ const page = async () => {
 				</CardHeader>
 				<CardContent>
 					<DataTable columns={columns} data={data} />
+				</CardContent>
+			</Card>
+			<Card className="my-2">
+				<CardHeader>
+					<CardTitle>Forms</CardTitle>
+					<CardDescription>description.</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<FormTabs />
 				</CardContent>
 			</Card>
 		</div>

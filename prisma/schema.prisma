@@ -8,21 +8,22 @@ datasource db {
 }
 
 model User {
-    id          String       @id
-    displayName String?
-    pictureUrl  String?
-    role        Role         @default(DEFAULT)
-    studentName String?
-    isLinked    Boolean      @default(false)
-    isAvailable Boolean      @default(true)
-    createdAt   DateTime     @default(now())
-    updatedAt   DateTime     @updatedAt
-    Assignment  Assignment[]
-    Test        Test[]
-    Change      Change[]
-    Timetable   Timetable[]
-    Schedule Schedule[]
+    id           String         @id
+    displayName  String?
+    pictureUrl   String?
+    role         Role           @default(DEFAULT)
+    studentName  String?
+    isLinked     Boolean        @default(false)
+    isAvailable  Boolean        @default(true)
+    createdAt    DateTime       @default(now())
+    updatedAt    DateTime       @updatedAt
+    Assignment   Assignment[]
+    Test         Test[]
+    Change       Change[]
+    Timetable    Timetable[]
+    Schedule     Schedule[]
     ScheduleWeek ScheduleWeek[]
+    ExamSchedule ExamSchedule[]
 }
 
 model Student {
@@ -104,6 +105,18 @@ model ScheduleWeek {
     id        Int      @id @default(autoincrement())
     date      DateTime @db.Date
     week      String
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model ExamSchedule {
+    id        Int      @id @default(autoincrement())
+    grade     Int      @default(2)
+    date      DateTime @db.Date
+    term      String
+    timetable String[]
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
     createdAt DateTime @default(now())

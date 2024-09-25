@@ -18,7 +18,14 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { ScheduleData, StudentData, TestData, TimetableData, UserData } from "@/types/types";
+import {
+	ExamScheduleData,
+	ScheduleData,
+	StudentData,
+	TestData,
+	TimetableData,
+	UserData,
+} from "@/types/types";
 import { useUser } from "@/hooks/useUser";
 
 const fetchData = async (url: string): Promise<any> => {
@@ -42,6 +49,11 @@ const getTestData = async (grade: number, group: String, date: Date): Promise<Te
 	return fetchData(url);
 };
 
+const getExamScheduleData = async (grade: number, date: Date): Promise<ExamScheduleData> => {
+	const url = `exams/${grade}/${date}`;
+	return fetchData(url);
+};
+
 const getScheduleData = async (
 	grade: number,
 	group: String,
@@ -58,6 +70,7 @@ const WeekData = () => {
 	const [timetable, setTimetable] = useState<TimetableData | null>();
 	const [test, setTest] = useState<TestData[] | null>();
 	const [schedule, setSchedule] = useState<ScheduleData[] | null>();
+	const [examSchedule, setExamSchedule] = useState<ExamScheduleData | null>();
 	const [isClient, setIsClient] = useState(false);
 	const today = new Date();
 	const [selectedDate, setSelectedDate] = useState<string>(
@@ -102,6 +115,9 @@ const WeekData = () => {
 				});
 				await getScheduleData(grade, group, date).then((data) => {
 					setSchedule(data);
+				});
+				await getExamScheduleData(grade, date).then((data) => {
+					setExamSchedule(data);
 				});
 			}
 		};
@@ -152,7 +168,17 @@ const WeekData = () => {
 										<TableHead>Subjects</TableHead>
 									</TableRow>
 								</TableHeader>
-								{timetable ? (
+								{examSchedule?.timetable?.map((item, index) => {
+									return (
+										<TableBody>
+											<TableRow key={index}>
+												<TableHead>{index}.</TableHead>
+												<TableCell>{item}</TableCell>
+											</TableRow>
+										</TableBody>
+									);
+								})}
+								{!examSchedule && timetable ? (
 									<TableBody>
 										<TableRow>
 											<TableHead>1.</TableHead>

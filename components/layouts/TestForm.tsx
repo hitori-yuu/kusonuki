@@ -57,7 +57,7 @@ const TestForm = () => {
 
 	async function onSubmit(value: z.infer<typeof formSchema>) {
 		const { name, subject, implementationDate } = value;
-		const authorId = user?.id;
+		const authorId = user?.id || "guest";
 		var grade: number, group: string;
 		if (student) {
 			grade = student.grade;

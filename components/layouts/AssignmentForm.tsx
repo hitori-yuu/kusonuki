@@ -54,7 +54,7 @@ const AssignmentForm = () => {
 
 	async function onSubmit(value: z.infer<typeof formSchema>) {
 		const { name, subject, deadline } = value;
-		const authorId = user?.id;
+		const authorId = user?.id || "guest";
 		try {
 			await fetch(`${process.env.NEXT_PUBLIC_API_URL}assignments`, {
 				method: "POST",

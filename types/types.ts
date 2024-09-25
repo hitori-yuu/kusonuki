@@ -77,3 +77,14 @@ export interface ScheduleData {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface ExamScheduleData {
+	id: number;
+	grade: number;
+	date: Date;
+	term: string;
+	timetable: string[];
+	authorId: string;
+	createdAt: Date;
+	updatedAt: Date;
+}

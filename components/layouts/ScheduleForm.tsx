@@ -44,7 +44,7 @@ const ScheduleForm = () => {
 
 	async function onSubmit(value: z.infer<typeof formSchema>) {
 		const { content, date } = value;
-		const authorId = user?.id;
+		const authorId = user?.id || "guest";
 		try {
 			await fetch(`${process.env.NEXT_PUBLIC_API_URL}schedule`, {
 				method: "POST",

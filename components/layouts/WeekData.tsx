@@ -178,7 +178,7 @@ const WeekData = () => {
 										</TableBody>
 									);
 								})}
-								{!examSchedule && timetable ? (
+								{timetable ? (
 									<TableBody>
 										<TableRow>
 											<TableHead>1.</TableHead>

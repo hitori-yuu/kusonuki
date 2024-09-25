@@ -108,8 +108,8 @@ const TestForm = () => {
 							<FormLabel>Subject</FormLabel>
 							<FormControl>
 								<Select onValueChange={field.onChange} defaultValue={field.value}>
-									<SelectTrigger className="w-[180px]">
-										<SelectValue placeholder="Theme" />
+									<SelectTrigger>
+										<SelectValue placeholder="Subject" />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value="数学">数学</SelectItem>
@@ -148,7 +148,7 @@ const TestForm = () => {
 										<Button
 											variant={"outline"}
 											className={cn(
-												"w-[240px] pl-3 text-left font-normal",
+												"pl-3 text-left font-normal",
 												!field.value && "text-muted-foreground",
 											)}
 										>
@@ -175,7 +175,9 @@ const TestForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Submit</Button>
+				<Button type="submit" className="w-full">
+					Submit
+				</Button>
 			</form>
 		</Form>
 	);

@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					onChange={(event) =>
 						table.getColumn("name")?.setFilterValue(event.target.value)
 					}
-					className="h-8 w-[150px] sm:w-[200px]"
+					className="h-8"
 				/>
 				{isFiltered && (
 					<Button

@@ -41,24 +41,7 @@ const page = async () => {
 					<DataTable columns={columns} data={data} />
 				</CardContent>
 			</Card>
-			<Card className="my-2">
-				<CardHeader>
-					<CardTitle>Forms</CardTitle>
-					<CardDescription>description.</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<FormTabs />
-				</CardContent>
-			</Card>
-			<Card className="my-2">
-				<CardHeader>
-					<CardTitle>ExamScheduleForm</CardTitle>
-					<CardDescription>description.</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<ExamScheduleForm />
-				</CardContent>
-			</Card>
+			<FormTabs />
 		</div>
 	);
 };

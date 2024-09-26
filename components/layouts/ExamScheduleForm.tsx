@@ -121,13 +121,12 @@ const ExamScheduleForm = () => {
 					)}
 				/>
 
-				{/* Date Selection */}
 				<FormField
 					control={form.control}
 					name="date"
 					render={({ field }) => (
 						<FormItem className="flex flex-col">
-							<FormLabel>Date</FormLabel>
+							<FormLabel>Date of schedule</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
 									<FormControl>
@@ -152,6 +151,7 @@ const ExamScheduleForm = () => {
 										mode="single"
 										selected={field.value}
 										onSelect={field.onChange}
+										disabled={(date) => date < new Date()}
 										initialFocus
 									/>
 								</PopoverContent>
@@ -161,7 +161,6 @@ const ExamScheduleForm = () => {
 					)}
 				/>
 
-				{/* Timetable Selection */}
 				<div>
 					<FormLabel>Timetable</FormLabel>
 					{fields.map((field, index) => (

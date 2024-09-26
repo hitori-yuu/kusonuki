@@ -168,16 +168,7 @@ const WeekData = () => {
 										<TableHead>Subjects</TableHead>
 									</TableRow>
 								</TableHeader>
-								{examSchedule?.timetable?.map((item, index) => {
-									return (
-										<TableBody>
-											<TableRow key={index}>
-												<TableHead>{index}.</TableHead>
-												<TableCell>{item}</TableCell>
-											</TableRow>
-										</TableBody>
-									);
-								})}
+								<TableBody></TableBody>
 								{!examSchedule && timetable ? (
 									<TableBody>
 										<TableRow>
@@ -203,11 +194,22 @@ const WeekData = () => {
 									</TableBody>
 								) : (
 									<TableBody>
-										<TableRow>
-											<TableCell colSpan={2} className="text-center">
-												None
-											</TableCell>
-										</TableRow>
+										{examSchedule ? (
+											examSchedule?.timetable?.map((item, index) => {
+												return (
+													<TableRow>
+														<TableHead>{index + 1}.</TableHead>
+														<TableCell>{item}</TableCell>
+													</TableRow>
+												);
+											})
+										) : (
+											<TableRow>
+												<TableCell colSpan={2} className="text-center">
+													None
+												</TableCell>
+											</TableRow>
+										)}
 									</TableBody>
 								)}
 							</Table>
@@ -221,6 +223,13 @@ const WeekData = () => {
 										</Card>
 									);
 								})}
+							{examSchedule && (
+								<Card className="my-1 py-[-5px]">
+									<CardHeader className="text-center">
+										{examSchedule.period}試験
+									</CardHeader>
+								</Card>
+							)}
 						</CardContent>
 					</Card>
 

@@ -115,7 +115,7 @@ model ExamSchedule {
     id        Int      @id @default(autoincrement())
     grade     Int      @default(2)
     date      DateTime @db.Date
-    term      String
+    period    String
     timetable String[]
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String

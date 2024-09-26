@@ -13,12 +13,13 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-	const { date, grade, term, authorId } = await req.json();
+	const { date, grade, period, timetable, authorId } = await req.json();
 	const examSchedule = await prisma.examSchedule.create({
 		data: {
 			grade,
-			term,
+			period,
             date,
+			timetable,
 			authorId,
 		},
 	});

@@ -11,6 +11,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import FormTabs from "@/components/layouts/FormTabs";
+import ExamScheduleForm from "@/components/layouts/ExamScheduleForm";
 
 async function getData(grade: number, group: string, range: Date): Promise<AssignmentData[]> {
 	const response = await fetch(
@@ -47,6 +48,15 @@ const page = async () => {
 				</CardHeader>
 				<CardContent>
 					<FormTabs />
+				</CardContent>
+			</Card>
+			<Card className="my-2">
+				<CardHeader>
+					<CardTitle>ExamScheduleForm</CardTitle>
+					<CardDescription>description.</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<ExamScheduleForm />
 				</CardContent>
 			</Card>
 		</div>

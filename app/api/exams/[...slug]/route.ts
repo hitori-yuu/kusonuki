@@ -10,7 +10,7 @@ export async function GET(req: Request, { params }: { params: { slug: any } }) {
 	inputDateAfter.setHours(0, 0, 0, 0);
 	inputDateAfter.setDate(inputDate.getDate() + 1);
 
-	const allExam = await prisma.examSchedule.findMany({
+	const allExam = await prisma.examSchedule.findFirst({
 		where: {
 			grade: parseInt(grade),
 			AND: [
@@ -29,6 +29,5 @@ export async function GET(req: Request, { params }: { params: { slug: any } }) {
 		],
 	});
 
-    console.log(allExam);
 	return NextResponse.json(allExam);
 }

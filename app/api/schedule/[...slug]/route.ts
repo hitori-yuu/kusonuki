@@ -18,8 +18,8 @@ export async function GET(req: Request, { params }: { params: { slug: any } }) {
 			AND: [
 				{
 					date: {
-						lt: inputDateAfter,
 						gte: inputDate,
+						lt: inputDateAfter,
 					},
 				},
 			],

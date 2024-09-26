@@ -82,7 +82,7 @@ export interface ExamScheduleData {
 	id: number;
 	grade: number;
 	date: Date;
-	term: string;
+	period: string;
 	timetable: string[];
 	authorId: string;
 	createdAt: Date;

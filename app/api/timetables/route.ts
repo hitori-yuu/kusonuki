@@ -20,7 +20,6 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
 	const {
-		id,
 		week,
 		day,
 		grade,
@@ -31,15 +30,10 @@ export async function POST(req: Request) {
 		fourth,
 		fifth,
 		authorId,
-		createdAt,
-		updatedAt,
 	} = await req.json();
-	const created_at = new Date(createdAt);
-	const updated_at = new Date(updatedAt);
 
 	const timetable = await prisma.timetable.create({
 		data: {
-			id,
 			week,
 			day,
 			grade,
@@ -50,8 +44,6 @@ export async function POST(req: Request) {
 			fourth,
 			fifth,
 			authorId,
-			createdAt: created_at,
-			updatedAt: updated_at,
 		},
 	});
 	return NextResponse.json(timetable);

@@ -64,7 +64,7 @@ export async function isUser(userId: string) {
 
 export function typeWeek(date: Date = new Date()): String {
 	// 基準日（A週の開始日）
-	const baseDate = new Date("2024-08-26"); // 例えば2024年1月1日をA週の開始日とする
+	const baseDate = new Date("2024-09-30"); // 例えば2024年1月1日をC週の開始日とする
 
 	// 日付のみにフォーカスするために時刻部分をクリア
 	baseDate.setHours(0, 0, 0, 0);
@@ -76,8 +76,8 @@ export function typeWeek(date: Date = new Date()): String {
 
 	// 経過日数を14で割った余りが0から6ならA週、7から13ならB週
 	if (daysDifference % 14 < 7) {
-		return "A";
+		return "D";
 	} else {
-		return "B";
+		return "C";
 	}
 }

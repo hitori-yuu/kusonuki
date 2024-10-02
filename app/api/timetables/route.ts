@@ -20,7 +20,6 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
 	const {
-		id,
 		week,
 		day,
 		grade,
@@ -35,7 +34,6 @@ export async function POST(req: Request) {
 
 	const timetable = await prisma.timetable.create({
 		data: {
-			id,
 			week,
 			day,
 			grade,

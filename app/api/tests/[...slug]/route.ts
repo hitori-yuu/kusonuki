@@ -10,10 +10,7 @@ export async function GET(req: Request, { params }: { params: { slug: any } }) {
 		where: {
 			grade: parseInt(grade),
 			group: group,
-			implementationDate: {
-				gte: dayjs(date).toDate(),
-				lt: dayjs(date).add(1, "day").toDate(),
-			},
+			implementationDate: dayjs(date).toDate(),
 		},
 	});
 	return NextResponse.json(allTests);

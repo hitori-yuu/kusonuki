@@ -17,7 +17,7 @@ export async function LiffUser(userId: string) {
 	return user;
 }
 
-export async function getAllUsers(): Promise<UserData[]>  {
+export async function getAllUsers(): Promise<UserData[]> {
 	const result = await prisma.user.findMany({
 		orderBy: [
 			{

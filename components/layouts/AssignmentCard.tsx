@@ -37,7 +37,7 @@ const AssignmentCard = () => {
 			if (student) {
 				const fetchedData = await getData(student.grade ?? 2, student.group ?? "H");
 				setAssignment(fetchedData);
-			};
+			}
 		};
 		fetchData();
 	}, [student]);

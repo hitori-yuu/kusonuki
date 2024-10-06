@@ -1,6 +1,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import prisma from "./prismaClient";
+import { StudentData, UserData } from "@/types/types";
+import { cache } from "react";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -15,24 +17,51 @@ export async function LiffUser(userId: string) {
 	return user;
 }
 
-export async function User(userId: string) {
+export async function getAllUsers(): Promise<UserData[]> {
+	const result = await prisma.user.findMany({
+		orderBy: [
+			{
+				displayName: "asc",
+			},
+		],
+	});
+
+	return result as UserData[];
+}
+
+export const User = cache(async (userId: string): Promise<UserData> => {
 	const user = await prisma.user.findUnique({
 		where: {
 			id: userId,
 		},
 	});
 
-	return user;
-}
+	return user as UserData;
+});
 
-export async function Student(studentName: string) {
+export const getAllStudents = cache(async (): Promise<StudentData[]> => {
+	const result = await prisma.student.findMany({
+		orderBy: [
+			{
+				group: "asc",
+			},
+			{
+				number: "asc",
+			},
+		],
+	});
+
+	return result as StudentData[];
+});
+
+export async function Student(studentName: string): Promise<StudentData> {
 	const student = await prisma.student.findUnique({
 		where: {
 			name: studentName,
 		},
 	});
 
-	return student;
+	return student as StudentData;
 }
 
 export async function isLinked(userId: string) {

@@ -1,20 +1,11 @@
-import React from "react";
+import React, { cache } from "react";
 import { UserData } from "@/types/types";
 import { columns } from "./columns";
 import { DataTable } from "./DataTable";
-
-async function getData(): Promise<UserData[]> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}users`, {
-		cache: "no-store",
-	});
-
-	const userAllData: UserData[] = await response.json();
-
-	return userAllData;
-}
+import { getAllUsers } from "@/lib/utils";
 
 const page = async () => {
-	const data = await getData();
+	const data = await getAllUsers();
 	return <DataTable columns={columns} data={data} />;
 };
 

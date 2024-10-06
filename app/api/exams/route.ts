@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 		data: {
 			grade,
 			period,
-            date,
+			date,
 			timetable,
 			authorId,
 		},

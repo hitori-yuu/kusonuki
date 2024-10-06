@@ -19,18 +19,8 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-	const {
-		week,
-		day,
-		grade,
-		group,
-		first,
-		second,
-		third,
-		fourth,
-		fifth,
-		authorId,
-	} = await req.json();
+	const { week, day, grade, group, first, second, third, fourth, fifth, authorId } =
+		await req.json();
 
 	const timetable = await prisma.timetable.create({
 		data: {

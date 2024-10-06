@@ -4,11 +4,12 @@ import dayjs from "dayjs";
 
 export async function GET(req: Request, { params }: { params: { slug: any } }) {
 	const grade = params.slug[0];
+
 	const inputDate = new Date(params.slug[1]);
-	const inputDateAfter = new Date();
 	inputDate.setHours(0, 0, 0, 0);
-	inputDateAfter.setHours(0, 0, 0, 0);
-	inputDateAfter.setDate(inputDate.getDate() + 1);
+
+	const after = new Date(inputDate);
+	after.setDate(inputDate.getDate() + 1);
 
 	const allExam = await prisma.examSchedule.findFirst({
 		where: {
@@ -16,7 +17,7 @@ export async function GET(req: Request, { params }: { params: { slug: any } }) {
 			AND: [
 				{
 					date: {
-						lte: inputDateAfter,
+						lte: after,
 						gt: inputDate,
 					},
 				},

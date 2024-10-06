@@ -21,15 +21,11 @@ export const columns: ColumnDef<AssignmentData>[] = [
 	},
 	{
 		accessorKey: "subject",
-		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="Subject" />;
-		},
+		header: "Subject",
 	},
 	{
 		accessorKey: "deadline",
-		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="Deadline" />;
-		},
+		header: "Deadline",
 		cell: ({ row }) => {
 			const dateTo = dayjs(new Date()).startOf("day");
 			const dateFrom = dayjs(row.getValue("deadline")).startOf("day");
@@ -38,6 +34,8 @@ export const columns: ColumnDef<AssignmentData>[] = [
 			let diffDays: string;
 			if (diff == 0) {
 				diffDays = "今日";
+			} else if (diff == 1) {
+				diffDays = "明日";
 			} else {
 				diffDays = `${diff}日後`;
 			}

@@ -30,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<meta name="theme-color" content="#b8e986" />
 				<link rel="icon" sizes="192x192" href="/icon-192x192.png" />
 				<link rel="icon" href="/favicon.ico" />
+				<meta name="mobile-web-app-capable" content="yes" />
 
 				{/* safari */}
 				<meta name="apple-mobile-web-app-capable" content="yes" />

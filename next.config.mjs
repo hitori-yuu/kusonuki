@@ -3,6 +3,7 @@ import { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_BUILD } from "next/constants
 /** @type {import("next").NextConfig} */
 const nextConfig = {
 	reactStrictMode: false,
+	serverActions: true,
 };
 
 const nextConfigFunction = async (phase) => {

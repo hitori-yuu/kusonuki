@@ -9,12 +9,12 @@ export const columns: ColumnDef<TestData>[] = [
 	{
 		accessorKey: "name",
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="Name" />;
+			return <DataTableColumnHeader column={column} title="テスト名" />;
 		},
 	},
 	{
 		accessorKey: "group",
-		header: ({ column }) => <DataTableColumnHeader column={column} title="Group" />,
+		header: ({ column }) => <DataTableColumnHeader column={column} title="クラス" />,
 		cell: ({ row }) => {
 			const grade = row.original.grade;
 			const group = groups.find((group) => group.value === row.getValue("group"));
@@ -36,7 +36,7 @@ export const columns: ColumnDef<TestData>[] = [
 	},
 	{
 		accessorKey: "subject",
-		header: ({ column }) => <DataTableColumnHeader column={column} title="Subject" />,
+		header: ({ column }) => <DataTableColumnHeader column={column} title="教科" />,
 		cell: ({ row }) => {
 			const grade = row.original.grade;
 			const subject = subjects.find((subject) => subject.value === row.getValue("subject"));
@@ -53,9 +53,7 @@ export const columns: ColumnDef<TestData>[] = [
 	},
 	{
 		accessorKey: "implementationDate",
-		header: ({ column }) => (
-			<DataTableColumnHeader column={column} title="implementationDate" />
-		),
+		header: ({ column }) => <DataTableColumnHeader column={column} title="実施日" />,
 		cell: ({ row }) => {
 			const date = new Date(row.getValue("implementationDate"));
 			const formatted = date.toLocaleDateString();

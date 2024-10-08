@@ -8,7 +8,7 @@ export function ProfileData() {
 
 	return (
 		<div>
-			{user && (
+			{user ? (
 				<>
 					<h2 className="text-center text-lg font-bold py-5">{user.displayName}</h2>
 					<div className="flex items-center justify-around">
@@ -64,6 +64,10 @@ export function ProfileData() {
 						</div>
 					</div>
 				</>
+			) : (
+				<div className="flex flex-col justify-center items-center h-screen">
+					<p className="text-xl font-bold">この機能を使うには、ログインしてください。</p>
+				</div>
 			)}
 		</div>
 	);

@@ -35,15 +35,6 @@ export const useUser = () => {
 					const studentData = await getStudentData(userData.studentName);
 					setStudent(studentData);
 				}
-			} else {
-				const userData = await getUserData("Uaf3fff4affec66cf3705df6f848fdce5");
-				setUser(userData);
-				if (userData?.isLinked) {
-					const studentData = await getStudentData(userData.studentName);
-					setStudent(studentData);
-				}
-				console.log("user" + user);
-				console.log("student: " + student);
 			}
 		};
 

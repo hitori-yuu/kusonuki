@@ -15,19 +15,19 @@ const page = () => {
 	return (
 		<div>
 			<Card className="my-2">
-				<CardHeader>Assignment Form</CardHeader>
+				<CardHeader>課題フォーム</CardHeader>
 				<CardContent>
 					<AssignmentForm />
 				</CardContent>
 			</Card>
 			<Card className="my-2">
-				<CardHeader>Test Form</CardHeader>
+				<CardHeader>テストフォーム</CardHeader>
 				<CardContent>
 					<TestForm />
 				</CardContent>
 			</Card>
 			<Card className="my-2">
-				<CardHeader>Schedule Form</CardHeader>
+				<CardHeader>予定フォーム</CardHeader>
 				<CardContent>
 					<ScheduleForm />
 				</CardContent>

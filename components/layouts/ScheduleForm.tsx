@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
+import { ja } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -24,7 +25,7 @@ import { useUser } from "@/hooks/useUser";
 
 const formSchema = z.object({
 	content: z.string().min(2, {
-		message: "Content must be at least 2 characters.",
+		message: "予定名は2文字以上で入力してください。",
 	}),
 	date: z.date(),
 });
@@ -56,7 +57,7 @@ const ScheduleForm = () => {
 			router.push("/");
 			router.refresh();
 			toast({
-				description: "Added Schedule",
+				description: "予定を作成しました。",
 			});
 		} catch (error) {
 			console.log(error);
@@ -71,9 +72,9 @@ const ScheduleForm = () => {
 					name="content"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Name</FormLabel>
+							<FormLabel>予定名</FormLabel>
 							<FormControl>
-								<Input placeholder="Schedule content" {...field} />
+								<Input placeholder="例 ） 知の探求講座" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -84,7 +85,7 @@ const ScheduleForm = () => {
 					name="date"
 					render={({ field }) => (
 						<FormItem className="flex flex-col">
-							<FormLabel>Date of schedule</FormLabel>
+							<FormLabel>日付</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
 									<FormControl>
@@ -96,9 +97,9 @@ const ScheduleForm = () => {
 											)}
 										>
 											{field.value ? (
-												format(field.value, "PPP")
+												format(field.value, "PPP", { locale: ja })
 											) : (
-												<span>Pick a date</span>
+												<span>日付を選択</span>
 											)}
 											<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
 										</Button>
@@ -110,6 +111,7 @@ const ScheduleForm = () => {
 										selected={field.value}
 										onSelect={field.onChange}
 										disabled={(date) => date < new Date()}
+										locale={ja}
 										initialFocus
 									/>
 								</PopoverContent>
@@ -119,7 +121,7 @@ const ScheduleForm = () => {
 					)}
 				/>
 				<Button type="submit" className="w-full">
-					Submit
+					予定作成
 				</Button>
 			</form>
 		</Form>

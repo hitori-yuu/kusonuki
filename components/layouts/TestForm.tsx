@@ -4,7 +4,8 @@ import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { cn, Student, User } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { ja } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -35,7 +36,7 @@ import { useUser } from "@/hooks/useUser";
 
 const formSchema = z.object({
 	name: z.string().min(2, {
-		message: "Name must be at least 2 characters.",
+		message: "小テスト名は2文字以上で入力してください。",
 	}),
 	subject: z.string(),
 	implementationDate: z.date(),
@@ -77,7 +78,7 @@ const TestForm = () => {
 			router.push("/");
 			router.refresh();
 			toast({
-				description: "Added Test",
+				description: "小テストを作成しました。",
 			});
 		} catch (error) {
 			console.log(error);
@@ -92,9 +93,9 @@ const TestForm = () => {
 					name="name"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Name</FormLabel>
+							<FormLabel>小テスト名</FormLabel>
 							<FormControl>
-								<Input placeholder="Test name" {...field} />
+								<Input placeholder="例 ） No.100-200" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -105,11 +106,11 @@ const TestForm = () => {
 					name="subject"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Subject</FormLabel>
+							<FormLabel>教科</FormLabel>
 							<FormControl>
 								<Select onValueChange={field.onChange} defaultValue={field.value}>
 									<SelectTrigger>
-										<SelectValue placeholder="Subject" />
+										<SelectValue placeholder="教科を選択" />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value="数学">数学</SelectItem>
@@ -141,7 +142,7 @@ const TestForm = () => {
 					name="implementationDate"
 					render={({ field }) => (
 						<FormItem className="flex flex-col">
-							<FormLabel>Implementation Date</FormLabel>
+							<FormLabel>実施日</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
 									<FormControl>
@@ -153,7 +154,7 @@ const TestForm = () => {
 											)}
 										>
 											{field.value ? (
-												format(field.value, "PPP")
+												format(field.value, "PPP", { locale: ja })
 											) : (
 												<span>Pick a date</span>
 											)}
@@ -167,6 +168,7 @@ const TestForm = () => {
 										selected={field.value}
 										onSelect={field.onChange}
 										disabled={(date) => date < new Date()}
+										locale={ja}
 										initialFocus
 									/>
 								</PopoverContent>
@@ -176,7 +178,7 @@ const TestForm = () => {
 					)}
 				/>
 				<Button type="submit" className="w-full">
-					Submit
+					小テスト作成
 				</Button>
 			</form>
 		</Form>

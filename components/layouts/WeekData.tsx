@@ -113,12 +113,6 @@ const WeekData: React.FC = () => {
 		if (selectedRef.current) {
 			selectedRef.current.scrollIntoView({ behavior: "smooth", inline: "center" });
 		}
-
-		// コンソールログに指定した日付とそのデータを表示
-		if (selectedDate && weekData[selectedDate]) {
-			console.log("Selected Date:", selectedDate);
-			console.log("Data for selected date:", weekData[selectedDate]);
-		}
 	}, [selectedDate, weekData]);
 
 	const days = Array.from({ length: 7 }, (_, i) => {
@@ -140,15 +134,15 @@ const WeekData: React.FC = () => {
 	const SkeletonLoader = () => (
 		<Card className="my-2">
 			<CardHeader>
-				<CardTitle>Timetable</CardTitle>
+				<CardTitle>時間割</CardTitle>
 				<Skeleton className="h-4 w-[250px]" />
 			</CardHeader>
 			<CardContent>
 				<Table>
 					<TableHeader>
 						<TableRow>
-							<TableHead>Times</TableHead>
-							<TableHead>Subjects</TableHead>
+							<TableHead>時限</TableHead>
+							<TableHead>教科</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -221,21 +215,21 @@ const WeekData: React.FC = () => {
 						<>
 							<Card className="my-2">
 								<CardHeader>
-									<CardTitle>Timetable</CardTitle>
+									<CardTitle>時間割</CardTitle>
 									<CardDescription>
-										Timetable of {selectedDate} (
+										{selectedDate} (
 										{typeWeek(
 											new Date(new Date().getFullYear() + "/" + selectedDate),
 										)}
-										)
+										) の時間割
 									</CardDescription>
 								</CardHeader>
 								<CardContent>
 									<Table>
 										<TableHeader>
 											<TableRow>
-												<TableHead>Times</TableHead>
-												<TableHead>Subjects</TableHead>
+												<TableHead>時限</TableHead>
+												<TableHead>教科</TableHead>
 											</TableRow>
 										</TableHeader>
 										<TableBody>
@@ -285,7 +279,7 @@ const WeekData: React.FC = () => {
 											) : (
 												<TableRow>
 													<TableCell colSpan={2} className="text-center">
-														None
+														時間割なし
 													</TableCell>
 												</TableRow>
 											)}
@@ -312,15 +306,15 @@ const WeekData: React.FC = () => {
 							{selectedData.test && selectedData.test.length > 0 && (
 								<Card className="my-2 py-0">
 									<CardHeader>
-										<CardTitle>Test</CardTitle>
-										<CardDescription>News of {selectedDate}</CardDescription>
+										<CardTitle>小テスト</CardTitle>
+										<CardDescription>{selectedDate} の小テスト</CardDescription>
 									</CardHeader>
 									<CardContent>
 										<Table>
 											<TableHeader>
 												<TableRow>
-													<TableHead>Name</TableHead>
-													<TableHead>Subject</TableHead>
+													<TableHead>テスト名</TableHead>
+													<TableHead>教科</TableHead>
 												</TableRow>
 											</TableHeader>
 											<TableBody>
@@ -340,7 +334,7 @@ const WeekData: React.FC = () => {
 						<Card className="my-2">
 							<CardContent>
 								<p className="text-center">
-									No data available for the selected date.
+									選択された日付にはデータがありません。
 								</p>
 							</CardContent>
 						</Card>

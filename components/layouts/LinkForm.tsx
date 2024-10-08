@@ -173,7 +173,12 @@ const LinkForm = () => {
 							<FormItem className="flex-1">
 								<FormLabel>Number</FormLabel>
 								<FormControl>
-									<Input type="number" placeholder="Number" {...field} />
+									<Input
+										type="number"
+										placeholder="Number"
+										{...field}
+										onChange={(e) => field.onChange(Number(e.target.value))}
+									/>
 								</FormControl>
 								<FormMessage />
 							</FormItem>

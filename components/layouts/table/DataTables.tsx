@@ -39,15 +39,15 @@ export const groups = [
 
 export const roles = [
 	{
-		label: "DEFAULT",
+		label: "一般",
 		value: "DEFAULT",
 	},
 	{
-		label: "EDITOR",
+		label: "編集者",
 		value: "EDITOR",
 	},
 	{
-		label: "ADMIN",
+		label: "管理者",
 		value: "ADMIN",
 	},
 ];

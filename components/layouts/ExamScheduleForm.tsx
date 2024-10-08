@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
+import { ja } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -85,7 +86,7 @@ const ExamScheduleForm = () => {
 			router.push("/");
 			router.refresh();
 			toast({
-				description: "Added ExamSchedule",
+				description: "試験用時間割を作成しました。",
 			});
 		} catch (error) {
 			console.log(error);
@@ -95,17 +96,16 @@ const ExamScheduleForm = () => {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-				{/* Period Selection */}
 				<FormField
 					control={form.control}
 					name="period"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Period</FormLabel>
+							<FormLabel>範囲</FormLabel>
 							<FormControl>
 								<Select onValueChange={field.onChange} defaultValue={field.value}>
 									<SelectTrigger>
-										<SelectValue placeholder="Select period" />
+										<SelectValue placeholder="範囲を選択" />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value="前期中間">前期中間</SelectItem>
@@ -126,7 +126,7 @@ const ExamScheduleForm = () => {
 					name="date"
 					render={({ field }) => (
 						<FormItem className="flex flex-col">
-							<FormLabel>Date of schedule</FormLabel>
+							<FormLabel>日付</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
 									<FormControl>
@@ -138,9 +138,9 @@ const ExamScheduleForm = () => {
 											)}
 										>
 											{field.value ? (
-												format(field.value, "PPP")
+												format(field.value, "PPP", { locale: ja })
 											) : (
-												<span>Pick a date</span>
+												<span>日付を選択</span>
 											)}
 											<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
 										</Button>
@@ -152,6 +152,7 @@ const ExamScheduleForm = () => {
 										selected={field.value}
 										onSelect={field.onChange}
 										disabled={(date) => date < new Date()}
+										locale={ja}
 										initialFocus
 									/>
 								</PopoverContent>
@@ -162,10 +163,10 @@ const ExamScheduleForm = () => {
 				/>
 
 				<div>
-					<FormLabel>Timetable</FormLabel>
+					<FormLabel>時間割</FormLabel>
 					{fields.map((field, index) => (
 						<div key={field.id} className="flex items-center gap-4 mb-4">
-							<FormLabel className="w-20">Class {index + 1}.</FormLabel>
+							<FormLabel className="w-20">{index + 1}時間目:</FormLabel>
 							<FormField
 								control={form.control}
 								name={`timetable.${index}`}
@@ -177,7 +178,7 @@ const ExamScheduleForm = () => {
 												defaultValue={field.value}
 											>
 												<SelectTrigger>
-													<SelectValue placeholder="Subject" />
+													<SelectValue placeholder="教科を選択" />
 												</SelectTrigger>
 												<SelectContent>
 													<SelectItem value="数学α">数学α</SelectItem>
@@ -219,7 +220,7 @@ const ExamScheduleForm = () => {
 								onClick={() => remove(index)}
 								disabled={fields.length === 1}
 							>
-								Remove
+								削除
 							</Button>
 						</div>
 					))}
@@ -231,13 +232,13 @@ const ExamScheduleForm = () => {
 							onClick={() => append("数学α")}
 							className="w-full"
 						>
-							Add Class
+							時間割追加
 						</Button>
 					)}
 				</div>
 
 				<Button type="submit" className="w-full">
-					Submit
+					時間割作成
 				</Button>
 			</form>
 		</Form>

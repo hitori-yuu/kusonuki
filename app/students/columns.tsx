@@ -9,12 +9,12 @@ export const columns: ColumnDef<StudentData>[] = [
 	{
 		accessorKey: "name",
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="Name" />;
+			return <DataTableColumnHeader column={column} title="氏名" />;
 		},
 	},
 	{
 		accessorKey: "group",
-		header: ({ column }) => <DataTableColumnHeader column={column} title="Group" />,
+		header: ({ column }) => <DataTableColumnHeader column={column} title="クラス" />,
 		cell: ({ row }) => {
 			const grade = row.original.grade;
 			const group = groups.find((group) => group.value === row.getValue("group"));
@@ -36,12 +36,12 @@ export const columns: ColumnDef<StudentData>[] = [
 	},
 	{
 		accessorKey: "number",
-		header: "Number",
+		header: "出席番号",
 	},
 	{
 		accessorKey: "firstGroupNumber",
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="1st" />;
+			return <DataTableColumnHeader column={column} title="1年" />;
 		},
 	},
 ];

@@ -47,16 +47,16 @@ export function DataTableColumnHeader<TData, TValue>({
 				<DropdownMenuContent align="start">
 					<DropdownMenuItem onClick={() => column.toggleSorting(false)}>
 						<ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-						Asc
+						昇順
 					</DropdownMenuItem>
 					<DropdownMenuItem onClick={() => column.toggleSorting(true)}>
 						<ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-						Desc
+						降順
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
 						<EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-						Hide
+						非表示
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>

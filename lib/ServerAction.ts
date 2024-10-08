@@ -40,6 +40,27 @@ export async function LinkUser(
 	return;
 }
 
+export async function CreateInformation(
+	title: string,
+	content: string,
+	authorId: string,
+) {
+	try {
+		await prisma.information.create({
+			data: {
+				title,
+                content,
+				date: new Date(),
+                authorId,
+			}
+		});
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
 export async function searchStudent(
 	lastName: string,
 	firstName: string,

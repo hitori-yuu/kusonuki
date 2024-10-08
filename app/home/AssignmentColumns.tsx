@@ -17,15 +17,15 @@ const formatDate = (date: Date): string => {
 export const columns: ColumnDef<AssignmentData>[] = [
 	{
 		accessorKey: "name",
-		header: "Name",
+		header: "課題名",
 	},
 	{
 		accessorKey: "subject",
-		header: "Subject",
+		header: "教科",
 	},
 	{
 		accessorKey: "deadline",
-		header: "Deadline",
+		header: "提出日",
 		cell: ({ row }) => {
 			const dateTo = dayjs(new Date()).startOf("day");
 			const dateFrom = dayjs(row.getValue("deadline")).startOf("day");

@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
+import { ja } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
 import {
 	Form,
@@ -32,7 +33,7 @@ import { useUser } from "@/hooks/useUser";
 
 const formSchema = z.object({
 	name: z.string().min(2, {
-		message: "Name must be at least 2 characters.",
+		message: "課題名は2文字以上で入力してください。",
 	}),
 	subject: z.string(),
 	deadline: z.date(),
@@ -66,7 +67,7 @@ const AssignmentForm = () => {
 			router.push("/");
 			router.refresh();
 			toast({
-				description: "Added Assignment",
+				description: `課題を作成しました。`,
 			});
 		} catch (error) {
 			console.log(error);
@@ -81,9 +82,9 @@ const AssignmentForm = () => {
 					name="name"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Name</FormLabel>
+							<FormLabel>課題名</FormLabel>
 							<FormControl>
-								<Input placeholder="Assignment name" {...field} />
+								<Input placeholder="例 ） プリントNo.1" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -94,11 +95,11 @@ const AssignmentForm = () => {
 					name="subject"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Subject</FormLabel>
+							<FormLabel>教科</FormLabel>
 							<FormControl>
 								<Select onValueChange={field.onChange} defaultValue={field.value}>
 									<SelectTrigger>
-										<SelectValue placeholder="Subject" />
+										<SelectValue placeholder="教科を選択" />
 									</SelectTrigger>
 									<SelectContent>
 										<SelectItem value="数学">数学</SelectItem>
@@ -130,7 +131,7 @@ const AssignmentForm = () => {
 					name="deadline"
 					render={({ field }) => (
 						<FormItem className="flex flex-col">
-							<FormLabel>Deadline of assignment</FormLabel>
+							<FormLabel>提出日</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
 									<FormControl>
@@ -142,9 +143,9 @@ const AssignmentForm = () => {
 											)}
 										>
 											{field.value ? (
-												format(field.value, "PPP")
+												format(field.value, "PPP", { locale: ja })
 											) : (
-												<span>Pick a date</span>
+												<span>日付を選択</span>
 											)}
 											<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
 										</Button>
@@ -156,6 +157,7 @@ const AssignmentForm = () => {
 										selected={field.value}
 										onSelect={field.onChange}
 										disabled={(date) => date < new Date()}
+										locale={ja}
 										initialFocus
 									/>
 								</PopoverContent>
@@ -165,7 +167,7 @@ const AssignmentForm = () => {
 					)}
 				/>
 				<Button type="submit" className="w-full">
-					Submit
+					課題作成
 				</Button>
 			</form>
 		</Form>

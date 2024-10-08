@@ -18,14 +18,14 @@ const FormTabs = () => {
 		<>
 			<Card className="my-2">
 				<CardHeader>
-					<CardTitle>Assignment Forms</CardTitle>
-					<CardDescription>description.</CardDescription>
+					<CardTitle>課題・小テスト作成</CardTitle>
+					<CardDescription>課題・小テストの情報を作成します。</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<Tabs defaultValue="assignment">
 						<TabsList className="grid w-full grid-cols-2">
-							<TabsTrigger value="assignment">Assignment</TabsTrigger>
-							<TabsTrigger value="test">Test</TabsTrigger>
+							<TabsTrigger value="assignment">課題</TabsTrigger>
+							<TabsTrigger value="test">小テスト</TabsTrigger>
 						</TabsList>
 						<TabsContent value="assignment">
 							<AssignmentForm />
@@ -39,14 +39,14 @@ const FormTabs = () => {
 
 			<Card className="my-2">
 				<CardHeader>
-					<CardTitle>Schedule Forms</CardTitle>
-					<CardDescription>description.</CardDescription>
+					<CardTitle>予定作成</CardTitle>
+					<CardDescription>予定・試験時間割の情報を作成します。</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<Tabs defaultValue="schedule">
 						<TabsList className="grid w-full grid-cols-2">
-							<TabsTrigger value="schedule">Schedule</TabsTrigger>
-							<TabsTrigger value="examSchedule">ExamSchedule</TabsTrigger>
+							<TabsTrigger value="schedule">予定</TabsTrigger>
+							<TabsTrigger value="examSchedule">試験時間割</TabsTrigger>
 						</TabsList>
 						<TabsContent value="schedule">
 							<ScheduleForm />

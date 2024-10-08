@@ -6,10 +6,10 @@ import { Home, User, Settings, Info } from "lucide-react";
 
 const Footer = () => {
 	const footerItems = [
-		{ icon: Home, label: "Home", href: "/" },
-		{ icon: User, label: "Profile", href: "/profile" },
-		{ icon: Settings, label: "Settings", href: "/settings" },
-		{ icon: Info, label: "About", href: "/about" },
+		{ icon: Home, label: "ホーム", href: "/" },
+		{ icon: User, label: "プロフィール", href: "/profile" },
+		{ icon: Settings, label: "設定", href: "/settings" },
+		{ icon: Info, label: "お知らせ", href: "/information" },
 	];
 
 	return (

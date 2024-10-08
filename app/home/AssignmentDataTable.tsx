@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		<div>
 			<div className="flex items-center py-4">
 				<Input
-					placeholder="Filter assignments..."
+					placeholder="課題名でフィルター"
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
 						table.getColumn("name")?.setFilterValue(event.target.value)
@@ -80,7 +80,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						onClick={() => table.resetColumnFilters()}
 						className="h-8 ml-1 px-2 lg:px-3"
 					>
-						Reset
+						リセット
 						<Cross2Icon className="ml-2 h-4 w-4" />
 					</Button>
 				)}
@@ -125,7 +125,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						) : (
 							<TableRow>
 								<TableCell colSpan={columns.length} className="h-24 text-center">
-									No results.
+									データなし
 								</TableCell>
 							</TableRow>
 						)}
@@ -140,7 +140,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						onClick={() => table.previousPage()}
 						disabled={!table.getCanPreviousPage()}
 					>
-						Previous
+						前
 					</Button>
 					<Button
 						variant="outline"
@@ -148,7 +148,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						onClick={() => table.nextPage()}
 						disabled={!table.getCanNextPage()}
 					>
-						Next
+						次
 					</Button>
 				</div>
 			) : (

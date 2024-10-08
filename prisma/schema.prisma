@@ -24,6 +24,7 @@ model User {
     Schedule     Schedule[]
     ScheduleWeek ScheduleWeek[]
     ExamSchedule ExamSchedule[]
+    Information  Information[]
 }
 
 model Student {
@@ -134,6 +135,17 @@ model Timetable {
     third     String
     fourth    String
     fifth     String
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Information {
+    id        Int      @id @default(autoincrement())
+    date      DateTime @db.Date
+    title     String
+    content   String
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
     createdAt DateTime @default(now())

@@ -20,7 +20,7 @@ export const columns: ColumnDef<UserData>[] = [
 	{
 		accessorKey: "displayName",
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="Name" />;
+			return <DataTableColumnHeader column={column} title="ユーザー名" />;
 		},
 		cell: ({ row }) => (
 			<div className="flex items-center">
@@ -34,7 +34,7 @@ export const columns: ColumnDef<UserData>[] = [
 	},
 	{
 		accessorKey: "role",
-		header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
+		header: ({ column }) => <DataTableColumnHeader column={column} title="権限" />,
 		cell: ({ row }) => {
 			const priority = roles.find((role) => role.value === row.getValue("role"));
 
@@ -54,7 +54,7 @@ export const columns: ColumnDef<UserData>[] = [
 	},
 	{
 		accessorKey: "createdAt",
-		header: "createdAt",
+		header: "作成日",
 		cell: ({ row }) => {
 			const date = new Date(row.getValue("createdAt"));
 			const formatted = date.toLocaleDateString();

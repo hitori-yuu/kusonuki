@@ -12,7 +12,7 @@ const AccountSettings = () => {
 		<>
 			<Accordion type="single" collapsible>
 				<AccordionItem value="item-1">
-					<AccordionTrigger>Student Information Linking</AccordionTrigger>
+					<AccordionTrigger>生徒情報連携</AccordionTrigger>
 					<AccordionContent className="m-1">
 						<LinkForm />
 					</AccordionContent>

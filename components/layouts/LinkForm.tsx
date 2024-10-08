@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { useUser } from "@/hooks/useUser";
 import { LinkUser, searchStudent } from "@/lib/ServerAction";
+import { useToast } from "../ui/use-toast";
 
 const formSchema = z.object({
 	firstName: z.string(),
@@ -32,6 +33,7 @@ const formSchema = z.object({
 
 const LinkForm = () => {
 	const { user } = useUser();
+	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -51,10 +53,9 @@ const LinkForm = () => {
 			values.grade,
 			values.group,
 			values.number,
-		); // ユーザー検索の関数を呼び出す
+		);
 
 		if (!foundUser) {
-			// ユーザーが見つからなかった場合
 			form.setError("lastName", {
 				type: "manual",
 				message: "ユーザーが見つかりませんでした。",
@@ -63,7 +64,7 @@ const LinkForm = () => {
 				type: "manual",
 				message: "ユーザーが見つかりませんでした。",
 			});
-			return; // 処理を終了
+			return;
 		}
 		if (user) {
 			await LinkUser(
@@ -74,8 +75,19 @@ const LinkForm = () => {
 				values.number,
 				user?.id,
 			);
+			form.reset();
+			toast({
+				description: "予定を作成しました。",
+			});
 		}
-		form.reset();
+	}
+
+	if (!user) {
+		return (
+			<div>
+				<p className="text-xl font-bold">この機能を使うには、ログインしてください。</p>
+			</div>
+		);
 	}
 
 	return (
@@ -87,9 +99,9 @@ const LinkForm = () => {
 						name="lastName"
 						render={({ field }) => (
 							<FormItem className="flex-1">
-								<FormLabel>Last Name</FormLabel>
+								<FormLabel>性</FormLabel>
 								<FormControl>
-									<Input placeholder="Last Name" {...field} />
+									<Input placeholder="名字" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -100,9 +112,9 @@ const LinkForm = () => {
 						name="firstName"
 						render={({ field }) => (
 							<FormItem className="flex-1">
-								<FormLabel>First Name</FormLabel>
+								<FormLabel>名</FormLabel>
 								<FormControl>
-									<Input placeholder="First Name" {...field} />
+									<Input placeholder="名前" {...field} />
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -115,14 +127,14 @@ const LinkForm = () => {
 						name="grade"
 						render={({ field }) => (
 							<FormItem className="flex-1">
-								<FormLabel>Grade</FormLabel>
+								<FormLabel>学年</FormLabel>
 								<FormControl>
 									<Select
 										onValueChange={(value) => field.onChange(Number(value))}
-										defaultValue={String(field.value)} // 数値を文字列に変換して渡す
+										defaultValue={String(field.value)}
 									>
 										<SelectTrigger>
-											<SelectValue placeholder="Select Grade" />
+											<SelectValue placeholder="学年を選択" />
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="1">1</SelectItem>
@@ -140,14 +152,14 @@ const LinkForm = () => {
 						name="group"
 						render={({ field }) => (
 							<FormItem className="flex-1">
-								<FormLabel>Group</FormLabel>
+								<FormLabel>クラス</FormLabel>
 								<FormControl>
 									<Select
 										onValueChange={field.onChange}
 										defaultValue={field.value}
 									>
 										<SelectTrigger>
-											<SelectValue placeholder="Group" />
+											<SelectValue placeholder="クラスを選択" />
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="A">A</SelectItem>
@@ -171,11 +183,11 @@ const LinkForm = () => {
 						name="number"
 						render={({ field }) => (
 							<FormItem className="flex-1">
-								<FormLabel>Number</FormLabel>
+								<FormLabel>出席番号</FormLabel>
 								<FormControl>
 									<Input
 										type="number"
-										placeholder="Number"
+										placeholder="出席番号を入力"
 										{...field}
 										onChange={(e) => field.onChange(Number(e.target.value))}
 									/>
@@ -187,7 +199,7 @@ const LinkForm = () => {
 				</div>
 
 				<Button type="submit" className="w-full">
-					Submit
+					生徒連携
 				</Button>
 			</form>
 		</Form>

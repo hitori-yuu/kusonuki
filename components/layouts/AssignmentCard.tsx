@@ -47,8 +47,8 @@ const AssignmentCard = () => {
 			{assignment && (
 				<Card className="my-2">
 					<CardHeader>
-						<CardTitle>Assignment</CardTitle>
-						<CardDescription>Assignments due within 10 days.</CardDescription>
+						<CardTitle>直近の課題</CardTitle>
+						<CardDescription>10日間以内に提出期限の課題一覧</CardDescription>
 					</CardHeader>
 					<CardContent>
 						<DataTable columns={columns} data={assignment} />

@@ -56,33 +56,37 @@ export function UserButton() {
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<DropdownMenuItem>
-								<User className="mr-2 h-4 w-4" />
-								<span>Profile</span>
-							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<Settings className="mr-2 h-4 w-4" />
-								<span>Settings</span>
-							</DropdownMenuItem>
+							<a href="/profile">
+								<DropdownMenuItem>
+									<User className="mr-2 h-4 w-4" />
+									<span>プロフィール</span>
+								</DropdownMenuItem>
+							</a>
+							<a href="/settings">
+								<DropdownMenuItem>
+									<Settings className="mr-2 h-4 w-4" />
+									<span>設定</span>
+								</DropdownMenuItem>
+							</a>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
 							<a href="/users">
 								<DropdownMenuItem>
 									<UsersRound className="mr-2 h-4 w-4" />
-									<span>Users</span>
+									<span>ユーザー</span>
 								</DropdownMenuItem>
 							</a>
 							<a href="/students">
 								<DropdownMenuItem>
 									<UsersRound className="mr-2 h-4 w-4" />
-									<span>Students</span>
+									<span>生徒</span>
 								</DropdownMenuItem>
 							</a>
 							<a href="/teachers">
 								<DropdownMenuItem disabled>
 									<Speech className="mr-2 h-4 w-4" />
-									<span>Teachers</span>
+									<span>教師</span>
 								</DropdownMenuItem>
 							</a>
 						</DropdownMenuGroup>
@@ -91,13 +95,13 @@ export function UserButton() {
 							<a href="/assignments">
 								<DropdownMenuItem>
 									<UsersRound className="mr-2 h-4 w-4" />
-									<span>Assignments</span>
+									<span>課題</span>
 								</DropdownMenuItem>
 							</a>
 							<a href="/tests">
 								<DropdownMenuItem>
 									<UsersRound className="mr-2 h-4 w-4" />
-									<span>Tests</span>
+									<span>小テスト</span>
 								</DropdownMenuItem>
 							</a>
 						</DropdownMenuGroup>
@@ -106,12 +110,12 @@ export function UserButton() {
 							{resolvedTheme === "light" ? (
 								<DropdownMenuItem onClick={() => setTheme("dark")}>
 									<MoonIcon className="mr-2 h-4 w-4" />
-									<span>Change Dark Theme</span>
+									<span>ダークモード</span>
 								</DropdownMenuItem>
 							) : (
 								<DropdownMenuItem onClick={() => setTheme("light")}>
 									<SunIcon className="mr-2 h-4 w-4" />
-									<span>Change Light Theme</span>
+									<span>ライトモード</span>
 								</DropdownMenuItem>
 							)}
 						</DropdownMenuGroup>

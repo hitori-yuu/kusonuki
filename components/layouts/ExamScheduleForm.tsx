@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
+import { CreateExamSchedule } from "@/lib/ServerAction";
 
 const formSchema = z.object({
 	period: z.enum(["前期中間", "前期期末", "後期期末", "後期中間", "学年末"]),
@@ -54,7 +55,7 @@ const formSchema = z.object({
 
 const ExamScheduleForm = () => {
 	const router = useRouter();
-	const { user } = useUser();
+	const { user, student } = useUser();
 	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -72,30 +73,26 @@ const ExamScheduleForm = () => {
 		name: "timetable",
 	});
 
-	async function onSubmit(value: z.infer<typeof formSchema>) {
-		const { period, date, timetable } = value;
-		const authorId = user?.id || "guest";
-		try {
-			await fetch(`${process.env.NEXT_PUBLIC_API_URL}exams`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ period, date, timetable, authorId }),
-			});
-			router.push("/");
-			router.refresh();
+	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		if (user && student) {
+			await CreateExamSchedule(
+				student.grade,
+				values.date,
+				values.period,
+				values.timetable,
+				user.id,
+			);
+			form.reset();
 			toast({
 				description: "試験用時間割を作成しました。",
 			});
-		} catch (error) {
-			console.log(error);
+			router.refresh();
 		}
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
 				<FormField
 					control={form.control}
 					name="period"

@@ -15,18 +15,7 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/hooks/useUser";
-
-async function getData(grade: number, group: string): Promise<AssignmentData[]> {
-	const response = await fetch(
-		`${process.env.NEXT_PUBLIC_API_URL}assignments/${grade}/${group}/10`,
-		{
-			cache: "no-store",
-		},
-	);
-	const assignmentData: AssignmentData[] = await response.json();
-
-	return assignmentData;
-}
+import { getAssignments } from "@/lib/ServerAction";
 
 const AssignmentCard = () => {
 	const { user, student, liff } = useUser();
@@ -35,7 +24,7 @@ const AssignmentCard = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			if (student) {
-				const fetchedData = await getData(student.grade ?? 2, student.group ?? "H");
+				const fetchedData = await getAssignments(student.grade, student.group, 10);
 				setAssignment(fetchedData);
 			}
 		};

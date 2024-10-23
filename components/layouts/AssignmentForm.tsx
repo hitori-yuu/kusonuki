@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
+import { CreateAssignment } from "@/lib/ServerAction";
 
 const formSchema = z.object({
 	name: z.string().min(2, {
@@ -53,30 +54,27 @@ const AssignmentForm = () => {
 		},
 	});
 
-	async function onSubmit(value: z.infer<typeof formSchema>) {
-		const { name, subject, deadline } = value;
-		const authorId = user?.id || "guest";
-		try {
-			await fetch(`${process.env.NEXT_PUBLIC_API_URL}assignments`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ name, subject, deadline, authorId }),
-			});
-			router.push("/");
-			router.refresh();
+	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		if (user && student) {
+			await CreateAssignment(
+				values.name,
+				student.grade,
+				student.group,
+				values.subject,
+				values.deadline,
+				user.id,
+			);
+			form.reset();
 			toast({
-				description: `課題を作成しました。`,
+				description: "課題を作成しました。",
 			});
-		} catch (error) {
-			console.log(error);
+			router.refresh();
 		}
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
 				<FormField
 					control={form.control}
 					name="name"

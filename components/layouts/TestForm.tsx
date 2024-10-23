@@ -33,6 +33,7 @@ import { useLiff } from "./LiffProvider";
 import { Profile } from "@liff/get-profile";
 import { StudentData, UserData } from "@/types/types";
 import { useUser } from "@/hooks/useUser";
+import { CreateTest } from "@/lib/ServerAction";
 
 const formSchema = z.object({
 	name: z.string().min(2, {
@@ -56,38 +57,27 @@ const TestForm = () => {
 		},
 	});
 
-	async function onSubmit(value: z.infer<typeof formSchema>) {
-		const { name, subject, implementationDate } = value;
-		const authorId = user?.id || "guest";
-		var grade: number, group: string;
-		if (student) {
-			grade = student.grade;
-			group = student.group;
-		} else {
-			grade = 2;
-			group = "H";
-		}
-		try {
-			await fetch(`${process.env.NEXT_PUBLIC_API_URL}tests`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ name, subject, grade, group, implementationDate, authorId }),
-			});
-			router.push("/");
-			router.refresh();
+	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		if (user && student) {
+			await CreateTest(
+				values.name,
+				student.grade,
+				student.group,
+				values.subject,
+				values.implementationDate,
+				user.id,
+			);
+			form.reset();
 			toast({
-				description: "小テストを作成しました。",
+				description: "課題を作成しました。",
 			});
-		} catch (error) {
-			console.log(error);
+			router.refresh();
 		}
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
 				<FormField
 					control={form.control}
 					name="name"

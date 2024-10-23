@@ -55,7 +55,7 @@ model Assignment {
     id        Int      @id @default(autoincrement())
     name      String
     subject   String
-    deadline  DateTime
+    deadline  DateTime @db.Date
     grade     Int      @default(2)
     group     String   @default("H")
     author    User     @relation(fields: [authorId], references: [id])
@@ -68,7 +68,7 @@ model Test {
     id                 Int      @id @default(autoincrement())
     name               String
     subject            String
-    implementationDate DateTime
+    implementationDate DateTime @db.Date
     grade              Int      @default(2)
     group              String   @default("H")
     author             User     @relation(fields: [authorId], references: [id])

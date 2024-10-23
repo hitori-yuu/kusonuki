@@ -13,41 +13,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { ExamScheduleData, ScheduleData, TestData, TimetableData } from "@/types/types";
 import { useUser } from "@/hooks/useUser";
-
-const fetchData = async (url: string): Promise<any> => {
-	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url);
-	const data = await response.json();
-	return data;
-};
-
-const getTimetableData = async (
-	grade: number,
-	group: string,
-	week: string,
-	day: string,
-): Promise<TimetableData> => {
-	const url = `timetables/${grade}/${group}/${week}/${day}`;
-	return fetchData(url);
-};
-
-const getTestData = async (grade: number, group: string, date: Date): Promise<TestData[]> => {
-	const url = `tests/${grade}/${group}/${date.toISOString().split("T")[0]}`;
-	return fetchData(url);
-};
-
-const getExamScheduleData = async (grade: number, date: Date): Promise<ExamScheduleData> => {
-	const url = `exams/${grade}/${date.toISOString().split("T")[0]}`;
-	return fetchData(url);
-};
-
-const getScheduleData = async (
-	grade: number,
-	group: string,
-	inputDate: Date,
-): Promise<ScheduleData[]> => {
-	const url = `schedule/${grade}/${group}/${inputDate.toISOString().split("T")[0]}`;
-	return fetchData(url);
-};
+import { getExamSchedules, getSchedules, getTests, getTimetable } from "@/lib/ServerAction";
 
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
@@ -92,10 +58,10 @@ const WeekData: React.FC = () => {
 				const dayOfWeek = daysOfWeek[date.getDay()];
 
 				const [timetable, test, schedule, examSchedule] = await Promise.all([
-					getTimetableData(grade, group, week, dayOfWeek),
-					getTestData(grade, group, date),
-					getScheduleData(grade, group, date),
-					getExamScheduleData(grade, date),
+					getTimetable(grade, group, week, dayOfWeek),
+					getTests(grade, group, date),
+					getSchedules(grade, group, date),
+					getExamSchedules(grade, date),
 				]);
 
 				weekDataTemp[dateString] = { timetable, test, schedule, examSchedule };

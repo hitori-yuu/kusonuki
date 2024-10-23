@@ -22,6 +22,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
+import { CreateSchedule } from "@/lib/ServerAction";
 
 const formSchema = z.object({
 	content: z.string().min(2, {
@@ -43,30 +44,26 @@ const ScheduleForm = () => {
 		},
 	});
 
-	async function onSubmit(value: z.infer<typeof formSchema>) {
-		const { content, date } = value;
-		const authorId = user?.id || "guest";
-		try {
-			await fetch(`${process.env.NEXT_PUBLIC_API_URL}schedule`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ content, date, authorId }),
-			});
-			router.push("/");
-			router.refresh();
+	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		if (user && student) {
+			await CreateSchedule(
+				student.grade,
+				student.group,
+				values.content,
+				values.date,
+				user.id,
+			);
+			form.reset();
 			toast({
 				description: "予定を作成しました。",
 			});
-		} catch (error) {
-			console.log(error);
+			router.refresh();
 		}
 	}
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
 				<FormField
 					control={form.control}
 					name="content"

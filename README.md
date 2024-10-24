@@ -37,7 +37,7 @@ yarn install
 
 Create a .env file in the root directory and add the following variables. Replace <your_value> with the actual values from your Supabase and Prisma setup.
 
-```
+```bash
 NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your_supabase_anon_key>
 DATABASE_URL=<your_database_url>

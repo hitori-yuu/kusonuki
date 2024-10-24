@@ -77,7 +77,7 @@ const LinkForm = () => {
 			);
 			form.reset();
 			toast({
-				description: "予定を作成しました。",
+				description: "生徒情報を連携しました。",
 			});
 		}
 	}

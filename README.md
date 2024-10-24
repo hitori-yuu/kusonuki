@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Kusonuki
 
-## Getting Started
+Kusonuki is a web application developed using TypeScript, aimed at helping students and users manage their schedules, assignments, and quizzes efficiently. The app fetches data based on user and student information, presenting it in a user-friendly interface.
 
-First, run the development server:
+## Features
+
+- **Student Schedules**: Displays a student's timetable, showing their classes and events.
+- **Assignment Management**: Lists all upcoming and completed assignments.
+- **Quizzes and Tests**: Provides a way to view and manage quizzes and tests.
+- **Responsive Design**: Fully optimized for mobile, tablet, and desktop screens.
+
+## Prerequisites
+
+Before running the project, ensure you have the following software installed:
+
+- **Node.js**: Version 18 or above
+- **Yarn**: Version 1.x or 2.x
+- **Supabase**: Set up your own Supabase instance
+- **Prisma**: For database ORM
+
+## Setup Instructions
+
+### 1. Clone the repository
 
 ```bash
-npm run dev
-# or
+git clone https://github.com/hitori-yuu/kusonuki.git
+cd kusonuki
+
+2. Install dependencies
+
+yarn install
+
+3. Configure environment variables
+
+Create a .env file in the root directory and add the following variables. Replace <your_value> with the actual values from your Supabase and Prisma setup.
+
+NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your_supabase_anon_key>
+DATABASE_URL=<your_database_url>
+
+4. Prisma setup
+
+Ensure your database schema is properly set up by running the following commands:
+
+npx prisma migrate dev
+
+This command will create the necessary tables in your database.
+
+5. Run the development server
+
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to view the app in the browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The project can be deployed on platforms like Vercel. Follow these steps to deploy:
 
-## Learn More
+	1.	Push your project to a GitHub repository.
+	2.	Create a new project on Vercel.
+	3.	Link your GitHub repository.
+	4.	Add the same environment variables from the .env file in Vercel’s settings.
+	5.	Deploy!
 
-To learn more about Next.js, take a look at the following resources:
+Testing
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To run unit tests, use:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+yarn test
 
-## Deploy on Vercel
+End-to-end (E2E) tests can be added with Cypress. To run E2E tests:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+yarn e2e
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Technology Stack
+
+	•	Next.js: Frontend framework
+	•	TypeScript: Type safety
+	•	Prisma: Database ORM
+	•	Supabase: Database and authentication
+	•	Tailwind CSS: Styling
+	•	Shadcn: UI components
+	•	Jest: Unit testing
+	•	Cypress: E2E testing
+
+Project Structure
+
+/kusonuki
+│
+├── /app                # Next.js pages and components
+├── /prisma             # Prisma schema and migrations
+├── /public             # Static assets
+├── /styles             # Tailwind and other styles
+├── /tests              # Test files (unit and E2E)
+├── /lib                # Helper functions and utilities
+├── prisma.schema       # Prisma ORM schema
+├── next.config.js      # Next.js configuration
+└── README.md           # Project documentation
+
+Future Improvements
+
+	•	Implement user role-based access control (RBAC) for admin and student roles.
+	•	Add notifications for new assignments or schedule changes.
+	•	Improve accessibility (ARIA roles and keyboard navigation).
+	•	Optimize performance with server-side caching.
+
+Contributing
+
+	1.	Fork the repository.
+	2.	Create a new branch (git checkout -b feature-branch).
+	3.	Commit your changes (git commit -m 'Add some feature').
+	4.	Push to the branch (git push origin feature-branch).
+	5.	Open a pull request.
+
+License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

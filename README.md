@@ -77,7 +77,7 @@ To run unit tests, use:
 
 ```bash
 yarn test
-```bash
+```
 
 End-to-end (E2E) tests can be added with Cypress. To run E2E tests:
 
@@ -98,6 +98,7 @@ Technology Stack
 
 Project Structure
 
+```bash
 /kusonuki
 │
 ├── /app                # Next.js pages and components
@@ -109,6 +110,7 @@ Project Structure
 ├── prisma.schema       # Prisma ORM schema
 ├── next.config.js      # Next.js configuration
 └── README.md           # Project documentation
+```
 
 Future Improvements
 

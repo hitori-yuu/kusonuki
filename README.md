@@ -25,30 +25,39 @@ Before running the project, ensure you have the following software installed:
 ```bash
 git clone https://github.com/hitori-yuu/kusonuki.git
 cd kusonuki
+```
 
 2. Install dependencies
 
+```bash
 yarn install
+```
 
 3. Configure environment variables
 
 Create a .env file in the root directory and add the following variables. Replace <your_value> with the actual values from your Supabase and Prisma setup.
 
+```
 NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your_supabase_anon_key>
 DATABASE_URL=<your_database_url>
+```
 
 4. Prisma setup
 
 Ensure your database schema is properly set up by running the following commands:
 
+```bash
 npx prisma migrate dev
+```
 
 This command will create the necessary tables in your database.
 
 5. Run the development server
 
+```bash
 yarn dev
+```
 
 Open http://localhost:3000 to view the app in the browser.
 
@@ -66,11 +75,15 @@ Testing
 
 To run unit tests, use:
 
+```bash
 yarn test
+```bash
 
 End-to-end (E2E) tests can be added with Cypress. To run E2E tests:
 
+```bash
 yarn e2e
+```
 
 Technology Stack
 

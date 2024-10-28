@@ -14,6 +14,7 @@ import { Settings, User, Speech, UsersRound } from "lucide-react";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 import { useUser } from "@/hooks/useUser";
+import Link from "next/link";
 
 export function UserButton() {
 	const { setTheme, resolvedTheme } = useTheme();
@@ -56,54 +57,54 @@ export function UserButton() {
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<a href="/profile">
+							<Link href="/profile">
 								<DropdownMenuItem>
 									<User className="mr-2 h-4 w-4" />
 									<span>プロフィール</span>
 								</DropdownMenuItem>
-							</a>
-							<a href="/settings">
+							</Link>
+							<Link href="/settings">
 								<DropdownMenuItem>
 									<Settings className="mr-2 h-4 w-4" />
 									<span>設定</span>
 								</DropdownMenuItem>
-							</a>
+							</Link>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<a href="/users">
+							<Link href="/users">
 								<DropdownMenuItem>
 									<UsersRound className="mr-2 h-4 w-4" />
 									<span>ユーザー</span>
 								</DropdownMenuItem>
-							</a>
-							<a href="/students">
+							</Link>
+							<Link href="/students">
 								<DropdownMenuItem>
 									<UsersRound className="mr-2 h-4 w-4" />
 									<span>生徒</span>
 								</DropdownMenuItem>
-							</a>
-							<a href="/teachers">
+							</Link>
+							<Link href="/teachers">
 								<DropdownMenuItem disabled>
 									<Speech className="mr-2 h-4 w-4" />
 									<span>教師</span>
 								</DropdownMenuItem>
-							</a>
+							</Link>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<a href="/assignments">
+							<Link href="/assignments">
 								<DropdownMenuItem>
 									<UsersRound className="mr-2 h-4 w-4" />
 									<span>課題</span>
 								</DropdownMenuItem>
-							</a>
-							<a href="/tests">
+							</Link>
+							<Link href="/tests">
 								<DropdownMenuItem>
 									<UsersRound className="mr-2 h-4 w-4" />
 									<span>小テスト</span>
 								</DropdownMenuItem>
-							</a>
+							</Link>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>

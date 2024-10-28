@@ -10,10 +10,21 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import {
+	Drawer,
+	DrawerClose,
+	DrawerContent,
+	DrawerDescription,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
+} from "@/components/ui/drawer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ExamScheduleData, ScheduleData, TestData, TimetableData } from "@/types/types";
 import { useUser } from "@/hooks/useUser";
 import { getExamSchedules, getSchedules, getTests, getTimetable } from "@/lib/ServerAction";
+import { Separator } from "../ui/separator";
 
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
@@ -77,7 +88,11 @@ const WeekData: React.FC = () => {
 
 	useEffect(() => {
 		if (selectedRef.current) {
-			selectedRef.current.scrollIntoView({ behavior: "smooth", inline: "center" });
+			selectedRef.current.scrollIntoView({
+				block: "center",
+				behavior: "smooth",
+				inline: "center",
+			});
 		}
 	}, [selectedDate, weekData]);
 
@@ -98,56 +113,53 @@ const WeekData: React.FC = () => {
 	const selectedData = selectedDate ? weekData[selectedDate] : null;
 
 	const SkeletonLoader = () => (
-		<Card className="my-2">
-			<CardHeader>
-				<CardTitle>時間割</CardTitle>
-				<Skeleton className="h-4 w-[250px]" />
-			</CardHeader>
-			<CardContent>
-				<Table>
-					<TableHeader>
-						<TableRow>
-							<TableHead>時限</TableHead>
-							<TableHead>教科</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						<TableRow>
-							<TableHead>
-								<Skeleton className="h-4 w-[50px]" />
-							</TableHead>
-							<TableCell>
-								<Skeleton className="h-4 w-[250px]" />
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableHead>
-								<Skeleton className="h-4 w-[50px]" />
-							</TableHead>
-							<TableCell>
-								<Skeleton className="h-4 w-[250px]" />
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableHead>
-								<Skeleton className="h-4 w-[50px]" />
-							</TableHead>
-							<TableCell>
-								<Skeleton className="h-4 w-[250px]" />
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableHead>
-								<Skeleton className="h-4 w-[50px]" />
-							</TableHead>
-							<TableCell>
-								<Skeleton className="h-4 w-[250px]" />
-							</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
-			</CardContent>
-		</Card>
+		<>
+			<DrawerHeader>
+				<DrawerTitle>時間割</DrawerTitle>
+			</DrawerHeader>
+			<Table>
+				<TableHeader>
+					<TableRow>
+						<TableHead>時限</TableHead>
+						<TableHead>教科</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					<TableRow>
+						<TableHead>
+							<Skeleton className="h-4 w-[50px]" />
+						</TableHead>
+						<TableCell>
+							<Skeleton className="h-4 w-[250px]" />
+						</TableCell>
+					</TableRow>
+					<TableRow>
+						<TableHead>
+							<Skeleton className="h-4 w-[50px]" />
+						</TableHead>
+						<TableCell>
+							<Skeleton className="h-4 w-[250px]" />
+						</TableCell>
+					</TableRow>
+					<TableRow>
+						<TableHead>
+							<Skeleton className="h-4 w-[50px]" />
+						</TableHead>
+						<TableCell>
+							<Skeleton className="h-4 w-[250px]" />
+						</TableCell>
+					</TableRow>
+					<TableRow>
+						<TableHead>
+							<Skeleton className="h-4 w-[50px]" />
+						</TableHead>
+						<TableCell>
+							<Skeleton className="h-4 w-[250px]" />
+						</TableCell>
+					</TableRow>
+				</TableBody>
+			</Table>
+		</>
 	);
 
 	return (
@@ -173,126 +185,94 @@ const WeekData: React.FC = () => {
 							))}
 						</div>
 					</div>
+
+					<Separator />
 					{isLoading ? (
 						<>
 							<SkeletonLoader />
 						</>
 					) : selectedData ? (
 						<>
-							<Card className="my-2">
-								<CardHeader>
-									<CardTitle>時間割</CardTitle>
-									<CardDescription>
-										{selectedDate} (
-										{typeWeek(
-											new Date(new Date().getFullYear() + "/" + selectedDate),
-										)}
-										) の時間割
-									</CardDescription>
-								</CardHeader>
-								<CardContent>
-									<Table>
-										<TableHeader>
-											<TableRow>
-												<TableHead>時限</TableHead>
-												<TableHead>教科</TableHead>
-											</TableRow>
-										</TableHeader>
-										<TableBody>
-											{!selectedData.examSchedule &&
-											selectedData.timetable ? (
-												<>
-													<TableRow>
-														<TableHead>1.</TableHead>
-														<TableCell>
-															{selectedData.timetable.first}
-														</TableCell>
-													</TableRow>
-													<TableRow>
-														<TableHead>2.</TableHead>
-														<TableCell>
-															{selectedData.timetable.second}
-														</TableCell>
-													</TableRow>
-													<TableRow>
-														<TableHead>3.</TableHead>
-														<TableCell>
-															{selectedData.timetable.third}
-														</TableCell>
-													</TableRow>
-													<TableRow>
-														<TableHead>4.</TableHead>
-														<TableCell>
-															{selectedData.timetable.fourth}
-														</TableCell>
-													</TableRow>
-													<TableRow>
-														<TableHead>5.</TableHead>
-														<TableCell>
-															{selectedData.timetable.fifth}
-														</TableCell>
-													</TableRow>
-												</>
-											) : selectedData.examSchedule ? (
-												selectedData.examSchedule.timetable?.map(
-													(item, index) => (
-														<TableRow key={index}>
-															<TableHead>{index + 1}.</TableHead>
-															<TableCell>{item}</TableCell>
-														</TableRow>
-													),
-												)
-											) : (
-												<TableRow>
-													<TableCell colSpan={2} className="text-center">
-														時間割なし
-													</TableCell>
-												</TableRow>
-											)}
-										</TableBody>
-									</Table>
-									{selectedData.schedule &&
-										selectedData.schedule.map((item, index) => (
-											<Card key={index} className="my-1 py-[-5px]">
-												<CardHeader className="text-center">
-													{item.content}
-												</CardHeader>
-											</Card>
-										))}
-									{selectedData.examSchedule && (
-										<Card className="my-1 py-[-5px]">
-											<CardHeader className="text-center">
-												{selectedData.examSchedule.period}試験
-											</CardHeader>
-										</Card>
+							<DrawerHeader>
+								<DrawerTitle>時間割</DrawerTitle>
+								<DrawerDescription>
+									{selectedDate} (
+									{typeWeek(
+										new Date(new Date().getFullYear() + "/" + selectedDate),
 									)}
-								</CardContent>
-							</Card>
-
-							{selectedData.test && selectedData.test.length > 0 && (
-								<Card className="my-2 py-0">
-									<CardHeader>
-										<CardTitle>小テスト</CardTitle>
-										<CardDescription>{selectedDate} の小テスト</CardDescription>
+									) の時間割
+								</DrawerDescription>
+							</DrawerHeader>
+							<Table>
+								<TableHeader>
+									<TableRow>
+										<TableHead>時限</TableHead>
+										<TableHead>教科</TableHead>
+									</TableRow>
+								</TableHeader>
+								<TableBody>
+									{!selectedData.examSchedule && selectedData.timetable ? (
+										<>
+											<TableRow>
+												<TableHead>1.</TableHead>
+												<TableCell>
+													{selectedData.timetable.first}
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableHead>2.</TableHead>
+												<TableCell>
+													{selectedData.timetable.second}
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableHead>3.</TableHead>
+												<TableCell>
+													{selectedData.timetable.third}
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableHead>4.</TableHead>
+												<TableCell>
+													{selectedData.timetable.fourth}
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableHead>5.</TableHead>
+												<TableCell>
+													{selectedData.timetable.fifth}
+												</TableCell>
+											</TableRow>
+										</>
+									) : selectedData.examSchedule ? (
+										selectedData.examSchedule.timetable?.map((item, index) => (
+											<TableRow key={index}>
+												<TableHead>{index + 1}.</TableHead>
+												<TableCell>{item}</TableCell>
+											</TableRow>
+										))
+									) : (
+										<TableRow>
+											<TableCell colSpan={2} className="text-center">
+												時間割なし
+											</TableCell>
+										</TableRow>
+									)}
+								</TableBody>
+							</Table>
+							{selectedData.schedule &&
+								selectedData.schedule.map((item, index) => (
+									<Card key={index} className="my-1 py-[-5px]">
+										<CardHeader className="text-center">
+											{item.content}
+										</CardHeader>
+									</Card>
+								))}
+							{selectedData.examSchedule && (
+								<Card className="my-1 py-[-5px]">
+									<CardHeader className="text-center">
+										{selectedData.examSchedule.period}試験
 									</CardHeader>
-									<CardContent>
-										<Table>
-											<TableHeader>
-												<TableRow>
-													<TableHead>テスト名</TableHead>
-													<TableHead>教科</TableHead>
-												</TableRow>
-											</TableHeader>
-											<TableBody>
-												{selectedData.test.map((item, index) => (
-													<TableRow key={index}>
-														<TableCell>{item.name}</TableCell>
-														<TableCell>{item.subject}</TableCell>
-													</TableRow>
-												))}
-											</TableBody>
-										</Table>
-									</CardContent>
 								</Card>
 							)}
 						</>

@@ -62,6 +62,7 @@ const ExamForm = () => {
 		if (user && student) {
 			await CreateExam(
 				student.grade,
+				values.term,
 				values.subject,
 				values.scope,
 				values.exclusion,

@@ -121,6 +121,7 @@ export async function CreateTest(
 
 export async function CreateExam(
 	grade: number,
+	term: string,
 	subject: string,
 	scope: string,
 	exclusion: string,
@@ -130,6 +131,7 @@ export async function CreateExam(
 		await prisma.exam.create({
             data: {
                 grade,
+				term,
                 subject,
 				scope,
 				exclusion,

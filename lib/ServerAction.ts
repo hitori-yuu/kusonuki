@@ -42,19 +42,15 @@ export async function LinkUser(
 	return;
 }
 
-export async function CreateInformation(
-	title: string,
-	content: string,
-	authorId: string,
-) {
+export async function CreateInformation(title: string, content: string, authorId: string) {
 	try {
 		await prisma.information.create({
 			data: {
 				title,
-                content,
+				content,
 				date: new Date(),
-                authorId,
-			}
+				authorId,
+			},
 		});
 	} catch (error) {
 		console.log(error);
@@ -74,16 +70,15 @@ export async function CreateAssignment(
 	try {
 		deadline.setDate(deadline.getDate() + 1);
 		await prisma.assignment.create({
-            data: {
-                name,
-                grade,
-                group,
-                subject,
-                deadline,
-                authorId,
-            }
-        });
-
+			data: {
+				name,
+				grade,
+				group,
+				subject,
+				deadline,
+				authorId,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -102,16 +97,15 @@ export async function CreateTest(
 	try {
 		implementationDate.setDate(implementationDate.getDate() + 1);
 		await prisma.test.create({
-            data: {
-                name,
-                grade,
-                group,
-                subject,
-                implementationDate,
-                authorId,
-            }
-        });
-
+			data: {
+				name,
+				grade,
+				group,
+				subject,
+				implementationDate,
+				authorId,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -129,16 +123,15 @@ export async function CreateExam(
 ) {
 	try {
 		await prisma.exam.create({
-            data: {
-                grade,
+			data: {
+				grade,
 				term,
-                subject,
+				subject,
 				scope,
 				exclusion,
-                authorId,
-            }
-        });
-
+				authorId,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -156,15 +149,14 @@ export async function CreateSchedule(
 	try {
 		date.setDate(date.getDate() + 1);
 		await prisma.schedule.create({
-            data: {
-                grade,
-                group,
+			data: {
+				grade,
+				group,
 				date,
 				content,
-                authorId,
-            }
-        });
-
+				authorId,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -183,16 +175,15 @@ export async function CreateChange(
 	try {
 		date.setDate(date.getDate() + 1);
 		await prisma.change.create({
-            data: {
-                grade,
-                group,
+			data: {
+				grade,
+				group,
 				date,
 				period,
 				subject,
-                authorId,
-            }
-        });
-
+				authorId,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -210,15 +201,14 @@ export async function CreateExamSchedule(
 	try {
 		date.setDate(date.getDate() + 1);
 		await prisma.examSchedule.create({
-            data: {
+			data: {
 				grade,
 				period,
 				date,
 				timetable,
 				authorId,
-            }
-        });
-
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -248,11 +238,7 @@ export async function searchStudent(
 	}
 }
 
-export async function getAssignments(
-	grade: number,
-    group: string,
-	rangeDays: number,
-) {
+export async function getAssignments(grade: number, group: string, rangeDays: number) {
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
 
@@ -282,11 +268,7 @@ export async function getAssignments(
 	return assignments;
 }
 
-export async function getTests(
-	grade: number,
-    group: string,
-	date: Date,
-) {
+export async function getTests(grade: number, group: string, date: Date) {
 	const inputDate = new Date(date);
 	inputDate.setHours(0, 0, 0, 0);
 
@@ -311,12 +293,7 @@ export async function getTests(
 	return tests;
 }
 
-export async function getTimetable(
-	grade: number,
-    group: string,
-    week: string,
-    day: string,
-) {
+export async function getTimetable(grade: number, group: string, week: string, day: string) {
 	const timetable = await prisma.timetable.findFirst({
 		where: {
 			grade: grade,
@@ -329,11 +306,7 @@ export async function getTimetable(
 	return timetable;
 }
 
-export async function getSchedules(
-	grade: number,
-    group: string,
-	date: Date,
-) {
+export async function getSchedules(grade: number, group: string, date: Date) {
 	const inputDate = new Date(date);
 	inputDate.setHours(0, 0, 0, 0);
 
@@ -357,10 +330,7 @@ export async function getSchedules(
 	return schedule;
 }
 
-export async function getExamSchedules(
-	grade: number,
-	date: Date,
-) {
+export async function getExamSchedules(grade: number, date: Date) {
 	const inputDate = new Date(date);
 	inputDate.setHours(0, 0, 0, 0);
 

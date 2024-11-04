@@ -13,7 +13,7 @@ export async function GET(req: Request, { params }: { params: { slug: any } }) {
 		},
 		orderBy: [
 			{
-				scope: "desc",
+				scope: "asc",
 			},
 		],
 	});

@@ -49,8 +49,8 @@ const formSchema = z.object({
 				"H.R.",
 			]),
 		)
-		.min(1)
-		.max(4), // Max 4 time slots
+		.min(1, { message: "時間割は1～4時限の範囲で入力してください。" })
+		.max(4, { message: "時間割は1～4時限の範囲で入力してください。" }),
 });
 
 const ExamScheduleForm = () => {

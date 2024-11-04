@@ -119,6 +119,31 @@ export async function CreateTest(
 	return;
 }
 
+export async function CreateExam(
+	grade: number,
+	subject: string,
+	scope: string,
+	exclusion: string,
+	authorId: string,
+) {
+	try {
+		await prisma.exam.create({
+            data: {
+                grade,
+                subject,
+				scope,
+				exclusion,
+                authorId,
+            }
+        });
+
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
 export async function CreateSchedule(
 	grade: number,
 	group: string,
@@ -134,6 +159,34 @@ export async function CreateSchedule(
                 group,
 				date,
 				content,
+                authorId,
+            }
+        });
+
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
+export async function CreateChange(
+	grade: number,
+	group: string,
+	subject: string,
+	period: number,
+	date: Date,
+	authorId: string,
+) {
+	try {
+		date.setDate(date.getDate() + 1);
+		await prisma.change.create({
+            data: {
+                grade,
+                group,
+				date,
+				period,
+				subject,
                 authorId,
             }
         });

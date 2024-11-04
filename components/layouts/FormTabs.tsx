@@ -11,7 +11,7 @@ import {
 import AssignmentForm from "./AssignmentForm";
 import TestForm from "./TestForm";
 import ScheduleForm from "./ScheduleForm";
-import ExamScheduleForm from "./ExamScheduleForm";
+import ChangeForm from "./ChangeForm";
 
 const FormTabs = () => {
 	return (
@@ -40,19 +40,19 @@ const FormTabs = () => {
 			<Card className="my-2">
 				<CardHeader>
 					<CardTitle>予定作成</CardTitle>
-					<CardDescription>予定・試験時間割の情報を作成します。</CardDescription>
+					<CardDescription>予定・授業変更の情報を作成します。</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<Tabs defaultValue="schedule">
 						<TabsList className="grid w-full grid-cols-2">
 							<TabsTrigger value="schedule">予定</TabsTrigger>
-							<TabsTrigger value="examSchedule">試験時間割</TabsTrigger>
+							<TabsTrigger value="change">授業変更</TabsTrigger>
 						</TabsList>
 						<TabsContent value="schedule">
 							<ScheduleForm />
 						</TabsContent>
-						<TabsContent value="examSchedule">
-							<ExamScheduleForm />
+						<TabsContent value="change">
+							<ChangeForm />
 						</TabsContent>
 					</Tabs>
 				</CardContent>

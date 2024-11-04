@@ -33,6 +33,7 @@ import { useUser } from "@/hooks/useUser";
 import { CreateExam } from "@/lib/ServerAction";
 
 const formSchema = z.object({
+	term: z.string(),
 	subject: z.string(),
 	scope: z.string().min(2, {
 		message: "試験範囲は2文字以上で入力してください。",
@@ -49,6 +50,7 @@ const ExamForm = () => {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
+			term: "",
 			subject: "",
 			scope: "",
 			exclusion: "",
@@ -76,6 +78,30 @@ const ExamForm = () => {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+				<FormField
+					control={form.control}
+					name="term"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>試験学期</FormLabel>
+							<FormControl>
+								<Select onValueChange={field.onChange} defaultValue={field.value}>
+									<SelectTrigger>
+										<SelectValue placeholder="学期を選択" />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectItem value="前期中間">前期中間</SelectItem>
+										<SelectItem value="前期期末">前期期末</SelectItem>
+										<SelectItem value="後期中間">後期中間</SelectItem>
+										<SelectItem value="後期期末">後期期末</SelectItem>
+										<SelectItem value="学年末">学年末</SelectItem>
+									</SelectContent>
+								</Select>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 				<FormField
 					control={form.control}
 					name="subject"

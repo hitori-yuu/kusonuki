@@ -72,6 +72,7 @@ export async function CreateAssignment(
 	authorId: string,
 ) {
 	try {
+		deadline.setDate(deadline.getDate() + 1);
 		await prisma.assignment.create({
             data: {
                 name,
@@ -99,6 +100,7 @@ export async function CreateTest(
 	authorId: string,
 ) {
 	try {
+		implementationDate.setDate(implementationDate.getDate() + 1);
 		await prisma.test.create({
             data: {
                 name,
@@ -125,6 +127,7 @@ export async function CreateSchedule(
 	authorId: string,
 ) {
 	try {
+		date.setDate(date.getDate() + 1);
 		await prisma.schedule.create({
             data: {
                 grade,
@@ -150,6 +153,7 @@ export async function CreateExamSchedule(
 	authorId: string,
 ) {
 	try {
+		date.setDate(date.getDate() + 1);
 		await prisma.examSchedule.create({
             data: {
 				grade,

@@ -162,14 +162,7 @@ const DailyTimetable = () => {
 	}
 
 	if (!student) {
-		return (
-			<Card className="my-2">
-				<CardHeader>
-					<CardTitle>{typeOfDay}の予定</CardTitle>
-				</CardHeader>
-				<CardContent>この機能は生徒情報を連携してから使用できます。</CardContent>
-			</Card>
-		);
+		return <SkeletonLoader />;
 	}
 
 	return (

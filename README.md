@@ -4,19 +4,19 @@ Kusonuki is a web application developed using TypeScript, aimed at helping stude
 
 ## Features
 
-- **Student Schedules**: Displays a student's timetable, showing their classes and events.
-- **Assignment Management**: Lists all upcoming and completed assignments.
-- **Quizzes and Tests**: Provides a way to view and manage quizzes and tests.
-- **Responsive Design**: Fully optimized for mobile, tablet, and desktop screens.
+-   **Student Schedules**: Displays a student's timetable, showing their classes and events.
+-   **Assignment Management**: Lists all upcoming and completed assignments.
+-   **Quizzes and Tests**: Provides a way to view and manage quizzes and tests.
+-   **Responsive Design**: Fully optimized for mobile, tablet, and desktop screens.
 
 ## Prerequisites
 
 Before running the project, ensure you have the following software installed:
 
-- **Node.js**: Version 18 or above
-- **Yarn**: Version 1.x or 2.x
-- **Supabase**: Set up your own Supabase instance
-- **Prisma**: For database ORM
+-   **Node.js**: Version 18 or above
+-   **Yarn**: Version 1.x or 2.x
+-   **Supabase**: Set up your own Supabase instance
+-   **Prisma**: For database ORM
 
 ## Setup Instructions
 
@@ -65,11 +65,11 @@ Deployment
 
 The project can be deployed on platforms like Vercel. Follow these steps to deploy:
 
-	1.	Push your project to a GitHub repository.
-	2.	Create a new project on Vercel.
-	3.	Link your GitHub repository.
-	4.	Add the same environment variables from the .env file in Vercel’s settings.
-	5.	Deploy!
+    1.	Push your project to a GitHub repository.
+    2.	Create a new project on Vercel.
+    3.	Link your GitHub repository.
+    4.	Add the same environment variables from the .env file in Vercel’s settings.
+    5.	Deploy!
 
 Testing
 
@@ -87,14 +87,14 @@ yarn e2e
 
 Technology Stack
 
-	•	Next.js: Frontend framework
-	•	TypeScript: Type safety
-	•	Prisma: Database ORM
-	•	Supabase: Database and authentication
-	•	Tailwind CSS: Styling
-	•	Shadcn: UI components
-	•	Jest: Unit testing
-	•	Cypress: E2E testing
+    •	Next.js: Frontend framework
+    •	TypeScript: Type safety
+    •	Prisma: Database ORM
+    •	Supabase: Database and authentication
+    •	Tailwind CSS: Styling
+    •	Shadcn: UI components
+    •	Jest: Unit testing
+    •	Cypress: E2E testing
 
 Project Structure
 
@@ -114,18 +114,18 @@ Project Structure
 
 Future Improvements
 
-	•	Implement user role-based access control (RBAC) for admin and student roles.
-	•	Add notifications for new assignments or schedule changes.
-	•	Improve accessibility (ARIA roles and keyboard navigation).
-	•	Optimize performance with server-side caching.
+    •	Implement user role-based access control (RBAC) for admin and student roles.
+    •	Add notifications for new assignments or schedule changes.
+    •	Improve accessibility (ARIA roles and keyboard navigation).
+    •	Optimize performance with server-side caching.
 
 Contributing
 
-	1.	Fork the repository.
-	2.	Create a new branch (git checkout -b feature-branch).
-	3.	Commit your changes (git commit -m 'Add some feature').
-	4.	Push to the branch (git push origin feature-branch).
-	5.	Open a pull request.
+    1.	Fork the repository.
+    2.	Create a new branch (git checkout -b feature-branch).
+    3.	Commit your changes (git commit -m 'Add some feature').
+    4.	Push to the branch (git push origin feature-branch).
+    5.	Open a pull request.
 
 License
 

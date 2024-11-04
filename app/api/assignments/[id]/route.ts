@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: Request, { params }: { params: { id: string } }) {
 	const assignmentData = await prisma.assignment.findUnique({
 		where: {
-            id: parseInt(params.id)
+			id: parseInt(params.id),
 		},
 	});
 	return NextResponse.json(assignmentData);

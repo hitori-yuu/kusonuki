@@ -27,7 +27,7 @@ const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
 const DailyQuiz = () => {
 	const { user, student, liff } = useUser();
-	const [quiz, setQuiz] = useState<TestData[] | null>([]);
+	const [quiz, setQuiz] = useState<TestData[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [typeOfDay, setTypeOfDay] = useState<string>("今日");
@@ -96,15 +96,10 @@ const DailyQuiz = () => {
 	}
 
 	if (!student) {
-		return (
-			<Card className="my-2">
-				<CardHeader>
-					<CardTitle>{typeOfDay}の小テスト</CardTitle>
-				</CardHeader>
-				<CardContent>この機能は生徒情報を連携してから使用できます。</CardContent>
-			</Card>
-		);
+		return <SkeletonLoader />;
 	}
+
+	if (quiz?.length < 1) return;
 
 	return (
 		<Card className="my-2">
@@ -120,18 +115,13 @@ const DailyQuiz = () => {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{quiz ? (
+						{quiz &&
 							quiz.map((item, index) => (
 								<TableRow key={index}>
 									<TableCell>{item.name}</TableCell>
 									<TableCell>{item.subject}</TableCell>
 								</TableRow>
-							))
-						) : (
-							<TableRow>
-								<TableCell colSpan={2}>小テストなし</TableCell>
-							</TableRow>
-						)}
+							))}
 					</TableBody>
 				</Table>
 			</CardContent>

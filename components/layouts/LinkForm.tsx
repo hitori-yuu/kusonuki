@@ -28,7 +28,10 @@ const formSchema = z.object({
 	lastName: z.string(),
 	grade: z.number(),
 	group: z.string(),
-	number: z.number(),
+	number: z
+		.number()
+		.min(1, { message: "出席番号は1～40の範囲で入力してください。" })
+		.max(40, { message: "出席番号は1～40の範囲で入力してください。" }),
 });
 
 const LinkForm = () => {

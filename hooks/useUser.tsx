@@ -54,6 +54,10 @@ export const useUser = () => {
 	const refreshData = useCallback(async () => {
 		if (!liff?.isLoggedIn()) {
 			setIsLoading(false);
+			const userData = await getUserData("Uaf3fff4affec66cf3705df6f848fdce5");
+			setUser(userData);
+			const studentData = await getStudentData(userData.studentName);
+			setStudent(studentData);
 			return;
 		}
 

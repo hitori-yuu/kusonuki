@@ -19,17 +19,17 @@ import {
 } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getSchedules, getTests, getTimetable } from "@/lib/ServerAction";
+import { getExamSchedules, getSchedules, getTests, getTimetable } from "@/lib/ServerAction";
 import { typeWeek } from "@/lib/utils";
-import { ScheduleData, TestData, TimetableData } from "@/types/types";
+import { ExamScheduleData, ScheduleData, TestData, TimetableData } from "@/types/types";
 
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
 const DailyTimetable = () => {
 	const { user, student, liff } = useUser();
 	const [timetable, setTimetable] = useState<TimetableData | null>(null);
-	const [quiz, setQuiz] = useState<TestData[] | null>([]);
 	const [schedule, setSchedule] = useState<ScheduleData[] | null>([]);
+	const [examSchedule, setExamSchedule] = useState<ExamScheduleData | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [typeOfDay, setTypeOfDay] = useState<string>("今日");
@@ -62,7 +62,14 @@ const DailyTimetable = () => {
 					week,
 					dayOfWeek,
 				)) as TimetableData;
+
+				const examScheduleData = (await getExamSchedules(
+					student.grade,
+					date,
+				)) as ExamScheduleData;
+
 				setTimetable(timetableData);
+				setExamSchedule(examScheduleData);
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "Failed to fetch timetable");
 			} finally {
@@ -181,7 +188,7 @@ const DailyTimetable = () => {
 							<TableHead>教科</TableHead>
 						</TableRow>
 					</TableHeader>
-					{timetable ? (
+					{!examSchedule && timetable ? (
 						<TableBody>
 							<TableRow>
 								<TableHead>1.</TableHead>
@@ -204,6 +211,13 @@ const DailyTimetable = () => {
 								<TableCell>{timetable.fifth}</TableCell>
 							</TableRow>
 						</TableBody>
+					) : examSchedule ? (
+						examSchedule.timetable?.map((item, index) => (
+							<TableRow key={index}>
+								<TableHead>{index + 1}.</TableHead>
+								<TableCell>{item}</TableCell>
+							</TableRow>
+						))
 					) : (
 						<TableBody>
 							<TableRow>
@@ -218,6 +232,11 @@ const DailyTimetable = () => {
 							<CardHeader className="text-center">{item.content}</CardHeader>
 						</Card>
 					))}
+				{examSchedule && (
+					<Card className="my-1 py-[-5px]">
+						<CardHeader className="text-center">{examSchedule.period}試験</CardHeader>
+					</Card>
+				)}
 			</CardContent>
 		</Card>
 	);

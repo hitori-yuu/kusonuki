@@ -17,6 +17,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
@@ -41,6 +42,7 @@ const formSchema = z.object({
 	}),
 	subject: z.string(),
 	implementationDate: z.date(),
+	isEvery: z.boolean().default(false),
 });
 
 const TestForm = () => {
@@ -54,6 +56,7 @@ const TestForm = () => {
 			name: "",
 			subject: "",
 			implementationDate: new Date(),
+			isEvery: false,
 		},
 	});
 
@@ -65,6 +68,7 @@ const TestForm = () => {
 				student.group,
 				values.subject,
 				values.implementationDate,
+				values.isEvery,
 				user.id,
 			);
 			form.reset();
@@ -167,6 +171,23 @@ const TestForm = () => {
 						</FormItem>
 					)}
 				/>
+				{user?.role == ("ADMIN" || "EDITOR") && (
+					<FormField
+						control={form.control}
+						name="isEvery"
+						render={({ field }) => (
+							<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+								<FormControl>
+									<Checkbox
+										checked={field.value}
+										onCheckedChange={field.onChange}
+									/>
+								</FormControl>
+								<FormLabel>全てのクラスに追加</FormLabel>
+							</FormItem>
+						)}
+					/>
+				)}
 				<Button type="submit" className="w-full">
 					小テスト作成
 				</Button>

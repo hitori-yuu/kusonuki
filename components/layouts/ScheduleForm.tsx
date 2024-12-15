@@ -16,6 +16,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
@@ -28,6 +29,7 @@ const formSchema = z.object({
 	content: z.string().min(2, {
 		message: "予定名は2文字以上で入力してください。",
 	}),
+	isEvery: z.boolean().default(false),
 	date: z.date(),
 });
 
@@ -41,6 +43,7 @@ const ScheduleForm = () => {
 		defaultValues: {
 			content: "",
 			date: new Date(),
+			isEvery: false,
 		},
 	});
 
@@ -51,6 +54,7 @@ const ScheduleForm = () => {
 				student.group,
 				values.content,
 				values.date,
+				values.isEvery,
 				user.id,
 			);
 			form.reset();
@@ -117,6 +121,24 @@ const ScheduleForm = () => {
 						</FormItem>
 					)}
 				/>
+				{user?.role == ("ADMIN" || "EDITOR") && (
+					<FormField
+						control={form.control}
+						name="isEvery"
+						render={({ field }) => (
+							<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+								<FormControl>
+									<Checkbox
+										checked={field.value}
+										onCheckedChange={field.onChange}
+									/>
+								</FormControl>
+								<FormLabel>全てのクラスに追加</FormLabel>
+							</FormItem>
+						)}
+					/>
+				)}
+
 				<Button type="submit" className="w-full">
 					予定作成
 				</Button>

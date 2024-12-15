@@ -63,7 +63,7 @@ const DailyQuiz = () => {
 	}, [student]);
 
 	const SkeletonLoader = () => (
-		<Card className="my-2">
+		<Card className="my-4">
 			<CardHeader>
 				<CardTitle>{typeOfDay}の小テスト</CardTitle>
 			</CardHeader>

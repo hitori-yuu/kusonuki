@@ -16,7 +16,7 @@ import ChangeForm from "./ChangeForm";
 const FormTabs = () => {
 	return (
 		<>
-			<Card className="my-2">
+			<Card className="my-4">
 				<CardHeader>
 					<CardTitle>課題・小テスト作成</CardTitle>
 					<CardDescription>課題・小テストの情報を作成します。</CardDescription>
@@ -37,7 +37,7 @@ const FormTabs = () => {
 				</CardContent>
 			</Card>
 
-			<Card className="my-2">
+			<Card className="my-4">
 				<CardHeader>
 					<CardTitle>予定作成</CardTitle>
 					<CardDescription>予定・授業変更の情報を作成します。</CardDescription>

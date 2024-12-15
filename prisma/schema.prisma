@@ -59,6 +59,7 @@ model Assignment {
     deadline  DateTime @db.Date
     grade     Int      @default(2)
     group     String   @default("H")
+    isEvery   Boolean  @default(false)
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
     createdAt DateTime @default(now())
@@ -72,6 +73,7 @@ model Test {
     implementationDate DateTime @db.Date
     grade              Int      @default(2)
     group              String   @default("H")
+    isEvery            Boolean  @default(false)
     author             User     @relation(fields: [authorId], references: [id])
     authorId           String
     createdAt          DateTime @default(now())
@@ -98,6 +100,7 @@ model Change {
     subject   String
     grade     Int      @default(2)
     group     String   @default("H")
+    isEvery   Boolean  @default(false)
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
     createdAt DateTime @default(now())
@@ -110,6 +113,7 @@ model Schedule {
     grade     Int      @default(2)
     group     String   @default("H")
     content   String
+    isEvery   Boolean  @default(false)
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
     createdAt DateTime @default(now())
@@ -162,6 +166,16 @@ model Information {
     content   String
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model TargetEnglish {
+    id Int      @id @default(autoincrement())
+    number Int
+    part String
+    phonetic String
+    translation String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

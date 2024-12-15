@@ -92,21 +92,39 @@ export async function isUser(userId: string) {
 }
 
 export function typeWeek(date: Date = new Date()): String {
-	// 基準日（A週の開始日）
-	const baseDate = new Date("2024-09-30"); // 例えば2024年1月1日をC週の開始日とする
+	if (date.getMonth() < 10) {
+		// 週の開始日
+		const baseDate = new Date("2024-12-09"); // A週の開始日
 
-	// 日付のみにフォーカスするために時刻部分をクリア
-	baseDate.setHours(0, 0, 0, 0);
-	date.setHours(0, 0, 0, 0);
+		// 時刻クリア
+		baseDate.setHours(0, 0, 0, 0);
+		date.setHours(0, 0, 0, 0);
 
-	// 基準日からの経過日数を計算
-	const msInDay = 24 * 60 * 60 * 1000;
-	const daysDifference = Math.floor((date.getTime() - baseDate.getTime()) / msInDay);
+		// 経過日数
+		const msInDay = 24 * 60 * 60 * 1000;
+		const daysDifference = Math.floor((date.getTime() - baseDate.getTime()) / msInDay);
 
-	// 経過日数を14で割った余りが0から6ならA週、7から13ならB週
-	if (daysDifference % 14 < 7) {
-		return "D";
+		if (daysDifference % 14 < 7) {
+			return "A";
+		} else {
+			return "B";
+		}
 	} else {
-		return "C";
+		// 週の開始日
+		const baseDate = new Date("2024-12-09"); // C週の開始日
+
+		// 時刻クリア
+		baseDate.setHours(0, 0, 0, 0);
+		date.setHours(0, 0, 0, 0);
+
+		// 経過日数
+		const msInDay = 24 * 60 * 60 * 1000;
+		const daysDifference = Math.floor((date.getTime() - baseDate.getTime()) / msInDay);
+
+		if (daysDifference % 14 < 7) {
+			return "C";
+		} else {
+			return "D";
+		}
 	}
 }

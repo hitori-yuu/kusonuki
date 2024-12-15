@@ -17,6 +17,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
@@ -38,6 +39,7 @@ const formSchema = z.object({
 	}),
 	subject: z.string(),
 	deadline: z.date(),
+	isEvery: z.boolean().default(false),
 });
 
 const AssignmentForm = () => {
@@ -51,6 +53,7 @@ const AssignmentForm = () => {
 			name: "",
 			subject: "",
 			deadline: new Date(),
+			isEvery: false,
 		},
 	});
 
@@ -62,6 +65,7 @@ const AssignmentForm = () => {
 				student.group,
 				values.subject,
 				values.deadline,
+				values.isEvery,
 				user.id,
 			);
 			form.reset();
@@ -164,6 +168,23 @@ const AssignmentForm = () => {
 						</FormItem>
 					)}
 				/>
+				{user?.role == ("ADMIN" || "EDITOR") && (
+					<FormField
+						control={form.control}
+						name="isEvery"
+						render={({ field }) => (
+							<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+								<FormControl>
+									<Checkbox
+										checked={field.value}
+										onCheckedChange={field.onChange}
+									/>
+								</FormControl>
+								<FormLabel>全てのクラスに追加</FormLabel>
+							</FormItem>
+						)}
+					/>
+				)}
 				<Button type="submit" className="w-full">
 					課題作成
 				</Button>

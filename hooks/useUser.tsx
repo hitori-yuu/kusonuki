@@ -55,10 +55,10 @@ export const useUser = () => {
 		if (!liff?.isLoggedIn()) {
 			setIsLoading(false);
 			// For test
-			// const userData = await getUserData("process.env.ADMIN_ID");
-			// setUser(userData);
-			// const studentData = await getStudentData(userData.studentName);
-			// setStudent(studentData);
+			const userData = await getUserData("Ud713d7bf56b49d0f40c0712335f625ba");
+			setUser(userData);
+			const studentData = await getStudentData(userData.studentName);
+			setStudent(studentData);
 			return;
 		}
 

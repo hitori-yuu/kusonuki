@@ -163,7 +163,7 @@ const WeekData: React.FC = () => {
 	);
 
 	return (
-		<div>
+		<div className="mx-auto max-w-3xl">
 			{isClient && (
 				<>
 					<div className="overflow-x-auto whitespace-no-wrap">

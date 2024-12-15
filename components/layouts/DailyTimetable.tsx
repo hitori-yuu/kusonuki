@@ -61,14 +61,14 @@ const DailyTimetable = () => {
 					student.group,
 					week,
 					dayOfWeek,
-				)) as TimetableData;
+				)) as TimetableData[];
 
 				const examScheduleData = (await getExamSchedules(
 					student.grade,
 					date,
 				)) as ExamScheduleData;
 
-				setTimetable(timetableData);
+				setTimetable(timetableData[0]);
 				setExamSchedule(examScheduleData);
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "Failed to fetch timetable");

@@ -355,13 +355,18 @@ export async function getTests(grade: number, group: string, date: Date) {
 }
 
 export async function getTimetable(grade: number, group: string, week: string, day: string) {
-	const timetable = await prisma.timetable.findFirst({
+	const timetable = await prisma.timetable.findMany({
 		where: {
 			grade: grade,
 			group: group,
 			week: week,
 			day: day,
 		},
+		orderBy: [
+			{
+				createdAt: "desc",
+			},
+		],
 	});
 
 	return timetable;

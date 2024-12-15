@@ -4,6 +4,8 @@ import { StudentData, UserData } from "@/types/types";
 import prisma from "./prismaClient";
 import { cache } from "react";
 
+const groups = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+
 export async function LinkUser(
 	lastName: string,
 	firstName: string,
@@ -65,20 +67,35 @@ export async function CreateAssignment(
 	group: string,
 	subject: string,
 	deadline: Date,
+	isEvery: boolean,
 	authorId: string,
 ) {
 	try {
 		deadline.setDate(deadline.getDate() + 1);
-		await prisma.assignment.create({
-			data: {
-				name,
-				grade,
-				group,
-				subject,
-				deadline,
-				authorId,
-			},
-		});
+		if (isEvery) {
+			await prisma.assignment.create({
+				data: {
+					name,
+					grade,
+					group,
+					subject,
+					deadline,
+					isEvery: true,
+					authorId,
+				},
+			});
+		} else {
+			await prisma.assignment.create({
+				data: {
+					name,
+					grade,
+					group,
+					subject,
+					deadline,
+					authorId,
+				},
+			});
+		}
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -92,20 +109,35 @@ export async function CreateTest(
 	group: string,
 	subject: string,
 	implementationDate: Date,
+	isEvery: boolean,
 	authorId: string,
 ) {
 	try {
 		implementationDate.setDate(implementationDate.getDate() + 1);
-		await prisma.test.create({
-			data: {
-				name,
-				grade,
-				group,
-				subject,
-				implementationDate,
-				authorId,
-			},
-		});
+		if (isEvery) {
+			await prisma.test.create({
+				data: {
+					name,
+					grade,
+					group,
+					subject,
+					implementationDate,
+					isEvery: true,
+					authorId,
+				},
+			});
+		} else {
+			await prisma.test.create({
+				data: {
+					name,
+					grade,
+					group,
+					subject,
+					implementationDate,
+					authorId,
+				},
+			});
+		}
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -144,19 +176,33 @@ export async function CreateSchedule(
 	group: string,
 	content: string,
 	date: Date,
+	isEvery: boolean,
 	authorId: string,
 ) {
 	try {
 		date.setDate(date.getDate() + 1);
-		await prisma.schedule.create({
-			data: {
-				grade,
-				group,
-				date,
-				content,
-				authorId,
-			},
-		});
+		if (isEvery) {
+			await prisma.schedule.create({
+				data: {
+					grade,
+					group,
+					date,
+					content,
+					isEvery: true,
+					authorId,
+				},
+			});
+		} else {
+			await prisma.schedule.create({
+				data: {
+					grade,
+					group,
+					date,
+					content,
+					authorId,
+				},
+			});
+		}
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -170,20 +216,35 @@ export async function CreateChange(
 	subject: string,
 	period: number,
 	date: Date,
+	isEvery: boolean,
 	authorId: string,
 ) {
 	try {
 		date.setDate(date.getDate() + 1);
-		await prisma.change.create({
-			data: {
-				grade,
-				group,
-				date,
-				period,
-				subject,
-				authorId,
-			},
-		});
+		if (isEvery) {
+			await prisma.change.create({
+				data: {
+					grade,
+					group,
+					date,
+					period,
+					subject,
+					isEvery: true,
+					authorId,
+				},
+			});
+		} else {
+			await prisma.change.create({
+				data: {
+					grade,
+					group,
+					date,
+					period,
+					subject,
+					authorId,
+				},
+			});
+		}
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -294,13 +355,18 @@ export async function getTests(grade: number, group: string, date: Date) {
 }
 
 export async function getTimetable(grade: number, group: string, week: string, day: string) {
-	const timetable = await prisma.timetable.findFirst({
+	const timetable = await prisma.timetable.findMany({
 		where: {
 			grade: grade,
 			group: group,
 			week: week,
 			day: day,
 		},
+		orderBy: [
+			{
+				createdAt: "desc",
+			},
+		],
 	});
 
 	return timetable;
@@ -316,7 +382,14 @@ export async function getSchedules(grade: number, group: string, date: Date) {
 	const schedule = await prisma.schedule.findMany({
 		where: {
 			grade: grade,
-			group: group,
+			OR: [
+				{
+					group: group,
+				},
+				{
+					isEvery: true,
+				},
+			],
 			AND: [
 				{
 					date: {
@@ -356,6 +429,40 @@ export async function getExamSchedules(grade: number, date: Date) {
 		],
 	});
 	return examSchedules;
+}
+
+export async function getAllAssignments() {
+	const assignments = await prisma.assignment.findMany({
+		orderBy: [
+			{
+				createdAt: "asc",
+			},
+		],
+	});
+
+	return assignments;
+}
+export async function getAllTests() {
+	const tests = await prisma.test.findMany({
+		orderBy: [
+			{
+				createdAt: "asc",
+			},
+		],
+	});
+
+	return tests;
+}
+export async function getAllChanges() {
+	const changes = await prisma.change.findMany({
+		orderBy: [
+			{
+				createdAt: "asc",
+			},
+		],
+	});
+
+	return changes;
 }
 
 export async function getAllUsers(): Promise<UserData[]> {

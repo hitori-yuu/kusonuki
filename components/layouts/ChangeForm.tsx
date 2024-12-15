@@ -17,6 +17,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useToast } from "@/components/ui/use-toast";
@@ -39,6 +40,7 @@ const formSchema = z.object({
 		.min(1, { message: "時限は1～5の範囲で入力してください。" })
 		.max(5, { message: "時限は1～5の範囲で入力してください。" }),
 	date: z.date(),
+	isEvery: z.boolean().default(false),
 });
 
 const ChangeForm = () => {
@@ -52,6 +54,7 @@ const ChangeForm = () => {
 			subject: "",
 			period: 1,
 			date: new Date(),
+			isEvery: false,
 		},
 	});
 
@@ -63,6 +66,7 @@ const ChangeForm = () => {
 				values.subject,
 				values.period,
 				values.date,
+				values.isEvery,
 				user.id,
 			);
 			form.reset();
@@ -170,6 +174,23 @@ const ChangeForm = () => {
 						</FormItem>
 					)}
 				/>
+				{user?.role == ("ADMIN" || "EDITOR") && (
+					<FormField
+						control={form.control}
+						name="isEvery"
+						render={({ field }) => (
+							<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+								<FormControl>
+									<Checkbox
+										checked={field.value}
+										onCheckedChange={field.onChange}
+									/>
+								</FormControl>
+								<FormLabel>全てのクラスに追加</FormLabel>
+							</FormItem>
+						)}
+					/>
+				)}
 				<Button type="submit" className="w-full">
 					授業変更作成
 				</Button>

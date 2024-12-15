@@ -38,7 +38,7 @@ const WeeklyInformation = () => {
 	});
 
 	return (
-		<Card className="my-2">
+		<Card className="my-4">
 			<CardHeader>
 				<CardTitle>一週間の予定</CardTitle>
 				<CardDescription>クリックして詳細を確認</CardDescription>
@@ -60,7 +60,7 @@ const WeeklyInformation = () => {
 							</div>
 						</div>
 					</DrawerTrigger>
-					<DrawerContent className="h-full">
+					<DrawerContent className="h-full w-full">
 						<WeekData />
 						<DrawerFooter>
 							<DrawerClose asChild>

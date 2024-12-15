@@ -35,17 +35,17 @@ const formSchema = z.object({
 });
 
 const LinkForm = () => {
-	const { user } = useUser();
+	const { user, student, liff } = useUser();
 	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			firstName: "",
-			lastName: "",
-			grade: 2,
-			group: "",
-			number: 1,
+			firstName: student?.firstName || "",
+			lastName: student?.lastName || "",
+			grade: student?.grade || 2,
+			group: student?.group || "",
+			number: student?.number || 1,
 		},
 	});
 
@@ -104,7 +104,11 @@ const LinkForm = () => {
 							<FormItem className="flex-1">
 								<FormLabel>性</FormLabel>
 								<FormControl>
-									<Input placeholder="名字" {...field} />
+									{student ? (
+										<Input placeholder={student.lastName} {...field} />
+									) : (
+										<Input placeholder="名字" {...field} />
+									)}
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -117,7 +121,11 @@ const LinkForm = () => {
 							<FormItem className="flex-1">
 								<FormLabel>名</FormLabel>
 								<FormControl>
-									<Input placeholder="名前" {...field} />
+									{student ? (
+										<Input placeholder={student.firstName} {...field} />
+									) : (
+										<Input placeholder="名前" {...field} />
+									)}
 								</FormControl>
 								<FormMessage />
 							</FormItem>
@@ -134,7 +142,9 @@ const LinkForm = () => {
 								<FormControl>
 									<Select
 										onValueChange={(value) => field.onChange(Number(value))}
-										defaultValue={String(field.value)}
+										defaultValue={
+											student ? String(student.grade) : String(field.value)
+										}
 									>
 										<SelectTrigger>
 											<SelectValue placeholder="学年を選択" />
@@ -162,7 +172,11 @@ const LinkForm = () => {
 										defaultValue={field.value}
 									>
 										<SelectTrigger>
-											<SelectValue placeholder="クラスを選択" />
+											{student ? (
+												<SelectValue placeholder={student.group} />
+											) : (
+												<SelectValue placeholder="クラスを選択" />
+											)}
 										</SelectTrigger>
 										<SelectContent>
 											<SelectItem value="A">A</SelectItem>
@@ -190,7 +204,7 @@ const LinkForm = () => {
 								<FormControl>
 									<Input
 										type="number"
-										placeholder="出席番号を入力"
+										defaultValue="出席番号を入力"
 										{...field}
 										onChange={(e) => field.onChange(Number(e.target.value))}
 									/>

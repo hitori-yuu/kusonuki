@@ -68,12 +68,14 @@ const WeekData: React.FC = () => {
 				const week = typeWeek(date).toString();
 				const dayOfWeek = daysOfWeek[date.getDay()];
 
-				const [timetable, test, schedule, examSchedule] = await Promise.all([
+				const [timetableData, test, schedule, examSchedule] = await Promise.all([
 					getTimetable(grade, group, week, dayOfWeek),
 					getTests(grade, group, date),
 					getSchedules(grade, group, date),
 					getExamSchedules(grade, date),
 				]);
+
+				const timetable = timetableData[0];
 
 				weekDataTemp[dateString] = { timetable, test, schedule, examSchedule };
 			}
@@ -163,7 +165,7 @@ const WeekData: React.FC = () => {
 	);
 
 	return (
-		<div>
+		<div className="mx-auto max-w-3xl">
 			{isClient && (
 				<>
 					<div className="overflow-x-auto whitespace-no-wrap">

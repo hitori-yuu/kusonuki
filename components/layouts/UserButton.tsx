@@ -10,7 +10,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Settings, User, Speech, UsersRound } from "lucide-react";
+import { Settings, User, Speech, UsersRound, FileStack } from "lucide-react";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 import { useUser } from "@/hooks/useUser";
@@ -95,13 +95,13 @@ export function UserButton() {
 						<DropdownMenuGroup>
 							<Link href="/assignments">
 								<DropdownMenuItem>
-									<UsersRound className="mr-2 h-4 w-4" />
+									<FileStack className="mr-2 h-4 w-4" />
 									<span>課題</span>
 								</DropdownMenuItem>
 							</Link>
 							<Link href="/tests">
 								<DropdownMenuItem>
-									<UsersRound className="mr-2 h-4 w-4" />
+									<FileStack className="mr-2 h-4 w-4" />
 									<span>小テスト</span>
 								</DropdownMenuItem>
 							</Link>

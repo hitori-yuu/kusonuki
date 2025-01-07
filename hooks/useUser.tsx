@@ -51,14 +51,18 @@ export const useUser = () => {
 	const [error, setError] = useState<Error | null>(null);
 	const { liff } = useLiff();
 
+	async function TestUser() {
+		setIsLoading(false);
+		// Guest User
+		const userData = await getUserData("guest");
+		setUser(userData);
+		const studentData = await getStudentData(userData.studentName);
+		setStudent(studentData);
+	}
+
 	const refreshData = useCallback(async () => {
 		if (!liff?.isLoggedIn()) {
-			setIsLoading(false);
-			// For test
-			const userData = await getUserData("Ud713d7bf56b49d0f40c0712335f625ba");
-			setUser(userData);
-			const studentData = await getStudentData(userData.studentName);
-			setStudent(studentData);
+			await TestUser();
 			return;
 		}
 
@@ -72,7 +76,7 @@ export const useUser = () => {
 				const studentData = await getStudentData(userData.studentName);
 				setStudent(studentData);
 			} else {
-				setStudent(null);
+				await TestUser();
 			}
 		} catch (error) {
 			setError(error instanceof Error ? error : new Error("Failed to fetch data"));

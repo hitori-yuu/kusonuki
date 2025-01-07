@@ -92,7 +92,7 @@ export async function isUser(userId: string) {
 }
 
 export function typeWeek(date: Date = new Date()): String {
-	if (date.getMonth() < 10) {
+	if (date.getMonth() > 3 && date.getMonth() < 10) {
 		// 週の開始日
 		const baseDate = new Date("2024-12-09"); // A週の開始日
 

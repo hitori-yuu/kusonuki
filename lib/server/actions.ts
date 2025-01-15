@@ -16,7 +16,13 @@ export async function LinkUser(
 	authorId: string,
 ) {
 	try {
-		const student = await searchStudent(lastName, firstName, currentGrade, currentClass, currentNumber);
+		const student = await searchStudent(
+			lastName,
+			firstName,
+			currentGrade,
+			currentClass,
+			currentNumber,
+		);
 
 		if (!student) return;
 
@@ -47,19 +53,25 @@ export async function LinkUser(
 	return;
 }
 
-export async function CreateStudent(fullName: string, enrollmentYear: number, currentGrade: number, currentClass: string, currentNumber: number) {
+export async function CreateStudent(
+	fullName: string,
+	enrollmentYear: number,
+	currentGrade: number,
+	currentClass: string,
+	currentNumber: number,
+) {
 	try {
 		await prisma.student.create({
-            data: {
-                fullName,
-                enrollmentYear,
-                currentGrade,
-                currentClass,
-                currentNumber,
-                isActive: true,
-                isLinked: false,
-            },
-        });
+			data: {
+				fullName,
+				enrollmentYear,
+				currentGrade,
+				currentClass,
+				currentNumber,
+				isActive: true,
+				isLinked: false,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -86,7 +98,7 @@ export async function CreateInformation(title: string, content: string, authorId
 
 export async function CreateAssignment(
 	title: string,
-	subject : string,
+	subject: string,
 	dueDate: Date,
 	grade: number,
 	className: string,
@@ -103,9 +115,9 @@ export async function CreateAssignment(
 					dueDate,
 					academicYear: getFiscalYear(),
 					grade,
-                    className,
-                    isEvery: true,
-                    authorId,
+					className,
+					isEvery: true,
+					authorId,
 				},
 			});
 		} else {
@@ -116,9 +128,9 @@ export async function CreateAssignment(
 					dueDate,
 					academicYear: getFiscalYear(),
 					grade,
-                    className,
-                    isEvery: false,
-                    authorId,
+					className,
+					isEvery: false,
+					authorId,
 				},
 			});
 		}
@@ -131,7 +143,7 @@ export async function CreateAssignment(
 
 export async function CreateQuiz(
 	scope: string,
-	subject : string,
+	subject: string,
 	testDate: Date,
 	grade: number,
 	className: string,
@@ -148,9 +160,9 @@ export async function CreateQuiz(
 					testDate,
 					academicYear: getFiscalYear(),
 					grade,
-                    className,
-                    isEvery: true,
-                    authorId,
+					className,
+					isEvery: true,
+					authorId,
 				},
 			});
 		} else {
@@ -161,9 +173,9 @@ export async function CreateQuiz(
 					testDate,
 					academicYear: getFiscalYear(),
 					grade,
-                    className,
-                    isEvery: false,
-                    authorId,
+					className,
+					isEvery: false,
+					authorId,
 				},
 			});
 		}
@@ -180,7 +192,7 @@ export async function CreateExam(
 	scopeItems: string[],
 	excludedItems: string[],
 	grade: number,
-    authorId: string,
+	authorId: string,
 ) {
 	try {
 		await prisma.examScope.create({
@@ -202,11 +214,11 @@ export async function CreateExam(
 }
 
 export async function CreateSchedule(
-    date: Date,
-    content: string,
-    grade: number,
-    className: string,
-    isEvery: boolean,
+	date: Date,
+	content: string,
+	grade: number,
+	className: string,
+	isEvery: boolean,
 	authorId: string,
 ) {
 	try {
@@ -244,12 +256,12 @@ export async function CreateSchedule(
 }
 
 export async function CreateChange(
-    date: Date,
-    period: number,
+	date: Date,
+	period: number,
 	subject: string,
-    grade: number,
-    className: string,
-    isEvery: boolean,
+	grade: number,
+	className: string,
+	isEvery: boolean,
 	authorId: string,
 ) {
 	try {
@@ -292,7 +304,7 @@ export async function CreateExamSchedule(
 	date: Date,
 	period: string,
 	timetable: string[],
-    grade: number,
+	grade: number,
 	authorId: string,
 ) {
 	try {
@@ -544,13 +556,13 @@ export const getAllStudents = cache(async (): Promise<StudentData[]> => {
 });
 
 export async function Student(studentId: number): Promise<StudentData> {
-    const student = await prisma.student.findUnique({
-        where: {
-            id: studentId,
-        },
-    });
+	const student = await prisma.student.findUnique({
+		where: {
+			id: studentId,
+		},
+	});
 
-    return student as StudentData;
+	return student as StudentData;
 }
 
 export async function getAllPosts(): Promise<PostData[]> {

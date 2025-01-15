@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useLiff } from "@/components/layouts/LiffProvider";
 import { StudentData, UserData } from "@/types/types";
-import { Student, User } from "@/lib/ServerAction";
+import { Student, User } from "@/lib/server/actions";
 
 type CacheData = {
 	data: UserData | StudentData;
@@ -27,8 +27,8 @@ const getUserData = async (userId: string): Promise<UserData> => {
 	return userData;
 };
 
-const getStudentData = async (studentName: string): Promise<StudentData> => {
-	const cachedStudent = sessionStorage.getItem(`studentData_${studentName}`);
+const getStudentData = async (studentId: number): Promise<StudentData> => {
+	const cachedStudent = sessionStorage.getItem(`studentData_${studentId}`);
 	if (cachedStudent) {
 		const { data, timestamp }: CacheData = JSON.parse(cachedStudent);
 		if (Date.now() - timestamp < CACHE_DURATION) {
@@ -36,9 +36,9 @@ const getStudentData = async (studentName: string): Promise<StudentData> => {
 		}
 	}
 
-	const studentData = await Student(studentName);
+	const studentData = await Student(studentId);
 	sessionStorage.setItem(
-		`studentData_${studentName}`,
+		`studentData_${studentId}`,
 		JSON.stringify({ data: studentData, timestamp: Date.now() }),
 	);
 	return studentData;
@@ -51,18 +51,8 @@ export const useUser = () => {
 	const [error, setError] = useState<Error | null>(null);
 	const { liff } = useLiff();
 
-	async function TestUser() {
-		setIsLoading(false);
-		// Guest User
-		const userData = await getUserData("guest");
-		setUser(userData);
-		const studentData = await getStudentData(userData.studentName);
-		setStudent(studentData);
-	}
-
 	const refreshData = useCallback(async () => {
 		if (!liff?.isLoggedIn()) {
-			await TestUser();
 			return;
 		}
 
@@ -73,10 +63,9 @@ export const useUser = () => {
 			setUser(userData);
 
 			if (userData?.isLinked) {
-				const studentData = await getStudentData(userData.studentName);
+				if (!userData.studentId) return;
+				const studentData = await getStudentData(userData.studentId);
 				setStudent(studentData);
-			} else {
-				await TestUser();
 			}
 		} catch (error) {
 			setError(error instanceof Error ? error : new Error("Failed to fetch data"));

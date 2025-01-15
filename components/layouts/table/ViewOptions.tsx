@@ -27,7 +27,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[150px] sm:w-[200px]">
-				<DropdownMenuLabel>ラベル切り替え</DropdownMenuLabel>
+				<DropdownMenuLabel>切り替え</DropdownMenuLabel>
 				<DropdownMenuSeparator />
 				{table
 					.getAllColumns()

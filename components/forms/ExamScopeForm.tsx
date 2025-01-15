@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { ja } from "date-fns/locale";
@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import {
 	Select,
@@ -30,19 +30,17 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
-import { CreateExam } from "@/lib/ServerAction";
+import { CreateExam } from "@/lib/server/actions";
 
 const formSchema = z.object({
 	term: z.string(),
 	subject: z.string(),
-	scope: z.string().min(2, {
-		message: "試験範囲は2文字以上で入力してください。",
-	}),
-	exclusion: z.string(),
+	scope: z.array(z.string()).min(1),
+	exclusion: z.array(z.string()),
 	deadline: z.date(),
 });
 
-const ExamForm = () => {
+const ExamScopeForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
 	const { toast } = useToast();
@@ -52,8 +50,8 @@ const ExamForm = () => {
 		defaultValues: {
 			term: "",
 			subject: "",
-			scope: "",
-			exclusion: "",
+			scope: [""],
+			exclusion: [""],
 			deadline: new Date(),
 		},
 	});
@@ -61,11 +59,11 @@ const ExamForm = () => {
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
 		if (user && student) {
 			await CreateExam(
-				student.grade,
 				values.term,
 				values.subject,
 				values.scope,
 				values.exclusion,
+				student.currentGrade,
 				user.id,
 			);
 			form.reset();
@@ -75,6 +73,11 @@ const ExamForm = () => {
 			router.refresh();
 		}
 	}
+
+	const { fields, append, remove } = useFieldArray<any>({
+		control: form.control,
+		name: "scope",
+	});
 
 	return (
 		<Form {...form}>
@@ -136,19 +139,44 @@ const ExamForm = () => {
 						</FormItem>
 					)}
 				/>
-				<FormField
-					control={form.control}
-					name="scope"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>試験範囲</FormLabel>
-							<FormControl>
-								<Input placeholder="例 ） 教科書p.20-40" {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
+				<div>
+					<FormLabel>範囲</FormLabel>
+					{fields.map((field, index) => (
+						<div key={field.id} className="flex items-center gap-4 mb-4">
+							<FormField
+								control={form.control}
+								name={`scope.${index}`}
+								render={({ field }) => (
+									<FormItem className="w-full">
+										<FormControl>
+											<Input placeholder={`${index + 1}`} {...field} />
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							<Button
+								type="button"
+								variant="outline"
+								onClick={() => remove(index)}
+								disabled={fields.length === 1}
+							>
+								削除
+							</Button>
+						</div>
+					))}
+
+					{fields.length < 4 && (
+						<Button
+							type="button"
+							variant="secondary"
+							onClick={() => append("数学α")}
+							className="w-full"
+						>
+							時間割追加
+						</Button>
 					)}
-				/>
+				</div>
 				<FormField
 					control={form.control}
 					name="exclusion"
@@ -170,4 +198,4 @@ const ExamForm = () => {
 	);
 };
 
-export default ExamForm;
+export default ExamScopeForm;

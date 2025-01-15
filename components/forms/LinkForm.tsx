@@ -20,8 +20,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useUser } from "@/hooks/useUser";
-import { LinkUser, searchStudent } from "@/lib/ServerAction";
-import { useToast } from "../ui/use-toast";
+import { LinkUser, searchStudent } from "@/lib/server/actions";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
 	firstName: z.string(),
@@ -43,9 +43,9 @@ const LinkForm = () => {
 		defaultValues: {
 			firstName: student?.firstName || "",
 			lastName: student?.lastName || "",
-			grade: student?.grade || 2,
-			group: student?.group || "",
-			number: student?.number || 1,
+			grade: student?.currentGrade || 2,
+			group: student?.currentClass || "",
+			number: student?.currentNumber || 1,
 		},
 	});
 
@@ -61,11 +61,11 @@ const LinkForm = () => {
 		if (!foundUser) {
 			form.setError("lastName", {
 				type: "manual",
-				message: "ユーザーが見つかりませんでした。",
+				message: "生徒が見つかりませんでした。",
 			});
 			form.setError("firstName", {
 				type: "manual",
-				message: "ユーザーが見つかりませんでした。",
+				message: "生徒が見つかりませんでした。",
 			});
 			return;
 		}
@@ -104,7 +104,7 @@ const LinkForm = () => {
 							<FormItem className="flex-1">
 								<FormLabel>性</FormLabel>
 								<FormControl>
-									{student ? (
+									{student?.lastName ? (
 										<Input placeholder={student.lastName} {...field} />
 									) : (
 										<Input placeholder="名字" {...field} />
@@ -121,7 +121,7 @@ const LinkForm = () => {
 							<FormItem className="flex-1">
 								<FormLabel>名</FormLabel>
 								<FormControl>
-									{student ? (
+									{student?.firstName ? (
 										<Input placeholder={student.firstName} {...field} />
 									) : (
 										<Input placeholder="名前" {...field} />
@@ -143,7 +143,9 @@ const LinkForm = () => {
 									<Select
 										onValueChange={(value) => field.onChange(Number(value))}
 										defaultValue={
-											student ? String(student.grade) : String(field.value)
+											student
+												? String(student.currentGrade)
+												: String(field.value)
 										}
 									>
 										<SelectTrigger>
@@ -173,7 +175,7 @@ const LinkForm = () => {
 									>
 										<SelectTrigger>
 											{student ? (
-												<SelectValue placeholder={student.group} />
+												<SelectValue placeholder={student.currentClass} />
 											) : (
 												<SelectValue placeholder="クラスを選択" />
 											)}

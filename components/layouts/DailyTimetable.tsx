@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getExamSchedules, getSchedules, getTests, getTimetable } from "@/lib/ServerAction";
+import { getExamSchedules, getSchedules, getTests, getTimetable } from "@/lib/server/actions";
 import { typeWeek } from "@/lib/utils";
 import { ExamScheduleData, ScheduleData, TestData, TimetableData } from "@/types/types";
 

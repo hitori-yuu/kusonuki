@@ -79,7 +79,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					onChange={(event) =>
 						table.getColumn("displayName")?.setFilterValue(event.target.value)
 					}
-					className="h-8 w-[200px] lg:w-[250px] mx-2"
+					className="h-8 w-[100px] lg:w-[250px] mx-2"
 				/>
 
 				{table.getColumn("role") && (
@@ -92,13 +92,13 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
 				{isFiltered && (
 					<Button
-						variant="ghost"
+						variant="outline"
 						size="sm"
 						onClick={() => table.resetColumnFilters()}
 						className="h-8 px-2 lg:px-3"
 					>
-						リセット
-						<Cross2Icon className="ml-2 h-4 w-4" />
+						<p className="hidden lg:block mr-2">リセット</p>
+						<Cross2Icon className="h-4 w-4" />
 					</Button>
 				)}
 

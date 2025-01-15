@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import prisma from "./prismaClient";
 import { StudentData, UserData } from "@/types/types";
 import { cache } from "react";
+import { User } from "./server/actions";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -27,41 +28,6 @@ export async function getAllUsers(): Promise<UserData[]> {
 	});
 
 	return result as UserData[];
-}
-
-export const User = cache(async (userId: string): Promise<UserData> => {
-	const user = await prisma.user.findUnique({
-		where: {
-			id: userId,
-		},
-	});
-
-	return user as UserData;
-});
-
-export const getAllStudents = cache(async (): Promise<StudentData[]> => {
-	const result = await prisma.student.findMany({
-		orderBy: [
-			{
-				group: "asc",
-			},
-			{
-				number: "asc",
-			},
-		],
-	});
-
-	return result as StudentData[];
-});
-
-export async function Student(studentName: string): Promise<StudentData> {
-	const student = await prisma.student.findUnique({
-		where: {
-			name: studentName,
-		},
-	});
-
-	return student as StudentData;
 }
 
 export async function isLinked(userId: string) {
@@ -127,4 +93,12 @@ export function typeWeek(date: Date = new Date()): String {
 			return "D";
 		}
 	}
+}
+
+export function getFiscalYear() {
+	const today = new Date();
+	const year = today.getFullYear();
+	const month = today.getMonth() + 1; // getMonth() は 0-11 を返すため +1 する
+	// 月が1～3月なら前年の年度を返す
+	return month <= 3 ? year - 1 : year;
 }

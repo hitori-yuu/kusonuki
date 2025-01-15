@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import {
 	Select,
@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
-import { CreateAssignment } from "@/lib/ServerAction";
+import { CreateAssignment } from "@/lib/server/actions";
 
 const formSchema = z.object({
 	name: z.string().min(2, {
@@ -61,10 +61,10 @@ const AssignmentForm = () => {
 		if (user && student) {
 			await CreateAssignment(
 				values.name,
-				student.grade,
-				student.group,
 				values.subject,
 				values.deadline,
+				student.currentGrade,
+				student.currentClass,
 				values.isEvery,
 				user.id,
 			);
@@ -168,23 +168,24 @@ const AssignmentForm = () => {
 						</FormItem>
 					)}
 				/>
-				{user?.role == ("ADMIN" || "EDITOR") && (
-					<FormField
-						control={form.control}
-						name="isEvery"
-						render={({ field }) => (
-							<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
-								<FormControl>
-									<Checkbox
-										checked={field.value}
-										onCheckedChange={field.onChange}
-									/>
-								</FormControl>
-								<FormLabel>全てのクラスに追加</FormLabel>
-							</FormItem>
-						)}
-					/>
-				)}
+				{user?.role === "ADMIN" ||
+					(user?.role === "EDITOR" && (
+						<FormField
+							control={form.control}
+							name="isEvery"
+							render={({ field }) => (
+								<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+									<FormControl>
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+										/>
+									</FormControl>
+									<FormLabel>全てのクラスに追加</FormLabel>
+								</FormItem>
+							)}
+						/>
+					))}
 				<Button type="submit" className="w-full">
 					課題作成
 				</Button>

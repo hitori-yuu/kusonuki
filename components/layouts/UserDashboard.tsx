@@ -15,12 +15,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
 	getAllAssignments,
 	getAllChanges,
-	getAllTests,
+	getAllQuiz,
 	getExamSchedules,
 	getSchedules,
-	getTests,
+	getQuiz,
 	getTimetable,
-} from "@/lib/ServerAction";
+} from "@/lib/server/actions";
 import { CalendarMinus2, ClipboardPenLine, NotepadText, PencilLine } from "lucide-react";
 
 export function UserDashboard() {
@@ -43,7 +43,7 @@ export function UserDashboard() {
 					(await getAllAssignments()).filter((data) => data.authorId == user.id).length,
 				);
 				setuserTests(
-					(await getAllTests()).filter((data) => data.authorId == user.id).length,
+					(await getAllQuiz()).filter((data) => data.authorId == user.id).length,
 				);
 				setuserChanges(
 					(await getAllChanges()).filter((data) => data.authorId == user.id).length,

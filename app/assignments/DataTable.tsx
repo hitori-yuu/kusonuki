@@ -36,7 +36,7 @@ import { DataTableViewOptions } from "@/components/layouts/table/ViewOptions";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { groups, subjects } from "@/components/layouts/table/DataTables";
-import AssignmentForm from "@/components/layouts/AssignmentForm";
+import AssignmentForm from "@/components/forms/AssignmentForm";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];

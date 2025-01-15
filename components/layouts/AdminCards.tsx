@@ -2,8 +2,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUser } from "@/hooks/useUser";
 import React, { useState, useEffect, useRef } from "react";
-import ExamForm from "./ExamForm";
-import ExamScheduleForm from "./ExamScheduleForm";
+import ExamForm from "../forms/ExamScopeForm";
+import ExamScheduleForm from "../forms/ExamScheduleForm";
 
 const AdminCards = () => {
 	const { user, student, liff } = useUser();

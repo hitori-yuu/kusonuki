@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import {
 	Select,
@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
-import { CreateExamSchedule } from "@/lib/ServerAction";
+import { CreateExamSchedule } from "@/lib/server/actions";
 
 const formSchema = z.object({
 	period: z.enum(["前期中間", "前期期末", "後期期末", "後期中間", "学年末"]),
@@ -76,10 +76,10 @@ const ExamScheduleForm = () => {
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
 		if (user && student) {
 			await CreateExamSchedule(
-				student.grade,
 				values.date,
 				values.period,
 				values.timetable,
+				student.currentGrade,
 				user.id,
 			);
 			form.reset();

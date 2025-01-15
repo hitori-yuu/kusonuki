@@ -21,9 +21,9 @@ import {
 	DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ExamScheduleData, ScheduleData, TestData, TimetableData } from "@/types/types";
+import { ExamScheduleData, ScheduleData, QuizData, TimetableData } from "@/types/types";
 import { useUser } from "@/hooks/useUser";
-import { getExamSchedules, getSchedules, getTests, getTimetable } from "@/lib/ServerAction";
+import { getExamSchedules, getSchedules, getQuiz, getTimetable } from "@/lib/server/actions";
 import { Separator } from "../ui/separator";
 
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
@@ -31,7 +31,7 @@ const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 interface WeekDataType {
 	[date: string]: {
 		timetable: TimetableData | null;
-		test: TestData[] | null;
+		quiz: QuizData[] | null;
 		schedule: ScheduleData[] | null;
 		examSchedule: ExamScheduleData | null;
 	};
@@ -56,8 +56,8 @@ const WeekData: React.FC = () => {
 			setIsLoading(true);
 			const today = new Date();
 			today.setDate(today.getDate() - today.getDay());
-			const grade = student.grade;
-			const group = student.group;
+			const grade = student.currentGrade;
+			const group = student.currentClass;
 
 			const weekDataTemp: WeekDataType = {};
 
@@ -68,16 +68,16 @@ const WeekData: React.FC = () => {
 				const week = typeWeek(date).toString();
 				const dayOfWeek = daysOfWeek[date.getDay()];
 
-				const [timetableData, test, schedule, examSchedule] = await Promise.all([
+				const [timetableData, quiz, schedule, examSchedule] = await Promise.all([
 					getTimetable(grade, group, week, dayOfWeek),
-					getTests(grade, group, date),
+					getQuiz(grade, group, date),
 					getSchedules(grade, group, date),
 					getExamSchedules(grade, date),
 				]);
 
 				const timetable = timetableData[0];
 
-				weekDataTemp[dateString] = { timetable, test, schedule, examSchedule };
+				weekDataTemp[dateString] = { timetable, quiz, schedule, examSchedule };
 			}
 
 			setWeekData(weekDataTemp);
@@ -165,7 +165,7 @@ const WeekData: React.FC = () => {
 	);
 
 	return (
-		<div className="mx-auto max-w-3xl">
+		<div>
 			{isClient && (
 				<>
 					<div className="overflow-x-auto whitespace-no-wrap">

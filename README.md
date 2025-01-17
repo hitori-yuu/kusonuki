@@ -1,132 +1,177 @@
-# Kusonuki
+# 情報共有システム（仮称）
 
-Kusonuki is a web application developed using TypeScript, aimed at helping students and users manage their schedules, assignments, and quizzes efficiently. The app fetches data based on user and student information, presenting it in a user-friendly interface.
+## 概要
 
-## Features
+本システムは、高校の生徒が学校生活に関する情報をいつでもどこでも簡単に確認できることを目的としたWebアプリケーションです。時間割、授業変更、課題、プリント、校則など、生徒が知りたい情報を一元化し、AIチャットボットによる情報検索を可能にします。
 
--   **Student Schedules**: Displays a student's timetable, showing their classes and events.
--   **Assignment Management**: Lists all upcoming and completed assignments.
--   **Quizzes and Tests**: Provides a way to view and manage quizzes and tests.
--   **Responsive Design**: Fully optimized for mobile, tablet, and desktop screens.
+## 主な機能
 
-## Prerequisites
+### 情報閲覧機能
 
-Before running the project, ensure you have the following software installed:
+-   **時間割の表示**:
+    -   日別および週別の時間割を確認できます。
+    -   例: 毎週月曜日の時間割を一目で把握。
+-   **授業変更情報の表示**:
+    -   当日の授業変更や教室変更の情報をリアルタイムで確認可能。
+    -   例: 教室変更通知が即座に表示されます。
+-   **課題の確認**:
+    -   提出期限や課題内容を一覧表示。
+    -   例: 提出期限が近い課題が強調表示されます。
+-   **プリントの閲覧・ダウンロード**:
+    -   必要なプリントをPDF形式でダウンロード可能。
+    -   例: 科目ごとに整理されたプリントリスト。
+-   **校則の閲覧**:
+    -   学校の規則をカテゴリ別に検索。
+    -   例: スマートフォンの利用規則を簡単に検索。
+-   **連絡事項の表示**:
+    -   教師からの重要な連絡を表示。
+    -   例: 今日の緊急連絡がトップに表示されます。
 
--   **Node.js**: Version 18 or above
--   **Yarn**: Version 1.x or 2.x
--   **Supabase**: Set up your own Supabase instance
--   **Prisma**: For database ORM
+### 情報検索機能
 
-## Setup Instructions
+-   **キーワード検索**:
+    -   キーワードを入力するだけで関連情報を即座に検索。
+    -   例: "数学の課題" と検索すると関連課題が表示されます。
+-   **AIチャットボット**:
+    -   自然言語での質問に回答。
+    -   例: "明日の時間割を教えて" という質問に対応。
 
-### 1. Clone the repository
+### 情報共有機能
+
+-   **プリントの共有**:
+    -   他の生徒とプリントを共有可能。
+    -   例: プリントリンクを生成し、共有可能。
+
+### 通知機能
+
+-   授業変更や課題の追加に関するリアルタイム通知を提供。
+    -   例: アプリ起動時に未読の通知が表示されます。
+
+### アカウント管理機能
+
+-   **ユーザー登録・ログイン**:
+    -   メールアドレスとパスワードによるアカウント作成。
+    -   例: 初回ログイン時にプロフィール設定が可能。
+-   **パスワード変更**:
+    -   セキュリティを強化するためのパスワードリセット機能。
+
+### 管理者機能
+
+-   **情報の登録・更新・削除**:
+    -   授業変更や新しい課題を登録可能。
+    -   例: 管理者が重要情報を一括登録。
+-   **ユーザー管理**:
+    -   学生アカウントの有効化や削除が可能。
+    -   例: 問題のあるアカウントを一時的に停止。
+-   **システム設定**:
+    -   アプリ全体の設定をカスタマイズ可能。
+
+## 非機能要件
+
+-   **セキュリティ**: 個人情報の保護、不正アクセス対策。
+-   **可用性**: 高い安定性と可用性を確保。
+-   **パフォーマンス**: 迅速なレスポンスを実現。
+-   **拡張性**: 今後の機能追加に対応可能。
+-   **操作性**: 直感的で使いやすいインターフェースを提供。
+
+## 対象ユーザー
+
+-   高校の生徒（2年生を中心に、他学年への拡張も検討）。
+-   将来的には、他校への展開も視野に入れる。
+
+## 利用シーン
+
+-   **放課後**: 翌日の予定確認、課題確認。
+-   **登校時**: 当日の予定確認、時間割確認。
+-   **授業中**: 授業内容の確認、プリントの閲覧。
+-   **休み時間**: 次の時間割の確認、質問。
+-   **自宅**: テスト範囲や連絡事項の確認。
+
+## 技術スタック
+
+-   **フロントエンド**: Next.js (TypeScript)
+-   **データベース**: Prisma, Supabase
+-   **スタイリング**: Tailwind CSS
+-   **テスト**: Jest (ユニットテスト), Cypress (E2Eテスト)
+-   **UIコンポーネント**: Shadcn
+
+## ディレクトリ構成
+
+```
+/kusonuki
+│
+├── /app                # Next.jsのアプリケーションディレクトリ
+│   ├── /pages          # 各ページのエントリポイント
+│   ├── /components     # UIコンポーネント
+│   └── /hooks          # Reactカスタムフック
+│
+├── /prisma             # Prisma関連のファイル
+│   ├── schema.prisma   # データベーススキーマ
+│   └── /migrations     # データベースマイグレーションファイル
+│
+├── /public             # 静的アセット（画像、フォントなど）
+│
+├── /styles             # グローバルおよびモジュールスタイル
+│   ├── globals.css     # 全体のスタイル設定
+│   └── tailwind.css    # Tailwind CSS用スタイル
+│
+├── /tests              # テスト関連
+│   ├── /unit           # ユニットテスト
+│   └── /e2e            # エンドツーエンドテスト
+│
+├── /lib                # ユーティリティおよびヘルパー関数
+│
+├── next.config.js      # Next.js設定ファイル
+├── package.json        # プロジェクト依存関係とスクリプト
+├── tailwind.config.js  # Tailwind CSS設定
+└── README.md           # プロジェクトドキュメント
+```
+
+## セットアップ手順
+
+1. リポジトリをクローン:
 
 ```bash
 git clone https://github.com/hitori-yuu/kusonuki.git
 cd kusonuki
 ```
 
-2. Install dependencies
+2. 依存関係をインストール:
 
 ```bash
 yarn install
 ```
 
-3. Configure environment variables
+3. 環境変数を設定:
+   `.env` ファイルを作成し、以下の変数を設定します。
 
-Create a .env file in the root directory and add the following variables. Replace <your_value> with the actual values from your Supabase and Prisma setup.
-
-```bash
+```env
 NEXT_PUBLIC_SUPABASE_URL=<your_supabase_url>
 NEXT_PUBLIC_SUPABASE_ANON_KEY=<your_supabase_anon_key>
 DATABASE_URL=<your_database_url>
 ```
 
-4. Prisma setup
-
-Ensure your database schema is properly set up by running the following commands:
+4. Prismaのセットアップ:
 
 ```bash
 npx prisma migrate dev
 ```
 
-This command will create the necessary tables in your database.
-
-5. Run the development server
+5. 開発サーバーを起動:
 
 ```bash
 yarn dev
 ```
 
-Open http://localhost:3000 to view the app in the browser.
+ブラウザで [http://localhost:3000](http://localhost:3000) にアクセスしてください。
 
-Deployment
+## 貢献方法
 
-The project can be deployed on platforms like Vercel. Follow these steps to deploy:
+1. リポジトリをフォーク。
+2. 新しいブランチを作成。
+3. 変更をコミット。
+4. プルリクエストを送信。
 
-    1.	Push your project to a GitHub repository.
-    2.	Create a new project on Vercel.
-    3.	Link your GitHub repository.
-    4.	Add the same environment variables from the .env file in Vercel’s settings.
-    5.	Deploy!
+## ライセンス
 
-Testing
-
-To run unit tests, use:
-
-```bash
-yarn test
-```
-
-End-to-end (E2E) tests can be added with Cypress. To run E2E tests:
-
-```bash
-yarn e2e
-```
-
-Technology Stack
-
-    •	Next.js: Frontend framework
-    •	TypeScript: Type safety
-    •	Prisma: Database ORM
-    •	Supabase: Database and authentication
-    •	Tailwind CSS: Styling
-    •	Shadcn: UI components
-    •	Jest: Unit testing
-    •	Cypress: E2E testing
-
-Project Structure
-
-```bash
-/kusonuki
-│
-├── /app                # Next.js pages and components
-├── /prisma             # Prisma schema and migrations
-├── /public             # Static assets
-├── /styles             # Tailwind and other styles
-├── /tests              # Test files (unit and E2E)
-├── /lib                # Helper functions and utilities
-├── prisma.schema       # Prisma ORM schema
-├── next.config.js      # Next.js configuration
-└── README.md           # Project documentation
-```
-
-Future Improvements
-
-    •	Implement user role-based access control (RBAC) for admin and student roles.
-    •	Add notifications for new assignments or schedule changes.
-    •	Improve accessibility (ARIA roles and keyboard navigation).
-    •	Optimize performance with server-side caching.
-
-Contributing
-
-    1.	Fork the repository.
-    2.	Create a new branch (git checkout -b feature-branch).
-    3.	Commit your changes (git commit -m 'Add some feature').
-    4.	Push to the branch (git push origin feature-branch).
-    5.	Open a pull request.
-
-License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+MITライセンスのもとで公開されています。詳細は `LICENSE` ファイルを参照してください。

@@ -4,6 +4,7 @@ import { PostData, StudentData, UserData } from "@/types/types";
 import prisma from "../prismaClient";
 import { cache } from "react";
 import { getFiscalYear } from "../utils";
+import { Role } from "@prisma/client";
 
 const classNames = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
 
@@ -44,6 +45,28 @@ export async function LinkUser(
 				lastName: lastName,
 				firstName: firstName,
 				isLinked: true,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
+export async function CreateUser(
+    id: string,
+    displayName: string,
+    pictureUrl: string,
+	role: Role,
+) {
+	try {
+		await prisma.user.create({
+			data: {
+				id,
+				displayName,
+                pictureUrl,
+				role
 			},
 		});
 	} catch (error) {
@@ -141,6 +164,22 @@ export async function CreateAssignment(
 	return;
 }
 
+export async function DeleteAssignment(
+	id: number
+) {
+	try {
+		await prisma.assignment.delete({
+            where: {
+                id,
+            },
+        });
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
 export async function CreateQuiz(
 	scope: string,
 	subject: string,
@@ -179,6 +218,22 @@ export async function CreateQuiz(
 				},
 			});
 		}
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
+export async function DeleteQuiz(
+	id: number
+) {
+	try {
+		await prisma.quiz.delete({
+            where: {
+                id,
+            },
+        });
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -492,8 +547,135 @@ export async function getAllAssignments() {
 
 	return assignments;
 }
+
+export async function findAssignmentsByRange(
+	academicYear: number,
+	grade: number,
+    className: string,
+    dateRange: number,
+) {
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+
+	const after = new Date(today);
+	after.setDate(today.getDate() + dateRange);
+	const assignments = await prisma.assignment.findMany({
+		where: {
+			academicYear,
+			grade,
+			OR: [
+				{
+					className,
+				},
+				{
+					isEvery: true
+				}
+			],
+			AND: [
+				{
+					dueDate: {
+						lte: after,
+						gte: today,
+					},
+				},
+			],
+		}
+	})
+
+	return assignments;
+}
+
+export async function findAssignmentsByDate(
+	academicYear: number,
+	grade: number,
+    className: string,
+    dueDate: Date,
+) {
+	const assignments = await prisma.assignment.findMany({
+		where: {
+			academicYear,
+			grade,
+			dueDate,
+			OR: [
+				{
+					className,
+				},
+				{
+					isEvery: true
+				}
+			],
+		}
+	});
+
+	return assignments;
+}
+
+export async function findQuizByRange(
+	academicYear: number,
+	grade: number,
+    className: string,
+    dateRange: number,
+) {
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+
+	const after = new Date(today);
+	after.setDate(today.getDate() + dateRange);
+
+	const quiz = await prisma.quiz.findMany({
+		where: {
+			academicYear,
+			grade,
+			OR: [
+				{
+					className,
+				},
+				{
+					isEvery: true
+				}
+			],
+			AND: [
+				{
+					testDate: {
+						lte: after,
+						gte: today,
+					},
+				},
+			],
+		}
+	});
+	return quiz;
+}
+
+
+
+export async function findQuizByDate(
+	academicYear: number,
+	grade: number,
+    className: string,
+    testDate: Date,
+) {
+	const quiz = await prisma.quiz.findMany({
+		where: {
+			academicYear,
+			grade,
+			testDate,
+			OR: [
+				{
+					className,
+				},
+				{
+					isEvery: true
+				}
+			]
+		}
+	});
+
+	return quiz;
+}
+
 export async function getAllQuiz() {
-	const quizs = await prisma.quiz.findMany({
+	const quiz = await prisma.quiz.findMany({
 		orderBy: [
 			{
 				createdAt: "asc",
@@ -501,7 +683,7 @@ export async function getAllQuiz() {
 		],
 	});
 
-	return quizs;
+	return quiz;
 }
 export async function getAllChanges() {
 	const changes = await prisma.change.findMany({

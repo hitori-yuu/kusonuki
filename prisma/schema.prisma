@@ -8,15 +8,15 @@ datasource db {
 }
 
 model User {
-    id          String @id
+    id          String  @id
     displayName String
     pictureUrl  String
-    email       String @unique
-    role        Role   @default(DEFAULT)
+    email       String? @unique
+    role        Role    @default(DEFAULT)
 
     studentName String?
-    student     Student @relation(fields: [studentId], references: [id])
-    studentId   Int
+    student     Student? @relation(fields: [studentId], references: [id])
+    studentId   Int?
 
     isLinked    Boolean @default(false)
     isAvailable Boolean @default(true)

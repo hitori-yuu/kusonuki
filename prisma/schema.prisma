@@ -71,7 +71,7 @@ model StudentHistory {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@unique([studentId, academicYear])
+    @@unique([studentId])
 }
 
 model Assignment {

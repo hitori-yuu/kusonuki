@@ -61,7 +61,7 @@ export async function CreateUser(
 	role: Role,
 ) {
 	try {
-		await prisma.user.create({
+		const userData = await prisma.user.create({
 			data: {
 				id,
 				displayName,
@@ -69,11 +69,11 @@ export async function CreateUser(
 				role
 			},
 		});
+		return userData;
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
 	}
-	return;
 }
 
 export async function CreateStudent(
@@ -84,22 +84,20 @@ export async function CreateStudent(
 	currentNumber: number,
 ) {
 	try {
-		await prisma.student.create({
+		const studentData = await prisma.student.create({
 			data: {
 				fullName,
 				enrollmentYear,
 				currentGrade,
 				currentClass,
 				currentNumber,
-				isActive: true,
-				isLinked: false,
 			},
 		});
+		return studentData;
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
 	}
-	return;
 }
 
 export async function CreateInformation(title: string, content: string, authorId: string) {
@@ -395,6 +393,60 @@ export async function searchStudent(
 			currentClass: group,
 			currentNumber: number,
 		},
+	});
+	return student;
+}
+
+export async function findStudentByCurrent(
+	currentGrade: number,
+	currentClass: string,
+	currentNumber: number,
+) {
+	const student = await prisma.student.findFirst({
+		where: {
+			currentGrade,
+			currentClass,
+			currentNumber,
+		},
+	});
+	return student;
+}
+
+export async function findStudentByFullName(
+	fullName: string,
+	grade: number,
+	group: string,
+	number: number,
+) {
+	const student = await prisma.student.findFirst({
+		where: {
+			fullName,
+			currentGrade: grade,
+			currentClass: group,
+			currentNumber: number,
+		},
+	});
+	return student;
+}
+
+export async function findStudentByHistory(
+	academicYear: number,
+	grade: number,
+	className: string,
+	number: number,
+) {
+	const studentHistory = await prisma.studentHistory.findFirst({
+		where: {
+			academicYear,
+			grade,
+			className,
+			number,
+		},
+	});
+	const student = await prisma.student.findUnique({
+		where: {
+            id: studentHistory?.studentId,
+        },
 	});
 	return student;
 }

@@ -1,4 +1,4 @@
-import { CreateStudent, findStudentByCurrent, findStudentByFullName, findStudentByHistory, getAllStudents } from "@/lib/server/actions";
+import { CreateStudent, CreateStudentHistory, findStudentByCurrent, findStudentByFullName, findStudentByHistory, getAllStudents } from "@/lib/server/actions";
 import { StudentData } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -28,7 +28,12 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-    const { fullName, enrollmentYear, currentGrade, currentClass, currentNumber } = await req.json();
-    const user = await CreateStudent(fullName, enrollmentYear, currentGrade, currentClass, currentNumber);
-    return NextResponse.json(user);
+    const { fullName, enrollmentYear, currentGrade, currentClass, currentNumber, academicYear, grade, className, number } = await req.json();
+    if (academicYear) {
+        const student = await CreateStudentHistory(fullName, enrollmentYear, academicYear, grade, className, number);
+        return NextResponse.json(student);
+    } else {
+        const student = await CreateStudent(fullName, enrollmentYear, currentGrade, currentClass, currentNumber);
+        return NextResponse.json(student);
+    }
 }

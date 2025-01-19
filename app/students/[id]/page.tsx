@@ -1,5 +1,5 @@
 import React from "react";
-import { Student } from "@/lib/server/actions";
+import { findHistoryByStudent, Student } from "@/lib/server/actions";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -16,13 +16,14 @@ import {
 const page = async ({ params }: { params: { id: string } }) => {
 	const { id } = params;
 	const student = await Student(parseInt(id));
+	const studentHistory = await findHistoryByStudent(parseInt(id));
 	return (
 		<div>
 			<div className="flex justify-between">
 				<h1 className="text-3xl font-bold">生徒詳細情報</h1>
 				<div className="space-x-2">
 					<Badge variant={student.isActive ? "default" : "secondary"}>
-						{student.isActive ? "在籍中" : "退学"}
+						{student.isActive ? "在籍中" : "離籍"}
 					</Badge>
 					<Badge variant={student.isLinked ? "default" : "secondary"}>
 						{student.isLinked ? "連携済" : "未連携"}
@@ -108,8 +109,8 @@ const page = async ({ params }: { params: { id: string } }) => {
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{student.StudentHistory ? (
-										student.StudentHistory.map((history) => (
+									{studentHistory ? (
+										studentHistory.map((history) => (
 											<TableRow key={history.id}>
 												<TableCell>{history.academicYear}年度</TableCell>
 												<TableCell>{history.grade}年</TableCell>

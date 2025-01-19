@@ -100,6 +100,41 @@ export async function CreateStudent(
 	}
 }
 
+export async function CreateStudentHistory(
+	fullName: string,
+	enrollmentYear: number,
+	academicYear: number,
+	grade: number,
+	className: string,
+	number: number,
+) {
+	try {
+		const studentData = await prisma.student.findFirst({
+			where: {
+                fullName,
+                enrollmentYear,
+            },
+		});
+		if (studentData) {
+			const studentHistoryData = await prisma.studentHistory.create({
+				data: {
+					studentId: studentData.id,
+					academicYear,
+					grade,
+					className,
+					number,
+				},
+			});
+			return studentHistoryData;
+		} else {
+			return
+		}
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+}
+
 export async function CreateInformation(title: string, content: string, authorId: string) {
 	try {
 		await prisma.information.create({
@@ -682,6 +717,22 @@ export async function findAssignmentsByDate(
 	return assignments;
 }
 
+export async function findHistoryByStudent(
+	studentId: number
+) {
+	const history = await prisma.studentHistory.findMany({
+		where: {
+			studentId
+		},
+		orderBy: [
+			{
+				academicYear: "asc",
+			},
+		]
+	});
+	return history;
+}
+
 export async function findQuizByRange(
 	academicYear: number,
 	grade: number,
@@ -718,8 +769,6 @@ export async function findQuizByRange(
 	});
 	return quiz;
 }
-
-
 
 export async function findQuizByDate(
 	academicYear: number,

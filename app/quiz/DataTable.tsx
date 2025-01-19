@@ -32,10 +32,9 @@ import {
 } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DataTableViewOptions } from "@/components/layouts/table/ViewOptions";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { groups, subjects } from "@/components/layouts/table/DataTables";
+import { classNames, subjects } from "@/components/layouts/table/DataTables";
 import TestForm from "@/components/forms/QuizForm";
 
 interface DataTableProps<TData, TValue> {
@@ -94,7 +93,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					<DataTableFacetedFilter
 						column={table.getColumn("group")}
 						title="クラス"
-						options={groups}
+						options={classNames}
 					/>
 				)}
 
@@ -109,7 +108,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						<Cross2Icon className="ml-2 h-4 w-4" />
 					</Button>
 				)}
-				<DataTableViewOptions table={table} />
 			</div>
 			<div className="rounded-md border">
 				<Table>

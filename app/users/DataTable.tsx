@@ -30,7 +30,6 @@ import {
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { DataTableViewOptions } from "@/components/layouts/table/ViewOptions";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { roles } from "@/components/layouts/table/DataTables";
@@ -101,8 +100,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						<Cross2Icon className="h-4 w-4" />
 					</Button>
 				)}
-
-				<DataTableViewOptions table={table} />
 			</div>
 			<div className="rounded-md border">
 				<Table>

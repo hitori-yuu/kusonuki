@@ -1,4 +1,5 @@
 export type Role = "DEFAULT" | "EDITOR" | "ADMIN";
+export type PostType = "POST" | "INFORMATION" | "ADVERTISEMENT";
 
 export type MediaType = "IMAGE" | "VIDEO" | "AUDIO" | "DOCUMENT";
 
@@ -205,7 +206,9 @@ export interface InformationData {
 
 export interface PostData {
 	id: number;
+	username: string;
 	content: string;
+	type: PostType;
 	mediaUrl?: string | null;
 	mediaType?: MediaType | null;
 	authorId: string;

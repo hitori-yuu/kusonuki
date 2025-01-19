@@ -18,18 +18,6 @@ export async function LiffUser(userId: string) {
 	return user;
 }
 
-export async function getAllUsers(): Promise<UserData[]> {
-	const result = await prisma.user.findMany({
-		orderBy: [
-			{
-				displayName: "asc",
-			},
-		],
-	});
-
-	return result as UserData[];
-}
-
 export async function isLinked(userId: string) {
 	if (await isUser(userId)) {
 		const user = await User(userId);

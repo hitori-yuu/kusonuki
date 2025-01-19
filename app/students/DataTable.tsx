@@ -24,10 +24,10 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DataTableViewOptions } from "@/components/layouts/table/ViewOptions";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { groups } from "@/components/layouts/table/DataTables";
+import { classNames, grades } from "@/components/layouts/table/DataTables";
+import Link from "next/link";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -68,17 +68,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 			<div className="flex items-center py-4">
 				<Input
 					placeholder="生徒氏名でフィルター"
-					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+					value={(table.getColumn("fullName")?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
-						table.getColumn("name")?.setFilterValue(event.target.value)
+						table.getColumn("fullName")?.setFilterValue(event.target.value)
 					}
 					className="h-8 w-[100px] lg:w-[250px] mx-2"
 				/>
-				{table.getColumn("group") && (
+				{table.getColumn("currentClass") && (
 					<DataTableFacetedFilter
-						column={table.getColumn("group")}
+						column={table.getColumn("currentClass")}
 						title="クラス"
-						options={groups}
+						options={classNames}
 					/>
 				)}
 
@@ -93,7 +93,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						<Cross2Icon className="h-4 w-4" />
 					</Button>
 				)}
-				<DataTableViewOptions table={table} />
 			</div>
 			<div className="rounded-md border">
 				<Table>

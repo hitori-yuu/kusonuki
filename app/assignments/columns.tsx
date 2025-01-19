@@ -3,30 +3,32 @@
 import { AssignmentData } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/layouts/table/ColumnHeader";
-import { groups, subjects } from "@/components/layouts/table/DataTables";
+import { classNames, subjects } from "@/components/layouts/table/DataTables";
 
 export const columns: ColumnDef<AssignmentData>[] = [
 	{
-		accessorKey: "name",
+		accessorKey: "title",
 		header: ({ column }) => {
 			return <DataTableColumnHeader column={column} title="課題名" />;
 		},
 	},
 	{
-		accessorKey: "group",
+		accessorKey: "className",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="クラス" />,
 		cell: ({ row }) => {
 			const grade = row.original.grade;
-			const group = groups.find((group) => group.value === row.getValue("group"));
+			const className = classNames.find(
+				(className) => className.value === row.getValue("className"),
+			);
 
-			if (!group) {
+			if (!className) {
 				return null;
 			}
 
 			return (
 				<div>
 					{grade}
-					{group.label}
+					{className.label}
 				</div>
 			);
 		},
@@ -38,7 +40,6 @@ export const columns: ColumnDef<AssignmentData>[] = [
 		accessorKey: "subject",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="教科" />,
 		cell: ({ row }) => {
-			const grade = row.original.grade;
 			const subject = subjects.find((subject) => subject.value === row.getValue("subject"));
 
 			if (!subject) {
@@ -52,10 +53,10 @@ export const columns: ColumnDef<AssignmentData>[] = [
 		},
 	},
 	{
-		accessorKey: "deadline",
+		accessorKey: "dueDate",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="提出日" />,
 		cell: ({ row }) => {
-			const date = new Date(row.getValue("deadline"));
+			const date = new Date(row.getValue("dueDate"));
 			const formatted = date.toLocaleDateString();
 			return <div>{formatted}</div>;
 		},

@@ -53,6 +53,8 @@ export const useUser = () => {
 
 	const refreshData = useCallback(async () => {
 		if (!liff?.isLoggedIn()) {
+			const userData = await getUserData("Ud713d7bf56b49d0f40c0712335f625ba");
+			setUser(userData);
 			return;
 		}
 

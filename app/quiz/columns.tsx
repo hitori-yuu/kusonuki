@@ -1,11 +1,11 @@
 "use client";
 
-import { TestData } from "@/types/types";
+import { QuizData } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/layouts/table/ColumnHeader";
-import { groups, subjects } from "@/components/layouts/table/DataTables";
+import { classNames, subjects } from "@/components/layouts/table/DataTables";
 
-export const columns: ColumnDef<TestData>[] = [
+export const columns: ColumnDef<QuizData>[] = [
 	{
 		accessorKey: "name",
 		header: ({ column }) => {
@@ -13,20 +13,22 @@ export const columns: ColumnDef<TestData>[] = [
 		},
 	},
 	{
-		accessorKey: "group",
+		accessorKey: "className",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="クラス" />,
 		cell: ({ row }) => {
 			const grade = row.original.grade;
-			const group = groups.find((group) => group.value === row.getValue("group"));
+			const className = classNames.find(
+				(className) => className.value === row.getValue("className"),
+			);
 
-			if (!group) {
+			if (!className) {
 				return null;
 			}
 
 			return (
 				<div>
 					{grade}
-					{group.label}
+					{className.label}
 				</div>
 			);
 		},
@@ -38,7 +40,6 @@ export const columns: ColumnDef<TestData>[] = [
 		accessorKey: "subject",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="教科" />,
 		cell: ({ row }) => {
-			const grade = row.original.grade;
 			const subject = subjects.find((subject) => subject.value === row.getValue("subject"));
 
 			if (!subject) {
@@ -52,10 +53,10 @@ export const columns: ColumnDef<TestData>[] = [
 		},
 	},
 	{
-		accessorKey: "implementationDate",
+		accessorKey: "testDate",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="実施日" />,
 		cell: ({ row }) => {
-			const date = new Date(row.getValue("implementationDate"));
+			const date = new Date(row.getValue("testDate"));
 			const formatted = date.toLocaleDateString();
 			return <div>{formatted}</div>;
 		},

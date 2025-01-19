@@ -245,7 +245,9 @@ model Information {
 
 model Post {
     id        Int        @id @default(autoincrement())
+    username  String
     content   String
+    type      postType   @default(POST)
     mediaUrl  String?
     mediaType mediaType?
 
@@ -282,4 +284,10 @@ enum mediaType {
     VIDEO
     AUDIO
     DOCUMENT
+}
+
+enum postType {
+    POST
+    INFORMATION
+    ADVERTISEMENT
 }

@@ -1,6 +1,6 @@
 "use server";
 
-import { PostData, StudentData, UserData } from "@/types/types";
+import { MediaType, PostData, StudentData, UserData } from "@/types/types";
 import prisma from "../prismaClient";
 import { cache } from "react";
 import { getFiscalYear } from "../utils";
@@ -370,6 +370,26 @@ export async function CreateExamSchedule(
 				grade,
 				timetable,
 				authorId,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
+export async function CreatePost(
+	username: string,
+    content: string,
+    authorId: string,
+) {
+	try {
+		await prisma.post.create({
+			data: {
+				username,
+                content,
+                authorId,
 			},
 		});
 	} catch (error) {

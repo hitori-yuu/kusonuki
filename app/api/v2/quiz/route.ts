@@ -10,6 +10,22 @@ import {
 import { QuizData } from "@/types/types";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * Handles GET requests to retrieve quiz data based on various filtering parameters.
+ *
+ * @remarks
+ * This function supports multiple query strategies for fetching quiz data:
+ * - Filtering quizzes by date range
+ * - Filtering quizzes by specific test date
+ * - Retrieving all quizzes if no specific filters are applied
+ *
+ * @param req - The Next.js request object containing search parameters
+ * @returns A JSON response with filtered or all quiz data
+ *
+ * @throws {Error} Implicitly throws errors if database queries fail
+ *
+ * @beta
+ */
 export async function GET(req: NextRequest) {
 	const params = req.nextUrl.searchParams;
 	const academicYear = params.get("academicYear");
@@ -42,6 +58,19 @@ export async function GET(req: NextRequest) {
 	}
 }
 
+/**
+ * Handles the creation of a new quiz via a POST request.
+ *
+ * @remarks
+ * Extracts quiz details from the request body and creates a new quiz using the CreateQuiz function.
+ *
+ * @param req - The incoming HTTP request containing quiz creation details
+ * @returns A JSON response with the newly created quiz assignment
+ *
+ * @throws {Error} If the request body is invalid or quiz creation fails
+ *
+ * @beta
+ */
 export async function POST(req: Request) {
 	const { scope, subject, testDate, grade, className, isEvery, authorId } = await req.json();
 

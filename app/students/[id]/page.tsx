@@ -12,6 +12,15 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const page = async ({ params }: { params: { id: string } }) => {
 	const { id } = params;
@@ -19,6 +28,13 @@ const page = async ({ params }: { params: { id: string } }) => {
 	const studentHistory = await findHistoryByStudent(parseInt(id));
 	return (
 		<div>
+			<Pagination className="text-left">
+				<PaginationContent>
+					<PaginationItem>
+						<PaginationPrevious href={"/students"} />
+					</PaginationItem>
+				</PaginationContent>
+			</Pagination>
 			<div className="flex justify-between">
 				<h1 className="text-3xl font-bold">生徒詳細情報</h1>
 				<div className="space-x-2">

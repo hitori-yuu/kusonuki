@@ -8,15 +8,12 @@ import Link from "next/link";
 
 export const columns: ColumnDef<StudentData>[] = [
 	{
-		accessorKey: "id",
-	},
-	{
 		accessorKey: "fullName",
 		header: ({ column }) => {
 			return <DataTableColumnHeader column={column} title="氏名" />;
 		},
 		cell: ({ row }) => {
-			return <Link href={`students/${row.getValue("id")}`}>{row.getValue("fullName")}</Link>;
+			return <Link href={`students/${row.original.id}`}>{row.getValue("fullName")}</Link>;
 		},
 	},
 	{

@@ -3,7 +3,6 @@ import React from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
-import { Button } from "@/components/ui/button";
 
 const LinkedAlert = () => {
 	const { user, student, liff } = useUser();

@@ -19,9 +19,9 @@ import {
 } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getExamSchedules, getSchedules, getTests, getTimetable } from "@/lib/server/actions";
+import { getExamSchedules, getSchedules, getQuiz, getTimetable } from "@/lib/server/actions";
 import { typeWeek } from "@/lib/utils";
-import { ExamScheduleData, ScheduleData, TestData, TimetableData } from "@/types/types";
+import { ExamScheduleData, ScheduleData, QuizData, TimetableData } from "@/types/types";
 
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
@@ -57,16 +57,16 @@ const DailyTimetable = () => {
 				const dayOfWeek = daysOfWeek[date.getDay()];
 
 				const timetableData = (await getTimetable(
-					student.grade,
-					student.group,
+					student.currentGrade,
+					student.currentClass,
 					week,
 					dayOfWeek,
 				)) as TimetableData[];
 
 				const examScheduleData = (await getExamSchedules(
-					student.grade,
+					student.currentGrade,
 					date,
-				)) as ExamScheduleData;
+				)) as unknown as ExamScheduleData;
 
 				setTimetable(timetableData[0]);
 				setExamSchedule(examScheduleData);
@@ -95,8 +95,8 @@ const DailyTimetable = () => {
 				}
 
 				const scheduleData = (await getSchedules(
-					student.grade,
-					student.group,
+					student.currentGrade,
+					student.currentClass,
 					date,
 				)) as ScheduleData[];
 				setSchedule(scheduleData);

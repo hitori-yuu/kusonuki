@@ -13,10 +13,10 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
 	const id = params.id;
-    const quizData = await prisma.quiz.delete({
-        where: {
-            id: parseInt(id),
-        },
-    });
-    return NextResponse.json({ message: "Deleted quiz with Scope: " + quizData.scope });
+	const quizData = await prisma.quiz.delete({
+		where: {
+			id: parseInt(id),
+		},
+	});
+	return NextResponse.json({ message: "Deleted quiz with Scope: " + quizData.scope });
 }

@@ -46,7 +46,7 @@ export function UserButton() {
 								</p>
 								{student ? (
 									<p className="text-xs leading-none text-muted-foreground">
-										連携中: {student.name}
+										連携中: {student.fullName}
 									</p>
 								) : (
 									<p className="text-xs leading-none text-muted-foreground">

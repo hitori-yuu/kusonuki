@@ -24,7 +24,11 @@ const AssignmentCard = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			if (student) {
-				const fetchedData = await getAssignments(student.grade, student.group, 10);
+				const fetchedData = (await getAssignments(
+					student.currentGrade,
+					student.currentClass,
+					10,
+				)) as AssignmentData[];
 				setAssignment(fetchedData);
 			}
 		};

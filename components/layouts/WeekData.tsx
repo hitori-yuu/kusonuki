@@ -69,10 +69,10 @@ const WeekData: React.FC = () => {
 				const dayOfWeek = daysOfWeek[date.getDay()];
 
 				const [timetableData, quiz, schedule, examSchedule] = await Promise.all([
-					getTimetable(grade, group, week, dayOfWeek),
-					getQuiz(grade, group, date),
-					getSchedules(grade, group, date),
-					getExamSchedules(grade, date),
+					getTimetable(grade, group, week, dayOfWeek) as unknown as TimetableData[],
+					getQuiz(grade, group, date) as unknown as QuizData[],
+					getSchedules(grade, group, date) as unknown as ScheduleData[],
+					getExamSchedules(grade, date) as unknown as ExamScheduleData,
 				]);
 
 				const timetable = timetableData[0];

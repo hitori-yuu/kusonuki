@@ -44,7 +44,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 				</PaginationContent>
 			</Pagination>
 			<div className="flex justify-between">
-				<h1 className="text-3xl font-bold">ユーザー詳細情報</h1>
+				<h1 className="text-3xl font-bold">ユーザー情報</h1>
 				<div className="space-x-2">
 					<Badge variant={user.isAvailable ? "default" : "secondary"}>
 						{user.isAvailable ? "利用可" : "利用禁止"}
@@ -86,7 +86,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 									<div className="text-sm font-medium text-gray-500">
 										メールアドレス
 									</div>
-									<div>{user.email}</div>
+									<div>{user.email || "-"}</div>
 								</div>
 							</div>
 						</div>
@@ -98,40 +98,36 @@ const page = async ({ params }: { params: { id: string } }) => {
 						<CardTitle>連携情報</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<div className="grid grid-cols-1 gap-2">
-							<div>
-								<div className="text-sm font-medium text-gray-500">連携状態</div>
-								<div>{user.isLinked ? "連携済" : "未連携"}</div>
-							</div>
-							{student && (
-								<>
-									<div>
-										<div className="text-sm font-medium text-gray-500">
-											入学年度
-										</div>
-										<div>{student.enrollmentYear}年度</div>
-									</div>
-									<div>
-										<div className="text-sm font-medium text-gray-500">
-											現在の学年
-										</div>
-										<div>{student.currentGrade}年</div>
-									</div>
-									<div>
-										<div className="text-sm font-medium text-gray-500">
-											クラス
-										</div>
-										<div>{student.currentClass}組</div>
-									</div>
-									<div>
-										<div className="text-sm font-medium text-gray-500">
-											出席番号
-										</div>
-										<div>{student.currentNumber}番</div>
-									</div>
-								</>
-							)}
+						<div>
+							<div className="text-sm font-medium text-gray-500">連携状態</div>
+							<div>{user.isLinked ? "連携済" : "未連携"}</div>
 						</div>
+						{student && (
+							<div className="mt-4 grid grid-cols-2 gap-2">
+								<div>
+									<div className="text-sm font-medium text-gray-500">
+										入学年度
+									</div>
+									<div>{student.enrollmentYear}年度</div>
+								</div>
+								<div>
+									<div className="text-sm font-medium text-gray-500">
+										現在の学年
+									</div>
+									<div>{student.currentGrade}年</div>
+								</div>
+								<div>
+									<div className="text-sm font-medium text-gray-500">クラス</div>
+									<div>{student.currentClass}組</div>
+								</div>
+								<div>
+									<div className="text-sm font-medium text-gray-500">
+										出席番号
+									</div>
+									<div>{student.currentNumber}番</div>
+								</div>
+							</div>
+						)}
 					</CardContent>
 				</Card>
 			</div>

@@ -2,14 +2,14 @@
 
 import React from "react";
 
-import { Home, User, Settings, Info } from "lucide-react";
+import { Home, User, TableOfContents, Info } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
 	const footerItems = [
 		{ icon: Home, label: "ホーム", href: "/" },
 		{ icon: User, label: "プロフィール", href: "/profile" },
-		{ icon: Settings, label: "設定", href: "/settings" },
+		{ icon: TableOfContents, label: "タイムライン", href: "/timeline" },
 		{ icon: Info, label: "お知らせ", href: "/information" },
 	];
 

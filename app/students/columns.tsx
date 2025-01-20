@@ -3,45 +3,48 @@
 import { StudentData } from "@/types/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/layouts/table/ColumnHeader";
-import { groups } from "@/components/layouts/table/DataTables";
+import { classNames, grades } from "@/components/layouts/table/DataTables";
+import Link from "next/link";
 
 export const columns: ColumnDef<StudentData>[] = [
 	{
-		accessorKey: "name",
+		accessorKey: "id",
+	},
+	{
+		accessorKey: "fullName",
 		header: ({ column }) => {
 			return <DataTableColumnHeader column={column} title="氏名" />;
 		},
+		cell: ({ row }) => {
+			return <Link href={`students/${row.getValue("id")}`}>{row.getValue("fullName")}</Link>;
+		},
 	},
 	{
-		accessorKey: "group",
+		accessorKey: "currentGrade",
+		header: ({ column }) => {
+			return <DataTableColumnHeader column={column} title="学年" />;
+		},
+	},
+	{
+		accessorKey: "currentClass",
 		header: ({ column }) => <DataTableColumnHeader column={column} title="クラス" />,
 		cell: ({ row }) => {
-			const grade = row.original.grade;
-			const group = groups.find((group) => group.value === row.getValue("group"));
+			const className = classNames.find(
+				(className) => className.value === row.getValue("currentClass"),
+			);
 
-			if (!group) {
+			if (!className) {
 				return null;
 			}
 
-			return (
-				<div>
-					{grade}
-					{group.label}
-				</div>
-			);
+			return className.label;
 		},
 		filterFn: (row, id, value) => {
 			return value.includes(row.getValue(id));
 		},
 	},
 	{
-		accessorKey: "number",
+		accessorKey: "currentNumber",
 		header: "出席番号",
-	},
-	{
-		accessorKey: "firstGroupNumber",
-		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="1年" />;
-		},
 	},
 ];

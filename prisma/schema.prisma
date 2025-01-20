@@ -8,114 +8,173 @@ datasource db {
 }
 
 model User {
-    id           String         @id
-    displayName  String?
-    pictureUrl   String?
-    role         Role           @default(DEFAULT)
-    studentName  String?
-    isLinked     Boolean        @default(false)
-    isAvailable  Boolean        @default(true)
-    createdAt    DateTime       @default(now())
-    updatedAt    DateTime       @updatedAt
+    id          String  @id
+    displayName String
+    pictureUrl  String
+    email       String? @unique
+    role        Role    @default(DEFAULT)
+
+    studentName String?
+    student     Student? @relation(fields: [studentId], references: [id])
+    studentId   Int?
+
+    isLinked    Boolean @default(false)
+    isAvailable Boolean @default(true)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     Assignment   Assignment[]
-    Test         Test[]
+    Quiz         Quiz[]
     Change       Change[]
     Timetable    Timetable[]
     Schedule     Schedule[]
     ScheduleWeek ScheduleWeek[]
     ExamSchedule ExamSchedule[]
     Information  Information[]
-    Exam         Exam[]
+    ExamScope    ExamScope[]
+    Post         Post[]
+    Like         Like[]
+    View         View[]
 }
 
 model Student {
-    name              String   @id
-    lastName          String?
-    firstName         String?
-    grade             Int
-    group             String
-    number            Int
-    firstGroupNumber  String?
-    secondGroupNumber String?
-    thirdGroupNumber  String?
-    isLinked          Boolean  @default(false)
-    isAvailable       Boolean  @default(true)
-    createdAt         DateTime @default(now())
-    updatedAt         DateTime @updatedAt
+    id        Int     @id @default(autoincrement())
+    fullName  String
+    lastName  String?
+    firstName String?
+
+    enrollmentYear Int
+    currentGrade   Int
+    currentClass   String
+    currentNumber  Int
+
+    isActive Boolean @default(true)
+    isLinked Boolean @default(false)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    StudentHistory StudentHistory[]
+    User           User[]
 }
 
-model Teacher {
-    name      String   @id
-    subject   String
-    userId    String   @unique
+model StudentHistory {
+    id           Int     @id @default(autoincrement())
+    student      Student @relation(fields: [studentId], references: [id])
+    studentId    Int
+    academicYear Int
+    grade        Int
+    className    String
+    number       Int
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model Assignment {
-    id        Int      @id @default(autoincrement())
-    name      String
-    subject   String
-    deadline  DateTime @db.Date
-    grade     Int      @default(2)
-    group     String   @default("H")
-    isEvery   Boolean  @default(false)
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+    id      Int      @id @default(autoincrement())
+    title   String
+    subject String
+    dueDate DateTime @db.Date
+
+    academicYear Int    @default(2024)
+    grade        Int    @default(2)
+    className    String @default("H")
+
+    isEvery Boolean @default(false)
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
-model Test {
-    id                 Int      @id @default(autoincrement())
-    name               String
-    subject            String
-    implementationDate DateTime @db.Date
-    grade              Int      @default(2)
-    group              String   @default("H")
-    isEvery            Boolean  @default(false)
-    author             User     @relation(fields: [authorId], references: [id])
-    authorId           String
-    createdAt          DateTime @default(now())
-    updatedAt          DateTime @updatedAt
+model Quiz {
+    id       Int      @id @default(autoincrement())
+    scope    String
+    subject  String
+    testDate DateTime @db.Date
+
+    academicYear Int    @default(2024)
+    grade        Int    @default(2)
+    className    String @default("H")
+
+    isEvery Boolean @default(false)
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
-model Exam {
-    id        Int      @id @default(autoincrement())
-    term      String
-    subject   String
-    scope     String
-    exclusion String?
-    grade     Int      @default(2)
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+model Document {
+    id          Int    @id @default(autoincrement())
+    title       String
+    description String
+    fileUrl     String
+    subject     String
+
+    academicYear Int    @default(2024)
+    grade        Int    @default(2)
+    className    String @default("H")
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model ExamScope {
+    id            Int      @id @default(autoincrement())
+    term          String
+    subject       String
+    scopeItems    String[]
+    excludedItems String[]
+
+    academicYear Int @default(2024)
+    grade        Int @default(2)
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model Change {
-    id        Int      @id @default(autoincrement())
-    date      DateTime @db.Date
-    period    Int
-    subject   String
-    grade     Int      @default(2)
-    group     String   @default("H")
-    isEvery   Boolean  @default(false)
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+    id      Int      @id @default(autoincrement())
+    date    DateTime @db.Date
+    period  Int
+    subject String
+
+    academicYear Int    @default(2024)
+    grade        Int    @default(2)
+    className    String @default("H")
+
+    isEvery Boolean @default(false)
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model Schedule {
-    id        Int      @id @default(autoincrement())
-    date      DateTime @db.Date
-    grade     Int      @default(2)
-    group     String   @default("H")
-    content   String
-    isEvery   Boolean  @default(false)
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+    id      Int      @id @default(autoincrement())
+    date    DateTime @db.Date
+    content String
+
+    academicYear Int    @default(2024)
+    grade        Int    @default(2)
+    className    String @default("H")
+
+    isEvery Boolean @default(false)
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -132,56 +191,101 @@ model ScheduleWeek {
 
 model ExamSchedule {
     id        Int      @id @default(autoincrement())
-    grade     Int      @default(2)
     date      DateTime @db.Date
     period    String
     timetable String[]
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+
+    academicYear Int    @default(2024)
+    grade        Int    @default(2)
+    className    String @default("H")
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model Timetable {
-    id        Int      @id @default(autoincrement())
-    week      String
-    day       String
-    grade     Int      @default(2)
-    group     String   @default("H")
-    first     String
-    second    String
-    third     String
-    fourth    String
-    fifth     String
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+    id   Int    @id @default(autoincrement())
+    week String
+    day  String
+
+    first  String
+    second String
+    third  String
+    fourth String
+    fifth  String
+
+    academicYear Int    @default(2024)
+    grade        Int    @default(2)
+    className    String @default("H")
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model Information {
-    id        Int      @id @default(autoincrement())
-    date      DateTime @db.Date
-    title     String
-    content   String
-    author    User     @relation(fields: [authorId], references: [id])
-    authorId  String
+    id      Int      @id @default(autoincrement())
+    date    DateTime @db.Date
+    title   String
+    content String
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
-model TargetEnglish {
-    id Int      @id @default(autoincrement())
-    number Int
-    part String
-    phonetic String
-    translation String
+model Post {
+    id        Int        @id @default(autoincrement())
+    username  String
+    content   String
+    type      postType   @default(POST)
+    mediaUrl  String?
+    mediaType mediaType?
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
+
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+}
+
+model Like {
+    id        Int      @id @default(autoincrement())
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    postId    Int
+    createdAt DateTime @default(now())
+}
+
+model View {
+    id        Int      @id @default(autoincrement())
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    postId    Int
+    createdAt DateTime @default(now())
 }
 
 enum Role {
     DEFAULT
     EDITOR
     ADMIN
+}
+
+enum mediaType {
+    IMAGE
+    VIDEO
+    AUDIO
+    DOCUMENT
+}
+
+enum postType {
+    POST
+    INFORMATION
+    ADVERTISEMENT
 }

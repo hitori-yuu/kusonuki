@@ -5,7 +5,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import LinkForm from "./LinkForm";
+import LinkForm from "../forms/LinkForm";
 
 const AccountSettings = () => {
 	return (

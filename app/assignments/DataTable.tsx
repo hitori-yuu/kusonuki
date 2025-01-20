@@ -22,21 +22,11 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DataTableViewOptions } from "@/components/layouts/table/ViewOptions";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { groups, subjects } from "@/components/layouts/table/DataTables";
-import AssignmentForm from "@/components/layouts/AssignmentForm";
+import { classNames, subjects } from "@/components/layouts/table/DataTables";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -77,9 +67,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 			<div className="flex items-center py-4">
 				<Input
 					placeholder="課題名でフィルター"
-					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+					value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
-						table.getColumn("name")?.setFilterValue(event.target.value)
+						table.getColumn("title")?.setFilterValue(event.target.value)
 					}
 					className="h-8 w-[100px] lg:w-[250px] mr-2"
 				/>
@@ -90,11 +80,11 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						options={subjects}
 					/>
 				)}
-				{table.getColumn("group") && (
+				{table.getColumn("className") && (
 					<DataTableFacetedFilter
-						column={table.getColumn("group")}
+						column={table.getColumn("className")}
 						title="クラス"
-						options={groups}
+						options={classNames}
 					/>
 				)}
 
@@ -109,7 +99,6 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						<Cross2Icon className="ml-2 h-4 w-4" />
 					</Button>
 				)}
-				<DataTableViewOptions table={table} />
 			</div>
 			<div className="rounded-md border">
 				<Table>

@@ -8,10 +8,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import AssignmentForm from "./AssignmentForm";
-import TestForm from "./TestForm";
-import ScheduleForm from "./ScheduleForm";
-import ChangeForm from "./ChangeForm";
+import AssignmentForm from "../forms/AssignmentForm";
+import QuizForm from "../forms/QuizForm";
+import ScheduleForm from "../forms/ScheduleForm";
+import ChangeForm from "../forms/ChangeForm";
 
 const FormTabs = () => {
 	return (
@@ -25,13 +25,13 @@ const FormTabs = () => {
 					<Tabs defaultValue="assignment">
 						<TabsList className="grid w-full grid-cols-2">
 							<TabsTrigger value="assignment">課題</TabsTrigger>
-							<TabsTrigger value="test">小テスト</TabsTrigger>
+							<TabsTrigger value="quiz">小テスト</TabsTrigger>
 						</TabsList>
 						<TabsContent value="assignment">
 							<AssignmentForm />
 						</TabsContent>
-						<TabsContent value="test">
-							<TestForm />
+						<TabsContent value="quiz">
+							<QuizForm />
 						</TabsContent>
 					</Tabs>
 				</CardContent>

@@ -25,7 +25,7 @@ export const columns: ColumnDef<UserData>[] = [
 		cell: ({ row }) => (
 			<div className="flex items-center">
 				<Avatar>
-					<AvatarImage src={row.original.pictureUrl} />
+					<AvatarImage src={row.original.pictureUrl as string} />
 					<AvatarFallback>{row.original.displayName}</AvatarFallback>
 				</Avatar>
 				<p className="px-4">{row.original.displayName}</p>

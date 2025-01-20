@@ -9,7 +9,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import InformationForm from "./InformationForm";
+import InformationForm from "../forms/InformationForm";
 import { useUser } from "@/hooks/useUser";
 
 const InformationButton = () => {

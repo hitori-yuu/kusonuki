@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/hooks/useUser";
-import { getAssignments } from "@/lib/ServerAction";
+import { getAssignments } from "@/lib/server/actions";
 
 const AssignmentCard = () => {
 	const { user, student, liff } = useUser();

@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import Header from "@/components/layouts/Header";
 import Footer from "@/components/layouts/Footer";
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
 };
 
 const inter = Inter({ subsets: ["latin"] });
+const gaId = process.env.GOOGLE_ANALYTICS_ID || "";
 config.autoAddCss = false;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -37,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 				<meta name="apple-mobile-web-app-title" content="くそぬきbot" />
 				<link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
+				<GoogleAnalytics gaId={gaId} />
 			</head>
 			<body className={inter.className}>
 				<SpeedInsights />

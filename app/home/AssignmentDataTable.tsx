@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import AssignmentForm from "@/components/layouts/AssignmentForm";
+import AssignmentForm from "@/components/forms/AssignmentForm";
 import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
 import { Cross2Icon } from "@radix-ui/react-icons";
 

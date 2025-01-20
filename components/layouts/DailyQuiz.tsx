@@ -19,15 +19,15 @@ import {
 } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getSchedules, getTests, getTimetable } from "@/lib/ServerAction";
+import { getSchedules, getQuiz, getTimetable } from "@/lib/server/actions";
 import { typeWeek } from "@/lib/utils";
-import { ScheduleData, TestData, TimetableData } from "@/types/types";
+import { ScheduleData, QuizData, TimetableData } from "@/types/types";
 
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
 const DailyQuiz = () => {
 	const { user, student, liff } = useUser();
-	const [quiz, setQuiz] = useState<TestData[]>([]);
+	const [quiz, setQuiz] = useState<QuizData[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 	const [typeOfDay, setTypeOfDay] = useState<string>("今日");
@@ -50,7 +50,11 @@ const DailyQuiz = () => {
 					date.setDate(today.getDate() + 2);
 				}
 
-				const quizData = (await getTests(student.grade, student.group, date)) as TestData[];
+				const quizData = (await getQuiz(
+					student.currentGrade,
+					student.currentClass,
+					date,
+				)) as QuizData[];
 				setQuiz(quizData);
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "Failed to fetch quiz");
@@ -118,7 +122,7 @@ const DailyQuiz = () => {
 						{quiz &&
 							quiz.map((item, index) => (
 								<TableRow key={index}>
-									<TableCell>{item.name}</TableCell>
+									<TableCell>{item.scope}</TableCell>
 									<TableCell>{item.subject}</TableCell>
 								</TableRow>
 							))}

@@ -1,27 +1,66 @@
+export type Role = "DEFAULT" | "EDITOR" | "ADMIN";
+export type PostType = "POST" | "INFORMATION" | "ADVERTISEMENT";
+
+export type MediaType = "IMAGE" | "VIDEO" | "AUDIO" | "DOCUMENT";
+
 export interface UserData {
 	id: string;
-	displayName: string;
-	pictureUrl: string;
-	role: string;
-	studentName: string;
+	displayName?: string | null;
+	pictureUrl?: string | null;
+	email: string;
+	role: Role;
+	studentName?: string | null;
+	studentId?: number | null;
 	isLinked: boolean;
 	isAvailable: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	Assignment: AssignmentData[];
+	Quiz: QuizData[];
+	Change: ChangeData[];
+	Timetable: TimetableData[];
+	Schedule: ScheduleData[];
+	ScheduleWeek: ScheduleWeekData[];
+	ExamSchedule: ExamScheduleData[];
+	Information: InformationData[];
+	Exam: ExamData[];
+	Post: PostData[];
+	Like: LikeData[];
+	View: ViewData[];
 }
 
 export interface StudentData {
-	name: string;
-	lastName: string;
-	firstName: string;
-	grade: number;
-	group: string;
-	number: number;
-	firstGroupNumber: string;
-	secondGroupNumber: string;
-	thirdGroupNumber: string;
+	id: number;
+	uniqueId: string;
+	fullName: string;
+	lastName?: string | null;
+	firstName?: string | null;
+	enrollmentYear: number;
+	currentGrade: number;
+	currentClass: string;
+	currentNumber: number;
+	isActive: boolean;
 	isLinked: boolean;
-	isAvailable: boolean;
+	createdAt: Date;
+	updatedAt: Date;
+	StudentHistory: StudentHistoryData[];
+}
+
+export interface StudentHistoryData {
+	id: number;
+	studentId: number;
+	academicYear: number;
+	grade: number;
+	className: string;
+	number: number;
+	createdAt: Date;
+	updatedAt: Date;
+	student: StudentData;
+}
+
+export interface TeacherData {
+	name: string;
+	subject: string;
 	userId: string;
 	createdAt: Date;
 	updatedAt: Date;
@@ -29,22 +68,120 @@ export interface StudentData {
 
 export interface AssignmentData {
 	id: number;
-	name: string;
+	title: string;
 	subject: string;
-	deadline: Date;
+	dueDate: Date;
+	academicYear: number;
 	grade: number;
-	group: string;
+	className: string;
+	isEvery: boolean;
 	authorId: string;
 	createdAt: Date;
 	updatedAt: Date;
+	author: UserData;
+}
+
+export interface QuizData {
+	id: number;
+	scope: string;
+	subject: string;
+	testDate: Date;
+	academicYear: number;
+	grade: number;
+	className: string;
+	isEvery: boolean;
+	authorId: string;
+	createdAt: Date;
+	updatedAt: Date;
+	author: UserData;
+}
+
+export interface DocumentData {
+	id: number;
+	title: string;
+	description: string;
+	fileUrl: string;
+	subject: string;
+	academicYear: number;
+	grade: number;
+	className: string;
+	createdAt: Date;
+	updatedAt: Date;
+}
+
+export interface ExamData {
+	id: number;
+	term: string;
+	subject: string;
+	scope: string;
+	exclusion?: string | null;
+	academicYear: number;
+	grade: number;
+	authorId: string;
+	createdAt: Date;
+	updatedAt: Date;
+	author: UserData;
+}
+
+export interface ChangeData {
+	id: number;
+	date: Date;
+	period: number;
+	subject: string;
+	academicYear: number;
+	grade: number;
+	className: string;
+	isEvery: boolean;
+	authorId: string;
+	createdAt: Date;
+	updatedAt: Date;
+	author: UserData;
+}
+
+export interface ScheduleData {
+	id: number;
+	date: Date;
+	academicYear: number;
+	grade: number;
+	className: string;
+	content: string;
+	isEvery: boolean;
+	authorId: string;
+	createdAt: Date;
+	updatedAt: Date;
+	author: UserData;
+}
+
+export interface ScheduleWeekData {
+	id: number;
+	date: Date;
+	week: string;
+	authorId: string;
+	createdAt: Date;
+	updatedAt: Date;
+	author: UserData;
+}
+
+export interface ExamScheduleData {
+	id: number;
+	academicYear: number;
+	grade: number;
+	date: Date;
+	period: string;
+	timetable: string[];
+	authorId: string;
+	createdAt: Date;
+	updatedAt: Date;
+	author: UserData;
 }
 
 export interface TimetableData {
 	id: number;
 	week: string;
 	day: string;
+	academicYear: number;
 	grade: number;
-	group: string;
+	className: string;
 	first: string;
 	second: string;
 	third: string;
@@ -53,38 +190,43 @@ export interface TimetableData {
 	authorId: string;
 	createdAt: Date;
 	updatedAt: Date;
+	author: UserData;
 }
 
-export interface TestData {
+export interface InformationData {
 	id: number;
-	name: string;
-	subject: string;
-	implementationDate: Date;
-	grade: number;
-	group: string;
-	authorId: string;
-	createdAt: Date;
-	updatedAt: Date;
-}
-
-export interface ScheduleData {
-	id: number;
-	grade: number;
-	group: string;
+	date: Date;
+	title: string;
 	content: string;
-	date: Date;
 	authorId: string;
 	createdAt: Date;
 	updatedAt: Date;
+	author: UserData;
 }
 
-export interface ExamScheduleData {
+export interface PostData {
 	id: number;
-	grade: number;
-	date: Date;
-	period: string;
-	timetable: string[];
+	username: string;
+	content: string;
+	type: PostType;
+	mediaUrl?: string | null;
+	mediaType?: MediaType | null;
 	authorId: string;
+	author: UserData;
+}
+
+export interface LikeData {
+	id: number;
+	authorId: string;
+	postId: number;
 	createdAt: Date;
-	updatedAt: Date;
+	author: UserData;
+}
+
+export interface ViewData {
+	id: number;
+	authorId: string;
+	postId: number;
+	createdAt: Date;
+	author: UserData;
 }

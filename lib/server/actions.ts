@@ -54,19 +54,14 @@ export async function LinkUser(
 	return;
 }
 
-export async function CreateUser(
-    id: string,
-    displayName: string,
-    pictureUrl: string,
-	role: Role,
-) {
+export async function CreateUser(id: string, displayName: string, pictureUrl: string, role: Role) {
 	try {
 		const userData = await prisma.user.create({
 			data: {
 				id,
 				displayName,
-                pictureUrl,
-				role
+				pictureUrl,
+				role,
 			},
 		});
 		return userData;
@@ -111,9 +106,9 @@ export async function CreateStudentHistory(
 	try {
 		const studentData = await prisma.student.findFirst({
 			where: {
-                fullName,
-                enrollmentYear,
-            },
+				fullName,
+				enrollmentYear,
+			},
 		});
 		if (studentData) {
 			const studentHistoryData = await prisma.studentHistory.create({
@@ -127,7 +122,7 @@ export async function CreateStudentHistory(
 			});
 			return studentHistoryData;
 		} else {
-			return
+			return;
 		}
 	} catch (error) {
 		console.log(error);
@@ -197,15 +192,13 @@ export async function CreateAssignment(
 	return;
 }
 
-export async function DeleteAssignment(
-	id: number
-) {
+export async function DeleteAssignment(id: number) {
 	try {
 		await prisma.assignment.delete({
-            where: {
-                id,
-            },
-        });
+			where: {
+				id,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -258,15 +251,13 @@ export async function CreateQuiz(
 	return;
 }
 
-export async function DeleteQuiz(
-	id: number
-) {
+export async function DeleteQuiz(id: number) {
 	try {
 		await prisma.quiz.delete({
-            where: {
-                id,
-            },
-        });
+			where: {
+				id,
+			},
+		});
 	} catch (error) {
 		console.log(error);
 		throw new Error("Database error");
@@ -414,17 +405,13 @@ export async function CreateExamSchedule(
 	return;
 }
 
-export async function CreatePost(
-	username: string,
-    content: string,
-    authorId: string,
-) {
+export async function CreatePost(username: string, content: string, authorId: string) {
 	try {
 		await prisma.post.create({
 			data: {
 				username,
-                content,
-                authorId,
+				content,
+				authorId,
 			},
 		});
 	} catch (error) {
@@ -500,8 +487,8 @@ export async function findStudentByHistory(
 	});
 	const student = await prisma.student.findUnique({
 		where: {
-            id: studentHistory?.studentId,
-        },
+			id: studentHistory?.studentId,
+		},
 	});
 	return student;
 }
@@ -658,8 +645,8 @@ export async function getAllAssignments() {
 export async function findAssignmentsByRange(
 	academicYear: number,
 	grade: number,
-    className: string,
-    dateRange: number,
+	className: string,
+	dateRange: number,
 ) {
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
@@ -675,8 +662,8 @@ export async function findAssignmentsByRange(
 					className,
 				},
 				{
-					isEvery: true
-				}
+					isEvery: true,
+				},
 			],
 			AND: [
 				{
@@ -686,8 +673,8 @@ export async function findAssignmentsByRange(
 					},
 				},
 			],
-		}
-	})
+		},
+	});
 
 	return assignments;
 }
@@ -695,8 +682,8 @@ export async function findAssignmentsByRange(
 export async function findAssignmentsByDate(
 	academicYear: number,
 	grade: number,
-    className: string,
-    dueDate: Date,
+	className: string,
+	dueDate: Date,
 ) {
 	const assignments = await prisma.assignment.findMany({
 		where: {
@@ -708,27 +695,25 @@ export async function findAssignmentsByDate(
 					className,
 				},
 				{
-					isEvery: true
-				}
+					isEvery: true,
+				},
 			],
-		}
+		},
 	});
 
 	return assignments;
 }
 
-export async function findHistoryByStudent(
-	studentId: number
-) {
+export async function findHistoryByStudent(studentId: number) {
 	const history = await prisma.studentHistory.findMany({
 		where: {
-			studentId
+			studentId,
 		},
 		orderBy: [
 			{
 				academicYear: "asc",
 			},
-		]
+		],
 	});
 	return history;
 }
@@ -736,8 +721,8 @@ export async function findHistoryByStudent(
 export async function findQuizByRange(
 	academicYear: number,
 	grade: number,
-    className: string,
-    dateRange: number,
+	className: string,
+	dateRange: number,
 ) {
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
@@ -754,8 +739,8 @@ export async function findQuizByRange(
 					className,
 				},
 				{
-					isEvery: true
-				}
+					isEvery: true,
+				},
 			],
 			AND: [
 				{
@@ -765,7 +750,7 @@ export async function findQuizByRange(
 					},
 				},
 			],
-		}
+		},
 	});
 	return quiz;
 }
@@ -773,8 +758,8 @@ export async function findQuizByRange(
 export async function findQuizByDate(
 	academicYear: number,
 	grade: number,
-    className: string,
-    testDate: Date,
+	className: string,
+	testDate: Date,
 ) {
 	const quiz = await prisma.quiz.findMany({
 		where: {
@@ -786,10 +771,10 @@ export async function findQuizByDate(
 					className,
 				},
 				{
-					isEvery: true
-				}
-			]
-		}
+					isEvery: true,
+				},
+			],
+		},
 	});
 
 	return quiz;

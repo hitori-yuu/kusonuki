@@ -13,10 +13,12 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
 	const id = params.id;
-    const studentData = await prisma.student.delete({
-        where: {
-            id: parseInt(id),
-        },
-    });
-    return NextResponse.json({ message: "Deleted student with DisplayName: " + studentData.fullName });
+	const studentData = await prisma.student.delete({
+		where: {
+			id: parseInt(id),
+		},
+	});
+	return NextResponse.json({
+		message: "Deleted student with DisplayName: " + studentData.fullName,
+	});
 }

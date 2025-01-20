@@ -53,7 +53,8 @@ export const useUser = () => {
 
 	const refreshData = useCallback(async () => {
 		if (!liff?.isLoggedIn()) {
-			return
+			setIsLoading(false);
+			return;
 		}
 
 		try {

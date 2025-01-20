@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useLiff } from "@/components/layouts/LiffProvider";
 import { StudentData, UserData } from "@/types/types";
-import { Student, User } from "@/lib/server/actions";
+import { CreateUser, Student, UpdateUser, User } from "@/lib/server/actions";
+import type { Profile } from "@liff/get-profile/lib/index.d.ts";
 
 type CacheData = {
 	data: UserData | StudentData;
@@ -44,6 +45,12 @@ const getStudentData = async (studentId: number): Promise<StudentData> => {
 	return studentData;
 };
 
+function CheckUser(user: UserData, profile: Profile) {
+	if (user.displayName === profile.displayName) return true;
+	if (user.pictureUrl === profile.pictureUrl) return true;
+	else return false;
+}
+
 export const useUser = () => {
 	const [user, setUser] = useState<UserData | null>(null);
 	const [student, setStudent] = useState<StudentData | null>(null);
@@ -61,6 +68,21 @@ export const useUser = () => {
 			setIsLoading(true);
 			const profile = await liff.getProfile();
 			const userData = await getUserData(profile.userId);
+			if (!userData) {
+				if (profile.pictureUrl) {
+					await CreateUser(profile.userId, profile.displayName, profile.pictureUrl);
+				} else {
+					await CreateUser(
+						profile.userId,
+						profile.displayName,
+						"https://www.webiconio.com/_upload/255/image_255.svg",
+					);
+				}
+			}
+			if (CheckUser(userData, profile)) {
+				if (!profile.pictureUrl) return;
+				await UpdateUser(userData.id, profile.displayName, profile.pictureUrl);
+			}
 			setUser(userData);
 
 			if (userData?.isLinked) {

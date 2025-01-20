@@ -54,15 +54,32 @@ export async function LinkUser(
 	return;
 }
 
-export async function CreateUser(id: string, displayName: string, pictureUrl: string, role: Role) {
+export async function CreateUser(id: string, displayName: string, pictureUrl: string) {
 	try {
 		const userData = await prisma.user.create({
 			data: {
 				id,
 				displayName,
 				pictureUrl,
-				role,
 			},
+		});
+		return userData;
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+}
+
+export async function UpdateUser(id: string, displayName: string, pictureUrl: string) {
+	try {
+		const userData = await prisma.user.update({
+			where: {
+				id,
+			},
+			data: {
+				displayName,
+				pictureUrl,
+			}
 		});
 		return userData;
 	} catch (error) {

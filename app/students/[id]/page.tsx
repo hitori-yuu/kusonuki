@@ -47,7 +47,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 				</div>
 			</div>
 
-			<div className="mt-2 grid gap-6 md:grid-cols-2">
+			<div className="mt-2 grid gap-4 sm:grid-cols-1 md:grid-cols-2">
 				<Card>
 					<CardHeader>
 						<CardTitle>基本情報</CardTitle>
@@ -58,7 +58,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 								<div className="text-sm font-medium text-gray-500">氏名</div>
 								<div className="text-lg">{student.fullName}</div>
 							</div>
-							<div className="grid grid-cols-2 gap-4">
+							<div className="grid grid-cols-2 gap-2">
 								<div>
 									<div className="text-sm font-medium text-gray-500">
 										入学年度
@@ -91,7 +91,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 						<CardTitle>システム情報</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<div className="space-y-4">
+						<div className="grid grid-cols-1 gap-2">
 							<div>
 								<div className="text-sm font-medium text-gray-500">学生ID</div>
 								<div>{student.id}</div>
@@ -108,8 +108,8 @@ const page = async ({ params }: { params: { id: string } }) => {
 					</CardContent>
 				</Card>
 			</div>
-			<div className="mt-2">
-				<Card className="mt-2">
+			<div className="mt-4">
+				<Card>
 					<CardHeader>
 						<CardTitle>履歴情報</CardTitle>
 					</CardHeader>

@@ -63,6 +63,11 @@ const PostForm = () => {
 
 		if (user && student) {
 			try {
+				if (!content && !fileInput?.files?.[0]) {
+					alert("内容を入力してください");
+					setIsUploading(false);
+					return;
+				}
 				if (fileInput?.files?.[0]) {
 					const file = fileInput.files[0];
 					const fileExt = file.name.split(".").pop();
@@ -89,7 +94,7 @@ const PostForm = () => {
 				console.error("Error creating post:", error);
 				toast.error("ポストの投稿に失敗しました。");
 			} finally {
-				toast("ポストを投稿しました。");
+				toast.success("ポストを投稿しました。");
 			}
 		} else {
 			toast.error("ログイン時のみ実行できます");

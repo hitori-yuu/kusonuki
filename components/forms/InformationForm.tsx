@@ -13,7 +13,7 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { CreateInformation } from "@/lib/server/actions";
@@ -30,7 +30,6 @@ const formSchema = z.object({
 const InformationForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
-	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -44,9 +43,7 @@ const InformationForm = () => {
 		if (user) {
 			await CreateInformation(values.title, values.content, user?.id);
 			form.reset();
-			toast({
-				description: "お知らせを作成しました。",
-			});
+			toast.success("お知らせを作成しました。");
 			router.refresh();
 		}
 	}

@@ -10,13 +10,24 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import prisma from "@/lib/prismaClient";
+
+async function getData() {
+	const result = await prisma.document.findMany({
+		orderBy: [
+			{
+				createdAt: "desc",
+			},
+		],
+	});
+	return result;
+}
 
 const page = async () => {
-	const data = (await getAllDocuments()) as DocumentData[];
+	const data = (await getData()) as DocumentData[];
 	return (
 		<div>
 			<div className="mb-4">

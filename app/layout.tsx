@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 const inter = Inter({ subsets: ["latin"] });
-const gaId = process.env.GOOGLE_ANALYTICS_ID || "";
+const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID || "";
 config.autoAddCss = false;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,8 +1,8 @@
-import { getAllPosts } from "@/lib/server/actions";
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { CircleAlert, CircleUser, Megaphone, User } from "lucide-react";
 import Image from "next/image";
+import prisma from "@/lib/prismaClient";
 
 const getTypeIcon = (type: string) => {
 	switch (type) {
@@ -17,16 +17,27 @@ const getTypeIcon = (type: string) => {
 	}
 };
 
+async function getData() {
+	const result = await prisma.post.findMany({
+		orderBy: [
+			{
+				createdAt: "desc",
+			},
+		],
+	});
+	return result;
+}
+
 const Feed = async () => {
-	const posts = await getAllPosts();
-	if (!posts) return <div>No posts...</div>;
+	const posts = await getData();
+	if (!posts) return <div>ポストはありません...</div>;
 	return (
 		<>
 			<h1 className="text-center mt-5">ポスト一覧</h1>
 			<Separator />
 			<div className="space-y-2">
 				{posts.map((post) => (
-					<div className="block">
+					<div className="block" key={post.id}>
 						<div className="flex items-center py-2">
 							{getTypeIcon(post.type)}
 							<div>

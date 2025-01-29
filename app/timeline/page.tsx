@@ -2,7 +2,7 @@ import PostForm from "@/components/forms/PostForm";
 import Feed from "@/components/layouts/Feed";
 import React from "react";
 
-const page = () => {
+const page = async () => {
 	return (
 		<div>
 			<PostForm />

@@ -80,7 +80,7 @@ const DocumentForm = () => {
 					student.currentClass,
 					user.id,
 				);
-				toast("プリントのアップロードが完了しました。", {
+				toast.success("プリントのアップロードが完了しました。", {
 					description: `${formData.title}`,
 				});
 			} catch (error) {

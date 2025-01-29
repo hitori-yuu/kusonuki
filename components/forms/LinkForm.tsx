@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { useUser } from "@/hooks/useUser";
 import { LinkUser, searchStudent } from "@/lib/server/actions";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 const formSchema = z.object({
 	firstName: z.string(),
@@ -36,7 +36,6 @@ const formSchema = z.object({
 
 const LinkForm = () => {
 	const { user, student, liff } = useUser();
-	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -79,8 +78,8 @@ const LinkForm = () => {
 				user?.id,
 			);
 			form.reset();
-			toast({
-				description: "生徒情報を連携しました。",
+			toast.success("生徒情報を連携しました。", {
+				description: values.lastName + values.firstName,
 			});
 		}
 	}

@@ -99,12 +99,12 @@ export interface QuizData {
 export interface DocumentData {
 	id: number;
 	title: string;
-	description: string;
 	fileUrl: string;
 	subject: string;
 	academicYear: number;
 	grade: number;
 	className: string;
+	authorId: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

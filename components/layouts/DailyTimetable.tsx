@@ -22,6 +22,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getExamSchedules, getSchedules, getQuiz, getTimetable } from "@/lib/server/actions";
 import { typeWeek } from "@/lib/utils";
 import { ExamScheduleData, ScheduleData, QuizData, TimetableData } from "@/types/types";
+import { toast } from "sonner";
 
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
@@ -36,6 +37,7 @@ const DailyTimetable = () => {
 
 	useEffect(() => {
 		const fetchTimetable = async () => {
+			toast("時間割情報を取得しています。");
 			if (!student) {
 				setLoading(false);
 				return;
@@ -78,6 +80,7 @@ const DailyTimetable = () => {
 		};
 
 		const fetchSchedule = async () => {
+			toast("予定情報を取得しています。");
 			if (!student) {
 				setLoading(false);
 				return;

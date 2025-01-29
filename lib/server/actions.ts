@@ -4,7 +4,13 @@ import { MediaType, PostData, StudentData, UserData } from "@/types/types";
 import prisma from "../prismaClient";
 import { cache } from "react";
 import { getFiscalYear } from "../utils";
-import { Role } from "@prisma/client";
+import { mediaType, Role } from "@prisma/client";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+	process.env.NEXT_PUBLIC_SUPABASE_URL!,
+	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+);
 
 const classNames = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
 
@@ -79,7 +85,7 @@ export async function UpdateUser(id: string, displayName: string, pictureUrl: st
 			data: {
 				displayName,
 				pictureUrl,
-			}
+			},
 		});
 		return userData;
 	} catch (error) {
@@ -428,6 +434,57 @@ export async function CreatePost(username: string, content: string, authorId: st
 			data: {
 				username,
 				content,
+				authorId,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
+export async function CreatePostMedia(
+	username: string,
+	content: string,
+	mediaUrl: string,
+	mediaType: mediaType,
+	authorId: string,
+) {
+	try {
+		await prisma.post.create({
+			data: {
+				username,
+				content,
+				mediaUrl,
+				mediaType,
+				authorId,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
+export async function CreateDocument(
+	title: string,
+	fileUrl: string,
+	subject: string,
+	grade: number,
+	className: string,
+	authorId: string,
+) {
+	try {
+		await prisma.document.create({
+			data: {
+				title,
+				fileUrl,
+				subject,
+				academicYear: getFiscalYear(),
+				grade,
+				className,
 				authorId,
 			},
 		});
@@ -820,6 +877,18 @@ export async function getAllChanges() {
 	return changes;
 }
 
+export async function getAllDocuments() {
+	const assignments = await prisma.document.findMany({
+		orderBy: [
+			{
+				createdAt: "asc",
+			},
+		],
+	});
+
+	return assignments;
+}
+
 export async function getAllUsers(): Promise<UserData[]> {
 	const result = await prisma.user.findMany({
 		orderBy: [
@@ -874,7 +943,7 @@ export async function getAllPosts(): Promise<PostData[]> {
 	const result = await prisma.post.findMany({
 		orderBy: [
 			{
-				createdAt: "asc",
+				createdAt: "desc",
 			},
 		],
 	});

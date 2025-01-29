@@ -4,6 +4,14 @@ import { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_BUILD } from "next/constants
 const nextConfig = {
 	reactStrictMode: false,
 	serverActions: true,
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "ejpluvlegngmfatunnsr.supabase.co",
+			},
+		],
+	},
 };
 
 const nextConfigFunction = async (phase) => {

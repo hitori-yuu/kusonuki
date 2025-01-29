@@ -36,6 +36,7 @@ model User {
     Post         Post[]
     Like         Like[]
     View         View[]
+    Document     Document[]
 }
 
 model Student {
@@ -111,15 +112,17 @@ model Quiz {
 }
 
 model Document {
-    id          Int    @id @default(autoincrement())
-    title       String
-    description String
-    fileUrl     String
-    subject     String
+    id      Int    @id @default(autoincrement())
+    title   String
+    fileUrl String
+    subject String
 
     academicYear Int    @default(2024)
     grade        Int    @default(2)
     className    String @default("H")
+
+    author   User   @relation(fields: [authorId], references: [id])
+    authorId String
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

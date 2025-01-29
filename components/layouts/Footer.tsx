@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { Home, User, TableOfContents, Info } from "lucide-react";
+import { Home, User, TableOfContents, ScrollText } from "lucide-react";
 import Link from "next/link";
 
 const Footer = () => {
@@ -10,7 +10,7 @@ const Footer = () => {
 		{ icon: Home, label: "ホーム", href: "/" },
 		{ icon: User, label: "プロフィール", href: "/profile" },
 		{ icon: TableOfContents, label: "タイムライン", href: "/timeline" },
-		{ icon: Info, label: "お知らせ", href: "/information" },
+		{ icon: ScrollText, label: "プリント", href: "/documents" },
 	];
 
 	return (

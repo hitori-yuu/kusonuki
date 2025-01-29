@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import {
 	Select,
@@ -48,7 +48,6 @@ const formSchema = z.object({
 const QuizForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
-	const { toast } = useToast();
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -72,8 +71,8 @@ const QuizForm = () => {
 				user.id,
 			);
 			form.reset();
-			toast({
-				description: "課題を作成しました。",
+			toast.success("小テストを作成しました。", {
+				description: values.name,
 			});
 			router.refresh();
 		}

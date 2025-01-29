@@ -43,7 +43,7 @@ const page = async () => {
 				</Dialog>
 			</div>
 			<Separator />
-			<div className="grid grid-cols-2 gap-4 mt-4">
+			<div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 				{data.map((doc) => (
 					<DocumentCard
 						key={doc.id}

@@ -14,7 +14,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-export const revalidate = 60 * 1000; // 1分
+export const revalidate = 60;
 
 export default async function page() {
 	const data = (await getAllDocuments()) as DocumentData[];

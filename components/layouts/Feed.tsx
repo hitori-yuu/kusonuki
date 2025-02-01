@@ -18,7 +18,7 @@ const getTypeIcon = (type: string) => {
 	}
 };
 
-export const revalidate = 60 * 1000; // 1分
+export const revalidate = 60;
 
 export default async function Feed() {
 	const posts = (await getAllPosts()) as PostData[];

@@ -14,11 +14,23 @@ import {
 	PaginationNext,
 	PaginationPrevious,
 } from "@/components/ui/pagination";
+import { StudentData, UserData } from "@/types/types";
+
+async function getStudentData(studentId: number): Promise<StudentData> {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v2/students/${studentId}`, {
+		cache: "no-store",
+	});
+
+	const studentData: StudentData = await response.json();
+
+	console.log(studentData);
+
+	return studentData;
+}
 
 const page = async ({ params }: { params: { id: string } }) => {
 	const { id } = params;
-	const student = await Student(parseInt(id));
-	const studentHistory = await findHistoryByStudent(parseInt(id));
+	const student = await getStudentData(parseInt(id));
 	return (
 		<div>
 			<Pagination className='text-left'>
@@ -112,8 +124,8 @@ const page = async ({ params }: { params: { id: string } }) => {
 									</TableRow>
 								</TableHeader>
 								<TableBody>
-									{studentHistory ? (
-										studentHistory.map((history) => (
+									{student.StudentHistory ? (
+										student.StudentHistory.map((history) => (
 											<TableRow key={history.id}>
 												<TableCell>{history.academicYear}年度</TableCell>
 												<TableCell>{history.grade}年</TableCell>

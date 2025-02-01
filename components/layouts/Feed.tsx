@@ -18,10 +18,18 @@ const getTypeIcon = (type: string) => {
 	}
 };
 
-export const revalidate = 60;
+async function getData(): Promise<PostData[]> {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v2/posts`, {
+		cache: "no-store",
+	});
+
+	const allPostData: PostData[] = await response.json();
+
+	return allPostData;
+}
 
 export default async function Feed() {
-	const posts = (await getAllPosts()) as PostData[];
+	const posts = await getData();
 
 	if (!posts) return <div>ポストはありません...</div>;
 	return (

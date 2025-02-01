@@ -1,14 +1,7 @@
 "use client";
 import { useUser } from "@/hooks/useUser";
 import React, { useEffect, useState } from "react";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -40,15 +33,9 @@ export function UserDashboard() {
 			}
 
 			try {
-				setuserAssignments(
-					(await getAllAssignments()).filter((data) => data.authorId == user.id).length,
-				);
-				setuserTests(
-					(await getAllQuiz()).filter((data) => data.authorId == user.id).length,
-				);
-				setuserChanges(
-					(await getAllChanges()).filter((data) => data.authorId == user.id).length,
-				);
+				setuserAssignments((await getAllAssignments()).filter((data) => data.authorId == user.id).length);
+				setuserTests((await getAllQuiz()).filter((data) => data.authorId == user.id).length);
+				setuserChanges((await getAllChanges()).filter((data) => data.authorId == user.id).length);
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "Failed to fetch timetable");
 			} finally {
@@ -60,25 +47,10 @@ export function UserDashboard() {
 
 	return (
 		user && (
-			<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 my-4">
-				<DashboardCard
-					title="課題作成"
-					content={userAssignments}
-					isLoading={isLoading}
-					icon={<PencilLine />}
-				/>
-				<DashboardCard
-					title="小テスト作成"
-					content={userTests}
-					isLoading={isLoading}
-					icon={<NotepadText />}
-				/>
-				<DashboardCard
-					title="変更作成"
-					content={userChanges}
-					isLoading={isLoading}
-					icon={<CalendarMinus2 />}
-				/>
+			<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3 my-4'>
+				<DashboardCard title='課題作成' content={userAssignments} isLoading={isLoading} icon={<PencilLine />} />
+				<DashboardCard title='小テスト作成' content={userTests} isLoading={isLoading} icon={<NotepadText />} />
+				<DashboardCard title='変更作成' content={userChanges} isLoading={isLoading} icon={<CalendarMinus2 />} />
 			</div>
 		)
 	);

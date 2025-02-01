@@ -3,17 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "../../ui/textarea";
 import { useUser } from "@/hooks/useUser";
 import { useToast } from "@/hooks/use-toast";
 import { CreatePost, CreatePostMedia } from "@/lib/server/actions";
@@ -106,14 +99,14 @@ const PostForm = () => {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-2'>
 				<FormField
 					control={form.control}
-					name="username"
+					name='username'
 					render={({ field }) => (
-						<FormItem className="flex-1">
+						<FormItem className='flex-1'>
 							<FormControl>
-								<Input placeholder="ユーザー名" {...field} />
+								<Input placeholder='ユーザー名' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -121,26 +114,26 @@ const PostForm = () => {
 				/>
 				<FormField
 					control={form.control}
-					name="content"
+					name='content'
 					render={({ field }) => (
-						<FormItem className="flex-1">
+						<FormItem className='flex-1'>
 							<FormControl>
-								<Textarea placeholder="シェアしよう" {...field} />
+								<Textarea placeholder='シェアしよう' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
-				<div className="flex justify-center">
-					<Label htmlFor="file">
+				<div className='flex justify-center'>
+					<Label htmlFor='file'>
 						<ImageIcon size={32} />
 					</Label>
 					<Input
-						name="mediaUrl"
-						className="hidden"
-						id="file"
-						type="file"
-						accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+						name='mediaUrl'
+						className='hidden'
+						id='file'
+						type='file'
+						accept='.pdf,.doc,.docx,.jpg,.jpeg,.png'
 						onChange={(event) => {
 							const { files, displayUrl } = getImageData(event);
 							setPreview(displayUrl);
@@ -148,18 +141,18 @@ const PostForm = () => {
 					/>
 				</div>
 				{preview && (
-					<div className="mx-auto max-w-[100px]">
+					<div className='mx-auto max-w-[100px]'>
 						<Image
 							src={preview}
 							width={50}
 							height={50}
-							alt=""
-							className="w-full h-full object-contain object-center"
+							alt=''
+							className='w-full h-full object-contain object-center'
 						/>
 					</div>
 				)}
 
-				<Button type="submit" className="w-full" disabled={isUploading}>
+				<Button type='submit' className='w-full' disabled={isUploading}>
 					{isUploading ? "投稿中..." : <>投稿する</>}
 				</Button>
 			</form>

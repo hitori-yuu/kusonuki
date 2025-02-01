@@ -1,12 +1,5 @@
 import React from "react";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import { User } from "@/lib/server/actions";
@@ -23,12 +16,12 @@ const DocumentCard = async (props: DocumentCardType) => {
 	return (
 		<>
 			<Card>
-				<CardHeader className="flex flex-row items-center space-y-0 pb-2">
+				<CardHeader className='flex flex-row items-center space-y-0 pb-2'>
 					<Avatar>
 						<AvatarImage src={user.pictureUrl?.toString()} />
 						<AvatarFallback>{user.displayName}</AvatarFallback>
 					</Avatar>
-					<CardTitle className="text-sm font-medium ml-2">{props.title}</CardTitle>
+					<CardTitle className='text-sm font-medium ml-2'>{props.title}</CardTitle>
 				</CardHeader>
 				<CardContent>
 					<Image
@@ -41,7 +34,7 @@ const DocumentCard = async (props: DocumentCardType) => {
 				</CardContent>
 				<CardFooter>
 					{/* Add download button or link here */}
-					<Button className="w-full" variant="outline" asChild>
+					<Button className='w-full' variant='outline' asChild>
 						<a href={props.fileUrl}>ダウンロード</a>
 					</Button>
 				</CardFooter>

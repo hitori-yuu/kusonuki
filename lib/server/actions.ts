@@ -7,10 +7,7 @@ import { getFiscalYear } from "../utils";
 import { mediaType, Role } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 
-const supabase = createClient(
-	process.env.NEXT_PUBLIC_SUPABASE_URL!,
-	process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-);
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
 
 const classNames = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
 
@@ -23,13 +20,7 @@ export async function LinkUser(
 	authorId: string,
 ) {
 	try {
-		const student = await searchStudent(
-			lastName,
-			firstName,
-			currentGrade,
-			currentClass,
-			currentNumber,
-		);
+		const student = await searchStudent(lastName, firstName, currentGrade, currentClass, currentNumber);
 
 		if (!student) return;
 
@@ -495,13 +486,7 @@ export async function CreateDocument(
 	return;
 }
 
-export async function searchStudent(
-	lastName: string,
-	firstName: string,
-	grade: number,
-	group: string,
-	number: number,
-) {
+export async function searchStudent(lastName: string, firstName: string, grade: number, group: string, number: number) {
 	const student = await prisma.student.findFirst({
 		where: {
 			fullName: lastName + firstName,
@@ -513,11 +498,7 @@ export async function searchStudent(
 	return student;
 }
 
-export async function findStudentByCurrent(
-	currentGrade: number,
-	currentClass: string,
-	currentNumber: number,
-) {
+export async function findStudentByCurrent(currentGrade: number, currentClass: string, currentNumber: number) {
 	const student = await prisma.student.findFirst({
 		where: {
 			currentGrade,
@@ -528,12 +509,7 @@ export async function findStudentByCurrent(
 	return student;
 }
 
-export async function findStudentByFullName(
-	fullName: string,
-	grade: number,
-	group: string,
-	number: number,
-) {
+export async function findStudentByFullName(fullName: string, grade: number, group: string, number: number) {
 	const student = await prisma.student.findFirst({
 		where: {
 			fullName,
@@ -545,12 +521,7 @@ export async function findStudentByFullName(
 	return student;
 }
 
-export async function findStudentByHistory(
-	academicYear: number,
-	grade: number,
-	className: string,
-	number: number,
-) {
+export async function findStudentByHistory(academicYear: number, grade: number, className: string, number: number) {
 	const studentHistory = await prisma.studentHistory.findFirst({
 		where: {
 			academicYear,
@@ -753,12 +724,7 @@ export async function findAssignmentsByRange(
 	return assignments;
 }
 
-export async function findAssignmentsByDate(
-	academicYear: number,
-	grade: number,
-	className: string,
-	dueDate: Date,
-) {
+export async function findAssignmentsByDate(academicYear: number, grade: number, className: string, dueDate: Date) {
 	const assignments = await prisma.assignment.findMany({
 		where: {
 			academicYear,
@@ -792,12 +758,7 @@ export async function findHistoryByStudent(studentId: number) {
 	return history;
 }
 
-export async function findQuizByRange(
-	academicYear: number,
-	grade: number,
-	className: string,
-	dateRange: number,
-) {
+export async function findQuizByRange(academicYear: number, grade: number, className: string, dateRange: number) {
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
 
@@ -829,12 +790,7 @@ export async function findQuizByRange(
 	return quiz;
 }
 
-export async function findQuizByDate(
-	academicYear: number,
-	grade: number,
-	className: string,
-	testDate: Date,
-) {
+export async function findQuizByDate(academicYear: number, grade: number, className: string, testDate: Date) {
 	const quiz = await prisma.quiz.findMany({
 		where: {
 			academicYear,
@@ -858,7 +814,7 @@ export async function getAllQuiz() {
 	const quiz = await prisma.quiz.findMany({
 		orderBy: [
 			{
-				createdAt: "asc",
+				createdAt: "desc",
 			},
 		],
 	});
@@ -869,7 +825,7 @@ export async function getAllChanges() {
 	const changes = await prisma.change.findMany({
 		orderBy: [
 			{
-				createdAt: "asc",
+				createdAt: "desc",
 			},
 		],
 	});
@@ -881,7 +837,7 @@ export async function getAllDocuments() {
 	const assignments = await prisma.document.findMany({
 		orderBy: [
 			{
-				createdAt: "asc",
+				createdAt: "desc",
 			},
 		],
 	});
@@ -893,7 +849,7 @@ export async function getAllUsers(): Promise<UserData[]> {
 	const result = await prisma.user.findMany({
 		orderBy: [
 			{
-				displayName: "asc",
+				displayName: "desc",
 			},
 		],
 	});
@@ -948,17 +904,15 @@ export async function getAllPosts(): Promise<PostData[]> {
 		],
 	});
 
-	return result as unknown as PostData[];
+	return result as PostData[];
 }
 
-export async function getPost(): Promise<PostData> {
-	const result = await prisma.post.findMany({
-		orderBy: [
-			{
-				createdAt: "asc",
-			},
-		],
+export async function getPost(postId: number): Promise<PostData> {
+	const result = await prisma.post.findUnique({
+		where: {
+			id: postId,
+		},
 	});
 
-	return result as unknown as PostData;
+	return result as PostData;
 }

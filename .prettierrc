@@ -1,5 +1,23 @@
 {
-	"printWidth": 100,
+	"trailingComma": "all",
 	"tabWidth": 4,
-	"useTabs": true
+	"useTabs": true,
+	"jsxSingleQuote": true,
+	"arrowParens": "always",
+	"printWidth": 120,
+	"bracketSpacing": true,
+	"overrides": [
+		{
+			"files": "*.html",
+			"options": {
+				"printWidth": 360
+			}
+		},
+		{
+			"files": ["*.css", "*.scss"],
+			"options": {
+				"singleQuote": false
+			}
+		}
+	]
 }

@@ -19,16 +19,16 @@ async function getData() {
 const page = async () => {
 	const informationData = await getData();
 	return (
-		<div className="space-y-4">
+		<div className='space-y-4'>
 			<InformationButton />
 			{informationData.map((info) => (
-				<Card key={info.id} className="relative">
+				<Card key={info.id} className='relative'>
 					<CardHeader>
 						<CardTitle>{info.title}</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<CardDescription>{info.content}</CardDescription>
-						<div className="absolute right-4 top-4 text-sm text-muted-foreground">
+						<div className='absolute right-4 top-4 text-sm text-muted-foreground'>
 							{format(new Date(info.date), "PPP", { locale: ja })}
 						</div>
 					</CardContent>

@@ -61,23 +61,10 @@ export async function POST(req: NextRequest) {
 		number,
 	} = await req.json();
 	if (academicYear) {
-		const student = await CreateStudentHistory(
-			fullName,
-			enrollmentYear,
-			academicYear,
-			grade,
-			className,
-			number,
-		);
+		const student = await CreateStudentHistory(fullName, enrollmentYear, academicYear, grade, className, number);
 		return NextResponse.json(student);
 	} else {
-		const student = await CreateStudent(
-			fullName,
-			enrollmentYear,
-			currentGrade,
-			currentClass,
-			currentNumber,
-		);
+		const student = await CreateStudent(fullName, enrollmentYear, currentGrade, currentClass, currentNumber);
 		return NextResponse.json(student);
 	}
 }

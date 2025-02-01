@@ -9,7 +9,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import InformationForm from "../forms/InformationForm";
+import InformationForm from "./forms/InformationForm";
 import { useUser } from "@/hooks/useUser";
 
 const InformationButton = () => {
@@ -21,7 +21,7 @@ const InformationButton = () => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className="w-full">お知らせ作成</Button>
+				<Button className='w-full'>お知らせ作成</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<InformationForm />

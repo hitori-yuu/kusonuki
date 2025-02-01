@@ -1,4 +1,4 @@
-import AssignmentForm from "@/components/forms/AssignmentForm";
+import AssignmentForm from "@/components/layouts/forms/AssignmentForm";
 import React from "react";
 
 const page = () => {

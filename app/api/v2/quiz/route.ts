@@ -45,14 +45,6 @@ export async function GET(req: NextRequest) {
 export async function POST(req: Request) {
 	const { scope, subject, testDate, grade, className, isEvery, authorId } = await req.json();
 
-	const assignment = await CreateQuiz(
-		scope,
-		subject,
-		testDate,
-		grade,
-		className,
-		isEvery,
-		authorId,
-	);
+	const assignment = await CreateQuiz(scope, subject, testDate, grade, className, isEvery, authorId);
 	return NextResponse.json(assignment);
 }

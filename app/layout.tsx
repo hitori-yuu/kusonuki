@@ -25,35 +25,30 @@ config.autoAddCss = false;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="ja">
+		<html lang='ja'>
 			<head>
 				{/* 一般 */}
-				<link rel="manifest" href="/manifest.json" />
-				<meta name="theme-color" content="#b8e986" />
-				<link rel="icon" sizes="192x192" href="/icon-192x192.png" />
-				<link rel="icon" href="/favicon.ico" />
-				<meta name="mobile-web-app-capable" content="yes" />
+				<link rel='manifest' href='/manifest.json' />
+				<meta name='theme-color' content='#b8e986' />
+				<link rel='icon' sizes='192x192' href='/icon-192x192.png' />
+				<link rel='icon' href='/favicon.ico' />
+				<meta name='mobile-web-app-capable' content='yes' />
 
 				{/* safari */}
-				<meta name="apple-mobile-web-app-capable" content="yes" />
-				<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-				<meta name="apple-mobile-web-app-title" content="くそぬきbot" />
-				<link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
+				<meta name='apple-mobile-web-app-capable' content='yes' />
+				<meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
+				<meta name='apple-mobile-web-app-title' content='くそぬきbot' />
+				<link rel='apple-touch-icon' sizes='192x192' href='/icon-192x192.png' />
 				<GoogleAnalytics gaId={gaId} />
 			</head>
 			<body className={inter.className}>
 				<SpeedInsights />
 				<Analytics />
 				<LiffProvider liffId={process.env.NEXT_PUBLIC_LIFF_ID || ""}>
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="system"
-						enableSystem
-						disableTransitionOnChange
-					>
-						<div className="flex flex-col justify-between w-full h-full min-h-screen">
+					<ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+						<div className='flex flex-col justify-between w-full h-full min-h-screen'>
 							<Header />
-							<main className="flex-auto w-full max-w-3xl px-4 py-4 mx-auto sm:px-6 md:px-6 md:py-6">
+							<main className='flex-auto w-full max-w-3xl px-4 py-4 mx-auto sm:px-6 md:px-6 md:py-6'>
 								{children}
 							</main>
 							<Toaster />

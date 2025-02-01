@@ -16,7 +16,7 @@ const formatDate = (date: Date): string => {
 
 export const columns: ColumnDef<AssignmentData>[] = [
 	{
-		accessorKey: "name",
+		accessorKey: "title",
 		header: "課題名",
 	},
 	{

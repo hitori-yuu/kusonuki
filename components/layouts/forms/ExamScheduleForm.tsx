@@ -6,25 +6,12 @@ import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { ja } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
-import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { CreateExamSchedule } from "@/lib/server/actions";
@@ -74,13 +61,7 @@ const ExamScheduleForm = () => {
 
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
 		if (user && student) {
-			await CreateExamSchedule(
-				values.date,
-				values.period,
-				values.timetable,
-				student.currentGrade,
-				user.id,
-			);
+			await CreateExamSchedule(values.date, values.period, values.timetable, student.currentGrade, user.id);
 			form.reset();
 			toast.success("試験用時間割を作成しました。");
 			router.refresh();
@@ -89,24 +70,24 @@ const ExamScheduleForm = () => {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-8'>
 				<FormField
 					control={form.control}
-					name="period"
+					name='period'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>範囲</FormLabel>
 							<FormControl>
 								<Select onValueChange={field.onChange} defaultValue={field.value}>
 									<SelectTrigger>
-										<SelectValue placeholder="範囲を選択" />
+										<SelectValue placeholder='範囲を選択' />
 									</SelectTrigger>
 									<SelectContent>
-										<SelectItem value="前期中間">前期中間</SelectItem>
-										<SelectItem value="前期期末">前期期末</SelectItem>
-										<SelectItem value="後期期末">後期期末</SelectItem>
-										<SelectItem value="後期中間">後期中間</SelectItem>
-										<SelectItem value="学年末">学年末</SelectItem>
+										<SelectItem value='前期中間'>前期中間</SelectItem>
+										<SelectItem value='前期期末'>前期期末</SelectItem>
+										<SelectItem value='後期期末'>後期期末</SelectItem>
+										<SelectItem value='後期中間'>後期中間</SelectItem>
+										<SelectItem value='学年末'>学年末</SelectItem>
 									</SelectContent>
 								</Select>
 							</FormControl>
@@ -117,9 +98,9 @@ const ExamScheduleForm = () => {
 
 				<FormField
 					control={form.control}
-					name="date"
+					name='date'
 					render={({ field }) => (
-						<FormItem className="flex flex-col">
+						<FormItem className='flex flex-col'>
 							<FormLabel>日付</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
@@ -136,13 +117,13 @@ const ExamScheduleForm = () => {
 											) : (
 												<span>日付を選択</span>
 											)}
-											<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+											<CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
 										</Button>
 									</FormControl>
 								</PopoverTrigger>
-								<PopoverContent className="w-auto p-0" align="start">
+								<PopoverContent className='w-auto p-0' align='start'>
 									<Calendar
-										mode="single"
+										mode='single'
 										selected={field.value}
 										onSelect={field.onChange}
 										disabled={(date) => date < new Date()}
@@ -159,48 +140,33 @@ const ExamScheduleForm = () => {
 				<div>
 					<FormLabel>時間割</FormLabel>
 					{fields.map((field, index) => (
-						<div key={field.id} className="flex items-center gap-4 mb-4">
-							<FormLabel className="w-20">{index + 1}時間目:</FormLabel>
+						<div key={field.id} className='flex items-center gap-4 mb-4'>
+							<FormLabel className='w-20'>{index + 1}時間目:</FormLabel>
 							<FormField
 								control={form.control}
 								name={`timetable.${index}`}
 								render={({ field }) => (
-									<FormItem className="w-full">
+									<FormItem className='w-full'>
 										<FormControl>
-											<Select
-												onValueChange={field.onChange}
-												defaultValue={field.value}
-											>
+											<Select onValueChange={field.onChange} defaultValue={field.value}>
 												<SelectTrigger>
-													<SelectValue placeholder="教科を選択" />
+													<SelectValue placeholder='教科を選択' />
 												</SelectTrigger>
 												<SelectContent>
-													<SelectItem value="数学α">数学α</SelectItem>
-													<SelectItem value="数学β">数学β</SelectItem>
-													<SelectItem value="英語コミュニケーション">
+													<SelectItem value='数学α'>数学α</SelectItem>
+													<SelectItem value='数学β'>数学β</SelectItem>
+													<SelectItem value='英語コミュニケーション'>
 														英語コミュニケーション
 													</SelectItem>
-													<SelectItem value="論理表現">
-														論理表現
-													</SelectItem>
-													<SelectItem value="古典探求">
-														古典探求
-													</SelectItem>
-													<SelectItem value="論理国語">
-														論理国語
-													</SelectItem>
-													<SelectItem value="歴史総合">
-														歴史総合
-													</SelectItem>
-													<SelectItem value="物理/生物">
-														物理/生物
-													</SelectItem>
-													<SelectItem value="化学">化学</SelectItem>
-													<SelectItem value="家庭基礎">
-														家庭基礎
-													</SelectItem>
-													<SelectItem value="保健">保健</SelectItem>
-													<SelectItem value="H.R.">H.R.</SelectItem>
+													<SelectItem value='論理表現'>論理表現</SelectItem>
+													<SelectItem value='古典探求'>古典探求</SelectItem>
+													<SelectItem value='論理国語'>論理国語</SelectItem>
+													<SelectItem value='歴史総合'>歴史総合</SelectItem>
+													<SelectItem value='物理/生物'>物理/生物</SelectItem>
+													<SelectItem value='化学'>化学</SelectItem>
+													<SelectItem value='家庭基礎'>家庭基礎</SelectItem>
+													<SelectItem value='保健'>保健</SelectItem>
+													<SelectItem value='H.R.'>H.R.</SelectItem>
 												</SelectContent>
 											</Select>
 										</FormControl>
@@ -209,8 +175,8 @@ const ExamScheduleForm = () => {
 							/>
 
 							<Button
-								type="button"
-								variant="outline"
+								type='button'
+								variant='outline'
 								onClick={() => remove(index)}
 								disabled={fields.length === 1}
 							>
@@ -220,18 +186,13 @@ const ExamScheduleForm = () => {
 					))}
 
 					{fields.length < 4 && (
-						<Button
-							type="button"
-							variant="secondary"
-							onClick={() => append("数学α")}
-							className="w-full"
-						>
+						<Button type='button' variant='secondary' onClick={() => append("数学α")} className='w-full'>
 							時間割追加
 						</Button>
 					)}
 				</div>
 
-				<Button type="submit" className="w-full">
+				<Button type='submit' className='w-full'>
 					時間割作成
 				</Button>
 			</form>

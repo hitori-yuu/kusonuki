@@ -6,15 +6,7 @@ import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { ja } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
@@ -64,15 +56,15 @@ const ScheduleForm = () => {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-8'>
 				<FormField
 					control={form.control}
-					name="content"
+					name='content'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>予定名</FormLabel>
 							<FormControl>
-								<Input placeholder="例 ） 知の探求講座" {...field} />
+								<Input placeholder='例 ） 知の探求講座' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -80,9 +72,9 @@ const ScheduleForm = () => {
 				/>
 				<FormField
 					control={form.control}
-					name="date"
+					name='date'
 					render={({ field }) => (
-						<FormItem className="flex flex-col">
+						<FormItem className='flex flex-col'>
 							<FormLabel>日付</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
@@ -99,13 +91,13 @@ const ScheduleForm = () => {
 											) : (
 												<span>日付を選択</span>
 											)}
-											<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+											<CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
 										</Button>
 									</FormControl>
 								</PopoverTrigger>
-								<PopoverContent className="w-auto p-0" align="start">
+								<PopoverContent className='w-auto p-0' align='start'>
 									<Calendar
-										mode="single"
+										mode='single'
 										selected={field.value}
 										onSelect={field.onChange}
 										disabled={(date) => date < new Date()}
@@ -122,14 +114,11 @@ const ScheduleForm = () => {
 					(user?.role === "EDITOR" && (
 						<FormField
 							control={form.control}
-							name="isEvery"
+							name='isEvery'
 							render={({ field }) => (
-								<FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow">
+								<FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow'>
 									<FormControl>
-										<Checkbox
-											checked={field.value}
-											onCheckedChange={field.onChange}
-										/>
+										<Checkbox checked={field.value} onCheckedChange={field.onChange} />
 									</FormControl>
 									<FormLabel>全てのクラスに追加</FormLabel>
 								</FormItem>
@@ -137,7 +126,7 @@ const ScheduleForm = () => {
 						/>
 					))}
 
-				<Button type="submit" className="w-full">
+				<Button type='submit' className='w-full'>
 					予定作成
 				</Button>
 			</form>

@@ -1,4 +1,4 @@
-import ExamScopeForm from "@/components/forms/ExamScopeForm";
+import ExamScopeForm from "@/components/layouts/forms/ExamScopeForm";
 import React from "react";
 
 const page = () => {

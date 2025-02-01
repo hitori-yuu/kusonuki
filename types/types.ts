@@ -213,6 +213,7 @@ export interface PostData {
 	mediaType?: MediaType | null;
 	authorId: string;
 	author: UserData;
+	createdAt: Date;
 }
 
 export interface LikeData {

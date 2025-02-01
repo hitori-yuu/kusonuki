@@ -5,13 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import supabase from "@/lib/supabaseClient";
 import { CreateDocument } from "@/lib/server/actions";
@@ -96,56 +90,54 @@ const DocumentForm = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-6">
+		<form onSubmit={handleSubmit} className='space-y-6'>
 			<h1>プリントをアップロード</h1>
-			<div className="space-y-2">
-				<Label htmlFor="title">タイトル</Label>
+			<div className='space-y-2'>
+				<Label htmlFor='title'>タイトル</Label>
 				<Input
-					id="title"
+					id='title'
 					required
 					value={formData.title}
 					onChange={(e) => setFormData({ ...formData, title: e.target.value })}
 				/>
 			</div>
 
-			<div className="space-y-2">
-				<Label htmlFor="subject">教科</Label>
+			<div className='space-y-2'>
+				<Label htmlFor='subject'>教科</Label>
 				<Select
 					value={formData.subject}
 					onValueChange={(value) => setFormData({ ...formData, subject: value })}
 				>
 					<SelectTrigger>
-						<SelectValue placeholder="教科を選択" />
+						<SelectValue placeholder='教科を選択' />
 					</SelectTrigger>
 					<SelectContent>
-						<SelectItem value="数学">数学</SelectItem>
-						<SelectItem value="英語コミュニケーション">
-							英語コミュニケーション
-						</SelectItem>
-						<SelectItem value="論理表現">論理表現</SelectItem>
-						<SelectItem value="古典探求">古典探求</SelectItem>
-						<SelectItem value="論理国語">論理国語</SelectItem>
-						<SelectItem value="歴史総合[日]">歴史総合[日]</SelectItem>
-						<SelectItem value="歴史総合[世]">歴史総合[世]</SelectItem>
-						<SelectItem value="物理">物理</SelectItem>
-						<SelectItem value="生物">生物</SelectItem>
-						<SelectItem value="化学">化学</SelectItem>
-						<SelectItem value="家庭基礎">家庭基礎</SelectItem>
-						<SelectItem value="体育">体育</SelectItem>
-						<SelectItem value="保健">保健</SelectItem>
-						<SelectItem value="ヴェリタス">ヴェリタス</SelectItem>
-						<SelectItem value="H.R.">H.R.</SelectItem>
+						<SelectItem value='数学'>数学</SelectItem>
+						<SelectItem value='英語コミュニケーション'>英語コミュニケーション</SelectItem>
+						<SelectItem value='論理表現'>論理表現</SelectItem>
+						<SelectItem value='古典探求'>古典探求</SelectItem>
+						<SelectItem value='論理国語'>論理国語</SelectItem>
+						<SelectItem value='歴史総合[日]'>歴史総合[日]</SelectItem>
+						<SelectItem value='歴史総合[世]'>歴史総合[世]</SelectItem>
+						<SelectItem value='物理'>物理</SelectItem>
+						<SelectItem value='生物'>生物</SelectItem>
+						<SelectItem value='化学'>化学</SelectItem>
+						<SelectItem value='家庭基礎'>家庭基礎</SelectItem>
+						<SelectItem value='体育'>体育</SelectItem>
+						<SelectItem value='保健'>保健</SelectItem>
+						<SelectItem value='ヴェリタス'>ヴェリタス</SelectItem>
+						<SelectItem value='H.R.'>H.R.</SelectItem>
 					</SelectContent>
 				</Select>
 			</div>
 
-			<div className="space-y-2">
-				<Label htmlFor="file">プリント写真</Label>
+			<div className='space-y-2'>
+				<Label htmlFor='file'>プリント写真</Label>
 				<Input
-					id="file"
-					type="file"
+					id='file'
+					type='file'
 					required
-					accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+					accept='.pdf,.doc,.docx,.jpg,.jpeg,.png'
 					onChange={(event) => {
 						const { files, displayUrl } = getImageData(event);
 						setPreview(displayUrl);
@@ -154,18 +146,18 @@ const DocumentForm = () => {
 			</div>
 
 			{preview && (
-				<div className="mx-auto max-w-[100px]">
+				<div className='mx-auto max-w-[100px]'>
 					<Image
 						src={preview}
 						width={50}
 						height={50}
-						alt=""
-						className="w-full h-full object-contain object-center"
+						alt=''
+						className='w-full h-full object-contain object-center'
 					/>
 				</div>
 			)}
 
-			<Button type="submit" className="w-full" disabled={isUploading}>
+			<Button type='submit' className='w-full' disabled={isUploading}>
 				{isUploading ? "アップロード中..." : <>プリントをアップロード</>}
 			</Button>
 		</form>

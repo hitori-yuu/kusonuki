@@ -14,14 +14,7 @@ import {
 	getSortedRowModel,
 	useReactTable,
 } from "@tanstack/react-table";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -71,37 +64,31 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 
 	return (
 		<div>
-			<div className="flex items-center py-4">
+			<div className='flex items-center py-4'>
 				<Input
-					placeholder="ユーザー名でフィルター"
+					placeholder='ユーザー名でフィルター'
 					value={(table.getColumn("displayName")?.getFilterValue() as string) ?? ""}
-					onChange={(event) =>
-						table.getColumn("displayName")?.setFilterValue(event.target.value)
-					}
-					className="h-8 w-[100px] lg:w-[250px] mx-2"
+					onChange={(event) => table.getColumn("displayName")?.setFilterValue(event.target.value)}
+					className='h-8 w-[100px] lg:w-[250px] mx-2'
 				/>
 
 				{table.getColumn("role") && (
-					<DataTableFacetedFilter
-						column={table.getColumn("role")}
-						title="権限"
-						options={roles}
-					/>
+					<DataTableFacetedFilter column={table.getColumn("role")} title='権限' options={roles} />
 				)}
 
 				{isFiltered && (
 					<Button
-						variant="outline"
-						size="sm"
+						variant='outline'
+						size='sm'
 						onClick={() => table.resetColumnFilters()}
-						className="h-8 px-2 lg:px-3"
+						className='h-8 px-2 lg:px-3'
 					>
-						<p className="hidden lg:block mr-2">リセット</p>
-						<Cross2Icon className="h-4 w-4" />
+						<p className='hidden lg:block mr-2'>リセット</p>
+						<Cross2Icon className='h-4 w-4' />
 					</Button>
 				)}
 			</div>
-			<div className="rounded-md border">
+			<div className='rounded-md border'>
 				<Table>
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
@@ -111,10 +98,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 										<TableHead key={header.id}>
 											{header.isPlaceholder
 												? null
-												: flexRender(
-														header.column.columnDef.header,
-														header.getContext(),
-													)}
+												: flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									);
 								})}
@@ -124,23 +108,17 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
-								<TableRow
-									key={row.id}
-									data-state={row.getIsSelected() && "selected"}
-								>
+								<TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext(),
-											)}
+											{flexRender(cell.column.columnDef.cell, cell.getContext())}
 										</TableCell>
 									))}
 								</TableRow>
 							))
 						) : (
 							<TableRow>
-								<TableCell colSpan={columns.length} className="h-24 text-center">
+								<TableCell colSpan={columns.length} className='h-24 text-center'>
 									データなし
 								</TableCell>
 							</TableRow>
@@ -148,21 +126,16 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					</TableBody>
 				</Table>
 			</div>
-			<div className="flex items-center justify-end space-x-2 py-4">
+			<div className='flex items-center justify-end space-x-2 py-4'>
 				<Button
-					variant="outline"
-					size="sm"
+					variant='outline'
+					size='sm'
 					onClick={() => table.previousPage()}
 					disabled={!table.getCanPreviousPage()}
 				>
 					前
 				</Button>
-				<Button
-					variant="outline"
-					size="sm"
-					onClick={() => table.nextPage()}
-					disabled={!table.getCanNextPage()}
-				>
+				<Button variant='outline' size='sm' onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
 					次
 				</Button>
 			</div>

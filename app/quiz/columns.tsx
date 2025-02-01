@@ -7,7 +7,7 @@ import { classNames, subjects } from "@/components/layouts/table/DataTables";
 
 export const columns: ColumnDef<QuizData>[] = [
 	{
-		accessorKey: "name",
+		accessorKey: "scope",
 		header: ({ column }) => {
 			return <DataTableColumnHeader column={column} title='テスト名' />;
 		},

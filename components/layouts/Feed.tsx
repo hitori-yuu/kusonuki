@@ -18,6 +18,8 @@ const getTypeIcon = (type: string) => {
 	}
 };
 
+export const revalidate = 60;
+
 export default async function Feed() {
 	const posts = (await getAllPosts()) as PostData[];
 

@@ -21,96 +21,87 @@ export function UserButton() {
 	const { user, student, liff } = useUser();
 
 	return (
-		<div className="flex gap-2 items-center">
-			<span className="hidden text-sm sm:inline-flex"></span>
-			{user && (
+		<div className='flex gap-2 items-center'>
+			<span className='hidden text-sm sm:inline-flex'></span>
+			{user ? (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant="ghost" className="relative w-8 h-8 rounded-full">
-							<Avatar className="w-10 h-10 shadow hover:ring-2 focus:ring-2">
-								{user.pictureUrl && (
-									<AvatarImage
-										src={user.pictureUrl}
-										alt={user.displayName ?? ""}
-									/>
-								)}
+						<Button variant='ghost' className='relative w-8 h-8 rounded-full'>
+							<Avatar className='w-10 h-10 shadow hover:ring-2 focus:ring-2'>
+								{user.pictureUrl && <AvatarImage src={user.pictureUrl} alt={user.displayName ?? ""} />}
 								<AvatarFallback>{user.displayName}</AvatarFallback>
 							</Avatar>
 						</Button>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent className="max-w-fit" align="end" forceMount>
-						<DropdownMenuLabel className="font-normal">
-							<div className="flex flex-col space-y-1">
-								<p className="text-sm font-medium leading-none">
-									{user.displayName}
-								</p>
+					<DropdownMenuContent className='max-w-fit' align='end' forceMount>
+						<DropdownMenuLabel className='font-normal'>
+							<div className='flex flex-col space-y-1'>
+								<p className='text-sm font-medium leading-none'>{user.displayName}</p>
 								{student ? (
-									<p className="text-xs leading-none text-muted-foreground">
+									<p className='text-xs leading-none text-muted-foreground'>
 										連携中: {student.fullName}
 									</p>
 								) : (
-									<p className="text-xs leading-none text-muted-foreground">
-										{user.id}
-									</p>
+									<p className='text-xs leading-none text-muted-foreground'>{user.id}</p>
 								)}
 							</div>
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<Link href="/profile">
+							<Link href='/profile'>
 								<DropdownMenuItem>
-									<User className="mr-2 h-4 w-4" />
+									<User className='mr-2 h-4 w-4' />
 									<span>プロフィール</span>
 								</DropdownMenuItem>
 							</Link>
-							<Link href="/settings">
+							<Link href='/settings'>
 								<DropdownMenuItem>
-									<Settings className="mr-2 h-4 w-4" />
+									<Settings className='mr-2 h-4 w-4' />
 									<span>設定</span>
 								</DropdownMenuItem>
 							</Link>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<Link href="/users">
+							<Link href='/users'>
 								<DropdownMenuItem>
-									<UsersRound className="mr-2 h-4 w-4" />
+									<UsersRound className='mr-2 h-4 w-4' />
 									<span>ユーザー</span>
 								</DropdownMenuItem>
 							</Link>
-							<Link href="/students">
+							<Link href='/students'>
 								<DropdownMenuItem>
-									<UsersRound className="mr-2 h-4 w-4" />
+									<UsersRound className='mr-2 h-4 w-4' />
 									<span>生徒</span>
 								</DropdownMenuItem>
 							</Link>
-							<Link href="/teachers">
+							<Link href='/teachers'>
 								<DropdownMenuItem disabled>
-									<Speech className="mr-2 h-4 w-4" />
+									<Speech className='mr-2 h-4 w-4' />
 									<span>教師</span>
 								</DropdownMenuItem>
 							</Link>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<Link href="/assignments">
+							<Link href='/assignments'>
 								<DropdownMenuItem>
-									<FileStack className="mr-2 h-4 w-4" />
+									<FileStack className='mr-2 h-4 w-4' />
 									<span>課題</span>
 								</DropdownMenuItem>
 							</Link>
-							<Link href="/tests">
+							<Link href='/tests'>
 								<DropdownMenuItem>
-									<FileStack className="mr-2 h-4 w-4" />
+									<FileStack className='mr-2 h-4 w-4' />
 									<span>小テスト</span>
 								</DropdownMenuItem>
 							</Link>
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuGroup>
-							<Link href="/documents">
+							<Link href='/documents'>
 								<DropdownMenuItem>
-									<ScrollText className="mr-2 h-4 w-4" />
+									<ScrollText className='mr-2 h-4 w-4' />
 									<span>ドキュメント</span>
 								</DropdownMenuItem>
 							</Link>
@@ -119,20 +110,21 @@ export function UserButton() {
 						<DropdownMenuGroup>
 							{resolvedTheme === "light" ? (
 								<DropdownMenuItem onClick={() => setTheme("dark")}>
-									<MoonIcon className="mr-2 h-4 w-4" />
+									<MoonIcon className='mr-2 h-4 w-4' />
 									<span>ダークモード</span>
 								</DropdownMenuItem>
 							) : (
 								<DropdownMenuItem onClick={() => setTheme("light")}>
-									<SunIcon className="mr-2 h-4 w-4" />
+									<SunIcon className='mr-2 h-4 w-4' />
 									<span>ライトモード</span>
 								</DropdownMenuItem>
 							)}
 						</DropdownMenuGroup>
 					</DropdownMenuContent>
 				</DropdownMenu>
+			) : (
+				<Button onClick={() => liff?.login()}>ログイン</Button>
 			)}
-			{!user && <Button onClick={() => liff?.login()}>ログイン</Button>}
 		</div>
 	);
 }

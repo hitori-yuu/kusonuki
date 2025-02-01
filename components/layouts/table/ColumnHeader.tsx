@@ -29,34 +29,30 @@ export function DataTableColumnHeader<TData, TValue>({
 		<div className={cn("flex items-center space-x-2", className)}>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<Button
-						variant="ghost"
-						size="sm"
-						className="-ml-1 h-8 data-[state=open]:bg-accent"
-					>
+					<Button variant='ghost' size='sm' className='-ml-1 h-8 data-[state=open]:bg-accent'>
 						<span>{title}</span>
 						{column.getIsSorted() === "desc" ? (
-							<ArrowDownIcon className="ml-1 h-4 w-4" />
+							<ArrowDownIcon className='ml-1 h-4 w-4' />
 						) : column.getIsSorted() === "asc" ? (
-							<ArrowUpIcon className="ml-1 h-4 w-4" />
+							<ArrowUpIcon className='ml-1 h-4 w-4' />
 						) : (
-							<CaretSortIcon className="ml-1 h-4 w-4" />
+							<CaretSortIcon className='ml-1 h-4 w-4' />
 						)}
 					</Button>
 				</DropdownMenuTrigger>
-				<DropdownMenuContent align="start">
+				<DropdownMenuContent align='start'>
 					<DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-						<ArrowUpIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-						<p className="sm:hidden md:block">昇順</p>
+						<ArrowUpIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
+						<p className='sm:hidden md:block'>昇順</p>
 					</DropdownMenuItem>
 					<DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-						<ArrowDownIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-						<p className="sm:hidden md:block">降順</p>
+						<ArrowDownIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
+						<p className='sm:hidden md:block'>降順</p>
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-						<EyeNoneIcon className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-						<p className="sm:hidden md:block">非表示</p>
+						<EyeNoneIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
+						<p className='sm:hidden md:block'>非表示</p>
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>

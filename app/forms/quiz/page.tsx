@@ -1,4 +1,4 @@
-import QuizForm from "@/components/forms/QuizForm";
+import QuizForm from "@/components/layouts/forms/QuizForm";
 import React from "react";
 
 const page = () => {

@@ -1,22 +1,8 @@
 "use client";
 import { useUser } from "@/hooks/useUser";
 import React, { useEffect, useState } from "react";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getSchedules, getQuiz, getTimetable } from "@/lib/server/actions";
@@ -50,11 +36,7 @@ const DailyQuiz = () => {
 					date.setDate(today.getDate() + 2);
 				}
 
-				const quizData = (await getQuiz(
-					student.currentGrade,
-					student.currentClass,
-					date,
-				)) as QuizData[];
+				const quizData = (await getQuiz(student.currentGrade, student.currentClass, date)) as QuizData[];
 				setQuiz(quizData);
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "Failed to fetch quiz");
@@ -67,7 +49,7 @@ const DailyQuiz = () => {
 	}, [student]);
 
 	const SkeletonLoader = () => (
-		<Card className="my-4">
+		<Card>
 			<CardHeader>
 				<CardTitle>{typeOfDay}の小テスト</CardTitle>
 			</CardHeader>
@@ -76,17 +58,17 @@ const DailyQuiz = () => {
 					<TableHeader>
 						<TableRow>
 							<TableHead colSpan={2}>
-								<Skeleton className="h-4 w-[250px]" />
+								<Skeleton className='h-4 w-[250px]' />
 							</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						<TableRow>
 							<TableCell>
-								<Skeleton className="h-4 w-[100px]" />
+								<Skeleton className='h-4 w-[100px]' />
 							</TableCell>
 							<TableCell>
-								<Skeleton className="h-4 w-[100px]" />
+								<Skeleton className='h-4 w-[100px]' />
 							</TableCell>
 						</TableRow>
 					</TableBody>
@@ -95,18 +77,14 @@ const DailyQuiz = () => {
 		</Card>
 	);
 
-	if (loading) {
-		return <SkeletonLoader />;
-	}
+	if (loading) return <SkeletonLoader />;
 
-	if (!student) {
-		return <SkeletonLoader />;
-	}
+	if (!student || !user) return <SkeletonLoader />;
 
 	if (quiz?.length < 1) return;
 
 	return (
-		<Card className="my-2">
+		<Card>
 			<CardHeader>
 				<CardTitle>{typeOfDay}のテスト</CardTitle>
 			</CardHeader>

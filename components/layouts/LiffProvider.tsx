@@ -1,13 +1,5 @@
 "use client";
-import React, {
-	createContext,
-	FC,
-	PropsWithChildren,
-	useCallback,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import React, { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
 import { Liff } from "@line/liff";
 
 const LiffContext = createContext<{
@@ -25,21 +17,21 @@ export const LiffProvider: FC<PropsWithChildren<{ liffId: string }>> = ({ childr
 		try {
 			const liffModule = await import("@line/liff");
 			const liff = liffModule.default;
-			console.log("LIFF init...");
+			console.log("LIFFを初期化中...");
 
 			await liff.init({ liffId });
 
-			console.log("LIFF init succeeded.");
+			console.log("LIFFの初期化が完了しました。");
 			setLiff(liff);
 		} catch (error) {
-			console.log("LIFF init failed.");
+			console.log("LIFFの初期化に失敗しました。");
 			setLiffError((error as Error).toString());
 		}
 	}, [liffId]);
 
 	// init Liff
 	useEffect(() => {
-		console.log("LIFF init start...");
+		console.log("LIFFの初期化を開始します...");
 		initLiff();
 	}, [initLiff]);
 

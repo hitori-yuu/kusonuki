@@ -1,5 +1,5 @@
 import React from "react";
-import DocumentForm from "@/components/forms/DocumentForm";
+import DocumentForm from "@/components/layouts/forms/DocumentForm";
 
 const page = () => {
 	return <DocumentForm />;

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useLiff } from "@/components/layouts/LiffProvider";
 import { StudentData, UserData } from "@/types/types";
 import { CreateUser, Student, UpdateUser, User } from "@/lib/server/actions";
@@ -22,10 +22,7 @@ const getUserData = async (userId: string): Promise<UserData> => {
 	}
 
 	const userData = await User(userId);
-	sessionStorage.setItem(
-		`userData_${userId}`,
-		JSON.stringify({ data: userData, timestamp: Date.now() }),
-	);
+	sessionStorage.setItem(`userData_${userId}`, JSON.stringify({ data: userData, timestamp: Date.now() }));
 	return userData;
 };
 
@@ -39,17 +36,14 @@ const getStudentData = async (studentId: number): Promise<StudentData> => {
 	}
 
 	const studentData = await Student(studentId);
-	sessionStorage.setItem(
-		`studentData_${studentId}`,
-		JSON.stringify({ data: studentData, timestamp: Date.now() }),
-	);
+	sessionStorage.setItem(`studentData_${studentId}`, JSON.stringify({ data: studentData, timestamp: Date.now() }));
 	return studentData;
 };
 
 function CheckUser(user: UserData, profile: Profile) {
-	if (user.displayName === profile.displayName) return true;
-	if (user.pictureUrl === profile.pictureUrl) return true;
-	else return false;
+	if (user.displayName !== profile.displayName) return true;
+	if (user.pictureUrl !== profile.pictureUrl) return true;
+	return false;
 }
 
 export const useUser = () => {
@@ -58,6 +52,7 @@ export const useUser = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
 	const { liff } = useLiff();
+	const isInitialLoadDone = useRef(false);
 
 	const refreshData = useCallback(async () => {
 		if (!liff?.isLoggedIn()) {
@@ -70,45 +65,53 @@ export const useUser = () => {
 			setIsLoading(true);
 			const profile = await liff.getProfile();
 			const userData = await getUserData(profile.userId);
+
 			if (!userData) {
 				if (profile.pictureUrl) {
 					toast("ユーザー情報を作成中です。");
 					await CreateUser(profile.userId, profile.displayName, profile.pictureUrl);
-				} else {
-					await CreateUser(
-						profile.userId,
-						profile.displayName,
-						"https://www.webiconio.com/_upload/255/image_255.svg",
-					);
 				}
-			}
-			if (CheckUser(userData, profile)) {
+			} else if (CheckUser(userData, profile)) {
 				if (!profile.pictureUrl) return;
 				toast("ユーザー情報を更新中です。");
 				await UpdateUser(userData.id, profile.displayName, profile.pictureUrl);
 			}
 			setUser(userData);
 
-			if (userData?.isLinked) {
-				if (!userData.studentId) return;
+			if (userData?.isLinked && userData.studentId) {
 				toast("生徒情報を取得中です。");
 				const studentData = await getStudentData(userData.studentId);
 				setStudent(studentData);
 			}
 		} catch (error) {
 			setError(error instanceof Error ? error : new Error("Failed to fetch data"));
-			toast("情報の取得に失敗しました。");
+			toast.error("情報の取得に失敗しました。");
 			setUser(null);
 			setStudent(null);
 		} finally {
-			toast("情報の取得が完了しました。");
+			toast.success("情報の取得が完了しました。");
 			setIsLoading(false);
 		}
 	}, [liff]);
 
 	useEffect(() => {
-		void refreshData();
+		if (!isInitialLoadDone.current) {
+			void refreshData();
+			isInitialLoadDone.current = true;
+		}
 	}, [refreshData]);
 
-	return { user, student, liff };
+	// 手動更新用の関数を返す
+	const manualRefresh = useCallback(async () => {
+		// キャッシュをクリア
+		if (user) {
+			sessionStorage.removeItem(`userData_${user.id}`);
+			if (user.studentId) {
+				sessionStorage.removeItem(`studentData_${user.studentId}`);
+			}
+		}
+		await refreshData();
+	}, [refreshData, user]);
+
+	return { user, student, liff, isLoading, error, refreshData: manualRefresh };
 };

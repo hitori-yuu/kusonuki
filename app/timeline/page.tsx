@@ -1,4 +1,4 @@
-import PostForm from "@/components/forms/PostForm";
+import PostForm from "@/components/layouts/forms/PostForm";
 import Feed from "@/components/layouts/Feed";
 import React from "react";
 

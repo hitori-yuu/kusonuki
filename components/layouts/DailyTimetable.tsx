@@ -1,22 +1,8 @@
 "use client";
 import { useUser } from "@/hooks/useUser";
 import React, { useEffect, useState } from "react";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getExamSchedules, getSchedules, getQuiz, getTimetable } from "@/lib/server/actions";
@@ -115,7 +101,7 @@ const DailyTimetable = () => {
 	}, [student]);
 
 	const SkeletonLoader = () => (
-		<Card className="my-4">
+		<Card>
 			<CardHeader>
 				<CardTitle>{typeOfDay}の予定</CardTitle>
 			</CardHeader>
@@ -124,41 +110,41 @@ const DailyTimetable = () => {
 					<TableHeader>
 						<TableRow>
 							<TableHead colSpan={2}>
-								<Skeleton className="h-4 w-[450px]" />
+								<Skeleton className='h-4 w-[450px]' />
 							</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						<TableRow>
 							<TableHead>
-								<Skeleton className="h-4 w-[50px]" />
+								<Skeleton className='h-4 w-[50px]' />
 							</TableHead>
 							<TableCell>
-								<Skeleton className="h-4 w-[250px]" />
+								<Skeleton className='h-4 w-[250px]' />
 							</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableHead>
-								<Skeleton className="h-4 w-[50px]" />
+								<Skeleton className='h-4 w-[50px]' />
 							</TableHead>
 							<TableCell>
-								<Skeleton className="h-4 w-[250px]" />
+								<Skeleton className='h-4 w-[250px]' />
 							</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableHead>
-								<Skeleton className="h-4 w-[50px]" />
+								<Skeleton className='h-4 w-[50px]' />
 							</TableHead>
 							<TableCell>
-								<Skeleton className="h-4 w-[250px]" />
+								<Skeleton className='h-4 w-[250px]' />
 							</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableHead>
-								<Skeleton className="h-4 w-[50px]" />
+								<Skeleton className='h-4 w-[50px]' />
 							</TableHead>
 							<TableCell>
-								<Skeleton className="h-4 w-[250px]" />
+								<Skeleton className='h-4 w-[250px]' />
 							</TableCell>
 						</TableRow>
 					</TableBody>
@@ -171,12 +157,10 @@ const DailyTimetable = () => {
 		return <SkeletonLoader />;
 	}
 
-	if (!student) {
-		return <SkeletonLoader />;
-	}
+	if (!student || !user) return <SkeletonLoader />;
 
 	return (
-		<Card className="my-2">
+		<Card>
 			<CardHeader>
 				<CardTitle>{typeOfDay}の予定</CardTitle>
 				<CardDescription>
@@ -184,7 +168,7 @@ const DailyTimetable = () => {
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<Table className="my-2">
+				<Table className='my-2'>
 					<TableHeader>
 						<TableRow>
 							<TableHead>時限</TableHead>
@@ -231,13 +215,13 @@ const DailyTimetable = () => {
 				</Table>
 				{schedule &&
 					schedule.map((item, index) => (
-						<Card key={index} className="my-1 py-[-5px]">
-							<CardHeader className="text-center">{item.content}</CardHeader>
+						<Card key={index} className='my-1 py-[-5px]'>
+							<CardHeader className='text-center'>{item.content}</CardHeader>
 						</Card>
 					))}
 				{examSchedule && (
-					<Card className="my-1 py-[-5px]">
-						<CardHeader className="text-center">{examSchedule.period}試験</CardHeader>
+					<Card className='my-1 py-[-5px]'>
+						<CardHeader className='text-center'>{examSchedule.period}試験</CardHeader>
 					</Card>
 				)}
 			</CardContent>

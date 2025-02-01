@@ -5,14 +5,7 @@ import { columns } from "../../app/home/AssignmentColumns";
 import { DataTable } from "../../app/home/AssignmentDataTable";
 import React, { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useUser } from "@/hooks/useUser";
 import { getAssignments } from "@/lib/server/actions";
@@ -35,10 +28,12 @@ const AssignmentCard = () => {
 		fetchData();
 	}, [student]);
 
+	if (!student || !user) return;
+
 	return (
 		<>
 			{assignment && (
-				<Card className="my-2">
+				<Card>
 					<CardHeader>
 						<CardTitle>直近の課題</CardTitle>
 						<CardDescription>10日間以内に提出期限の課題一覧</CardDescription>

@@ -2,14 +2,7 @@
 import { typeWeek } from "@/lib/utils";
 import React, { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
 	Drawer,
 	DrawerClose,
@@ -129,34 +122,34 @@ const WeekData: React.FC = () => {
 				<TableBody>
 					<TableRow>
 						<TableHead>
-							<Skeleton className="h-4 w-[50px]" />
+							<Skeleton className='h-4 w-[50px]' />
 						</TableHead>
 						<TableCell>
-							<Skeleton className="h-4 w-[250px]" />
+							<Skeleton className='h-4 w-[250px]' />
 						</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableHead>
-							<Skeleton className="h-4 w-[50px]" />
+							<Skeleton className='h-4 w-[50px]' />
 						</TableHead>
 						<TableCell>
-							<Skeleton className="h-4 w-[250px]" />
+							<Skeleton className='h-4 w-[250px]' />
 						</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableHead>
-							<Skeleton className="h-4 w-[50px]" />
+							<Skeleton className='h-4 w-[50px]' />
 						</TableHead>
 						<TableCell>
-							<Skeleton className="h-4 w-[250px]" />
+							<Skeleton className='h-4 w-[250px]' />
 						</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableHead>
-							<Skeleton className="h-4 w-[50px]" />
+							<Skeleton className='h-4 w-[50px]' />
 						</TableHead>
 						<TableCell>
-							<Skeleton className="h-4 w-[250px]" />
+							<Skeleton className='h-4 w-[250px]' />
 						</TableCell>
 					</TableRow>
 				</TableBody>
@@ -168,20 +161,18 @@ const WeekData: React.FC = () => {
 		<div>
 			{isClient && (
 				<>
-					<div className="overflow-x-auto whitespace-no-wrap">
-						<div className="flex items-center space-x-4 xl:justify-around">
+					<div className='overflow-x-auto whitespace-no-wrap'>
+						<div className='flex items-center space-x-4 xl:justify-around'>
 							{days.map(({ dateString, dayOfWeek }) => (
 								<div
 									key={dateString}
 									ref={selectedDate === dateString ? selectedRef : null}
 									className={`block p-4 cursor-pointer text-center opacity-70 ${
-										selectedDate === dateString
-											? "font-bold text-xl opacity-100"
-											: ""
+										selectedDate === dateString ? "font-bold text-xl opacity-100" : ""
 									}`}
 									onClick={() => setSelectedDate(dateString)}
 								>
-									<p className="font-bold">{dateString}</p>
+									<p className='font-bold'>{dateString}</p>
 									<p>{dayOfWeek}</p>
 								</div>
 							))}
@@ -198,11 +189,8 @@ const WeekData: React.FC = () => {
 							<DrawerHeader>
 								<DrawerTitle>時間割</DrawerTitle>
 								<DrawerDescription>
-									{selectedDate} (
-									{typeWeek(
-										new Date(new Date().getFullYear() + "/" + selectedDate),
-									)}
-									) の時間割
+									{selectedDate} ({typeWeek(new Date(new Date().getFullYear() + "/" + selectedDate))})
+									の時間割
 								</DrawerDescription>
 							</DrawerHeader>
 							<Table>
@@ -217,33 +205,23 @@ const WeekData: React.FC = () => {
 										<>
 											<TableRow>
 												<TableHead>1.</TableHead>
-												<TableCell>
-													{selectedData.timetable.first}
-												</TableCell>
+												<TableCell>{selectedData.timetable.first}</TableCell>
 											</TableRow>
 											<TableRow>
 												<TableHead>2.</TableHead>
-												<TableCell>
-													{selectedData.timetable.second}
-												</TableCell>
+												<TableCell>{selectedData.timetable.second}</TableCell>
 											</TableRow>
 											<TableRow>
 												<TableHead>3.</TableHead>
-												<TableCell>
-													{selectedData.timetable.third}
-												</TableCell>
+												<TableCell>{selectedData.timetable.third}</TableCell>
 											</TableRow>
 											<TableRow>
 												<TableHead>4.</TableHead>
-												<TableCell>
-													{selectedData.timetable.fourth}
-												</TableCell>
+												<TableCell>{selectedData.timetable.fourth}</TableCell>
 											</TableRow>
 											<TableRow>
 												<TableHead>5.</TableHead>
-												<TableCell>
-													{selectedData.timetable.fifth}
-												</TableCell>
+												<TableCell>{selectedData.timetable.fifth}</TableCell>
 											</TableRow>
 										</>
 									) : selectedData.examSchedule ? (
@@ -255,7 +233,7 @@ const WeekData: React.FC = () => {
 										))
 									) : (
 										<TableRow>
-											<TableCell colSpan={2} className="text-center">
+											<TableCell colSpan={2} className='text-center'>
 												時間割なし
 											</TableCell>
 										</TableRow>
@@ -264,26 +242,22 @@ const WeekData: React.FC = () => {
 							</Table>
 							{selectedData.schedule &&
 								selectedData.schedule.map((item, index) => (
-									<Card key={index} className="my-1 py-[-5px]">
-										<CardHeader className="text-center">
-											{item.content}
-										</CardHeader>
+									<Card key={index} className='my-1 py-[-5px]'>
+										<CardHeader className='text-center'>{item.content}</CardHeader>
 									</Card>
 								))}
 							{selectedData.examSchedule && (
-								<Card className="my-1 py-[-5px]">
-									<CardHeader className="text-center">
+								<Card className='my-1 py-[-5px]'>
+									<CardHeader className='text-center'>
 										{selectedData.examSchedule.period}試験
 									</CardHeader>
 								</Card>
 							)}
 						</>
 					) : (
-						<Card className="my-2">
+						<Card className='my-2'>
 							<CardContent>
-								<p className="text-center">
-									選択された日付にはデータがありません。
-								</p>
+								<p className='text-center'>選択された日付にはデータがありません。</p>
 							</CardContent>
 						</Card>
 					)}

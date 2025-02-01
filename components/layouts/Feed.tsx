@@ -1,8 +1,9 @@
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { CircleAlert, CircleUser, Megaphone, User } from "lucide-react";
+import { PostData } from "@/types/types";
 import Image from "next/image";
-import prisma from "@/lib/prismaClient";
+import { getAllPosts } from "@/lib/server/actions";
 
 const getTypeIcon = (type: string) => {
 	switch (type) {
@@ -17,49 +18,34 @@ const getTypeIcon = (type: string) => {
 	}
 };
 
-async function getData() {
-	const result = await prisma.post.findMany({
-		orderBy: [
-			{
-				createdAt: "desc",
-			},
-		],
-	});
-	return result;
-}
+export default async function Feed() {
+	const posts = (await getAllPosts()) as PostData[];
 
-const Feed = async () => {
-	const posts = await getData();
 	if (!posts) return <div>ポストはありません...</div>;
 	return (
 		<>
-			<h1 className="text-center mt-5">ポスト一覧</h1>
+			<h1 className='text-center mt-5'>ポスト一覧</h1>
 			<Separator />
-			<div className="space-y-2">
+			<div className='space-y-2'>
 				{posts.map((post) => (
-					<div className="block" key={post.id}>
-						<div className="flex items-center py-2">
-							{getTypeIcon(post.type)}
-							<div>
-								<h1 className="ml-4 font-bold">{post.username}</h1>
-								<p className="ml-4">{post.content}</p>
+					<div className='block' key={post.id}>
+						<div className='py-2'>
+							<div className='flex items-center py-2'>
+								{getTypeIcon(post.type)}
+								<div>
+									<h1 className='ml-4 font-bold'>{post.username}</h1>
+									<p className='ml-4'>{post.content}</p>
+								</div>
 							</div>
+							{post.mediaUrl && (
+								<Image className='mx-auto' src={post.mediaUrl} alt='' width={400} height={400} />
+							)}
 						</div>
-						{post.mediaUrl && (
-							<Image
-								className="mx-auto"
-								src={post.mediaUrl}
-								alt=""
-								width={400}
-								height={400}
-							/>
-						)}
+
 						<Separator />
 					</div>
 				))}
 			</div>
 		</>
 	);
-};
-
-export default Feed;
+}

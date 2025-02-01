@@ -10,7 +10,7 @@ export const columns: ColumnDef<StudentData>[] = [
 	{
 		accessorKey: "fullName",
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="氏名" />;
+			return <DataTableColumnHeader column={column} title='氏名' />;
 		},
 		cell: ({ row }) => {
 			return <Link href={`students/${row.original.id}`}>{row.getValue("fullName")}</Link>;
@@ -19,16 +19,14 @@ export const columns: ColumnDef<StudentData>[] = [
 	{
 		accessorKey: "currentGrade",
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="学年" />;
+			return <DataTableColumnHeader column={column} title='学年' />;
 		},
 	},
 	{
 		accessorKey: "currentClass",
-		header: ({ column }) => <DataTableColumnHeader column={column} title="クラス" />,
+		header: ({ column }) => <DataTableColumnHeader column={column} title='クラス' />,
 		cell: ({ row }) => {
-			const className = classNames.find(
-				(className) => className.value === row.getValue("currentClass"),
-			);
+			const className = classNames.find((className) => className.value === row.getValue("currentClass"));
 
 			if (!className) {
 				return null;

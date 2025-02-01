@@ -3,15 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -50,15 +42,15 @@ const InformationForm = () => {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+			<form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-8'>
 				<FormField
 					control={form.control}
-					name="title"
+					name='title'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>タイトル</FormLabel>
 							<FormControl>
-								<Input placeholder="タイトルを入力" {...field} />
+								<Input placeholder='タイトルを入力' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -66,18 +58,18 @@ const InformationForm = () => {
 				/>
 				<FormField
 					control={form.control}
-					name="content"
+					name='content'
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>内容</FormLabel>
 							<FormControl>
-								<Input placeholder="内容を入力" {...field} />
+								<Input placeholder='内容を入力' {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
-				<Button type="submit" className="w-full">
+				<Button type='submit' className='w-full'>
 					お知らせ作成
 				</Button>
 			</form>

@@ -21,23 +21,23 @@ export const columns: ColumnDef<UserData>[] = [
 	{
 		accessorKey: "displayName",
 		header: ({ column }) => {
-			return <DataTableColumnHeader column={column} title="ユーザー名" />;
+			return <DataTableColumnHeader column={column} title='ユーザー名' />;
 		},
 		cell: ({ row }) => (
 			<Link href={`users/${row.original.id}`}>
-				<div className="flex items-center">
+				<div className='flex items-center'>
 					<Avatar>
 						<AvatarImage src={row.original.pictureUrl as string} />
 						<AvatarFallback>{row.original.displayName}</AvatarFallback>
 					</Avatar>
-					<p className="px-4">{row.original.displayName}</p>
+					<p className='px-4'>{row.original.displayName}</p>
 				</div>
 			</Link>
 		),
 	},
 	{
 		accessorKey: "role",
-		header: ({ column }) => <DataTableColumnHeader column={column} title="権限" />,
+		header: ({ column }) => <DataTableColumnHeader column={column} title='権限' />,
 		cell: ({ row }) => {
 			const priority = roles.find((role) => role.value === row.getValue("role"));
 
@@ -46,7 +46,7 @@ export const columns: ColumnDef<UserData>[] = [
 			}
 
 			return (
-				<div className="flex items-center">
+				<div className='flex items-center'>
 					<span>{priority.label}</span>
 				</div>
 			);

@@ -13,7 +13,8 @@ import {
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import prisma from "@/lib/prismaClient";
+
+export const revalidate = 60 * 1000; // 1分
 
 export default async function page() {
 	const data = (await getAllDocuments()) as DocumentData[];

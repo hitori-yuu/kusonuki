@@ -90,7 +90,7 @@ export function UserButton() {
 									<span>課題</span>
 								</DropdownMenuItem>
 							</Link>
-							<Link href='/tests'>
+							<Link href='/quiz'>
 								<DropdownMenuItem>
 									<FileStack className='mr-2 h-4 w-4' />
 									<span>小テスト</span>

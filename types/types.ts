@@ -15,6 +15,7 @@ export interface UserData {
 	isAvailable: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	student: StudentData;
 	Assignment: AssignmentData[];
 	Quiz: QuizData[];
 	Change: ChangeData[];

@@ -71,6 +71,8 @@ model StudentHistory {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    @@index([studentId])
 }
 
 model Assignment {

@@ -7,6 +7,13 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 		where: {
 			id: parseInt(id),
 		},
+		include: {
+			StudentHistory: {
+				orderBy: {
+					academicYear: "desc",
+				},
+			},
+		},
 	});
 	return NextResponse.json(studentData);
 }

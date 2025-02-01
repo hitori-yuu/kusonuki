@@ -37,6 +37,9 @@ export async function GET(req: NextRequest) {
 			const allQuiz = (await getAllAssignments()) as AssignmentData[];
 			return NextResponse.json(allQuiz);
 		}
+	} else {
+		const allQuiz = (await getAllAssignments()) as AssignmentData[];
+		return NextResponse.json(allQuiz);
 	}
 }
 

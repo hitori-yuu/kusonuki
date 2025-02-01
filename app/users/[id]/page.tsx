@@ -15,18 +15,23 @@ import {
 	PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { StudentData, UserData } from "@/types/types";
+
+async function getUserData(userId: string): Promise<UserData> {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v2/users/${userId}`, {
+		cache: "no-store",
+	});
+
+	const userData: UserData = await response.json();
+
+	console.log(userData);
+
+	return userData;
+}
 
 const page = async ({ params }: { params: { id: string } }) => {
 	const { id } = params;
-	const user = await User(id);
-	let student = null;
-	if (user.studentId && user.isLinked) {
-		try {
-			student = await Student(user.studentId);
-		} catch (error) {
-			console.error("Failed to fetch student data:", error);
-		}
-	}
+	const user = await getUserData(id);
 	return (
 		<div>
 			<Pagination className='text-left'>
@@ -91,23 +96,23 @@ const page = async ({ params }: { params: { id: string } }) => {
 							<div className='text-sm font-medium text-gray-500'>連携状態</div>
 							<div>{user.isLinked ? "連携済" : "未連携"}</div>
 						</div>
-						{student && (
+						{user.student && (
 							<div className='mt-4 grid grid-cols-2 gap-2'>
 								<div>
 									<div className='text-sm font-medium text-gray-500'>入学年度</div>
-									<div>{student.enrollmentYear}年度</div>
+									<div>{user.student.enrollmentYear}年度</div>
 								</div>
 								<div>
 									<div className='text-sm font-medium text-gray-500'>現在の学年</div>
-									<div>{student.currentGrade}年</div>
+									<div>{user.student.currentGrade}年</div>
 								</div>
 								<div>
 									<div className='text-sm font-medium text-gray-500'>クラス</div>
-									<div>{student.currentClass}組</div>
+									<div>{user.student.currentClass}組</div>
 								</div>
 								<div>
 									<div className='text-sm font-medium text-gray-500'>出席番号</div>
-									<div>{student.currentNumber}番</div>
+									<div>{user.student.currentNumber}番</div>
 								</div>
 							</div>
 						)}

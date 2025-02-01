@@ -7,6 +7,9 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 		where: {
 			id,
 		},
+		include: {
+			student: {},
+		},
 	});
 	return NextResponse.json(userData);
 }

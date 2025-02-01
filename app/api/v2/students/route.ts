@@ -42,10 +42,10 @@ export async function GET(req: NextRequest) {
 			)) as StudentData;
 			return NextResponse.json(studentData);
 		}
+	} else {
+		const allStudent = await getAllStudents();
+		return NextResponse.json(allStudent);
 	}
-
-	const allStudent = await getAllStudents();
-	return NextResponse.json(allStudent);
 }
 
 export async function POST(req: NextRequest) {

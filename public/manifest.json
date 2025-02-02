@@ -1,41 +1,41 @@
 {
-	"display": "standalone",
-	"theme_color": "#44617b",
-	"background_color": "#44617b",
-	"scope": "/",
-	"start_url": "/",
-	"name": "\u304f\u305d\u306c\u304dbot",
-	"short_name": "\u304f\u305d\u306c\u304dbot",
-	"icons": [
-		{
-			"src": "/android-chrome-192x192.png",
-			"sizes": "192x192",
-			"type": "image/png"
-		},
-		{
-			"src": "/android-chrome-512x512.png",
-			"sizes": "512x512",
-			"type": "image/png"
-		},
-		{
-			"src": "/icon-192x192.png",
-			"sizes": "192x192",
-			"type": "image/png"
-		},
-		{
-			"src": "/icon-256x256.png",
-			"sizes": "256x256",
-			"type": "image/png"
-		},
-		{
-			"src": "/icon-384x384.png",
-			"sizes": "384x384",
-			"type": "image/png"
-		},
-		{
-			"src": "/icon-512x512.png",
-			"sizes": "512x512",
-			"type": "image/png"
-		}
-	]
+  "display": "standalone",
+  "theme_color": "#44617b",
+  "background_color": "#44617b",
+  "scope": "/",
+  "start_url": "/",
+  "name": "\u304f\u305d\u306c\u304dbot",
+  "short_name": "\u304f\u305d\u306c\u304dbot",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

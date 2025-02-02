@@ -18,5 +18,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 			id: parseInt(id),
 		},
 	});
-	return NextResponse.json({ message: "Deleted quiz with Scope: " + quizData.scope });
+	return NextResponse.json({
+		message: "Deleted quiz with Scope: " + quizData.scope,
+	});
 }

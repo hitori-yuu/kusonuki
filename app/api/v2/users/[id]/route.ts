@@ -22,5 +22,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 			id,
 		},
 	});
-	return NextResponse.json({ message: "Deleted user with DisplayName: " + userData.displayName });
+	return NextResponse.json({
+		message: "Deleted user with DisplayName: " + userData.displayName,
+	});
 }

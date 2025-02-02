@@ -18,5 +18,7 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
 			id: parseInt(id),
 		},
 	});
-	return NextResponse.json({ message: "Deleted assignment with Title: " + assignmentData.title });
+	return NextResponse.json({
+		message: "Deleted assignment with Title: " + assignmentData.title,
+	});
 }

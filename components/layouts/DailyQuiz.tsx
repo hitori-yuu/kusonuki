@@ -3,11 +3,9 @@ import { useUser } from "@/hooks/useUser";
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getSchedules, getQuiz, getTimetable } from "@/lib/server/actions";
-import { typeWeek } from "@/lib/utils";
-import { ScheduleData, QuizData, TimetableData } from "@/types/types";
+import { getQuiz } from "@/lib/server/actions";
+import { QuizData } from "@/types/types";
 
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
@@ -25,15 +23,14 @@ const DailyQuiz = () => {
 				return;
 			}
 			try {
-				const today = new Date();
-				const date = today;
+				const date = new Date();
 
-				if (daysOfWeek[today.getDay()] == "日") {
+				if (daysOfWeek[date.getDay()] == "日") {
 					setTypeOfDay("明日");
-					date.setDate(today.getDate() + 1);
-				} else if (daysOfWeek[today.getDay()] == "土") {
+					date.setDate(date.getDate() + 1);
+				} else if (daysOfWeek[date.getDay()] == "土") {
 					setTypeOfDay("明後日");
-					date.setDate(today.getDate() + 2);
+					date.setDate(date.getDate() + 2);
 				}
 
 				const quizData = (await getQuiz(student.currentGrade, student.currentClass, date)) as QuizData[];

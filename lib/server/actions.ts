@@ -279,6 +279,41 @@ export async function DeleteQuiz(id: number) {
 	return;
 }
 
+export async function CreateTimetable(
+	week: string,
+	day: string,
+	first: string,
+	second: string,
+	third: string,
+	fourth: string,
+	fifth: string,
+	grade: number,
+	className: string,
+	authorId: string,
+) {
+	try {
+		await prisma.timetable.create({
+			data: {
+				week,
+				day,
+				first,
+				second,
+				third,
+				fourth,
+				fifth,
+				academicYear: getFiscalYear(),
+				grade,
+				className,
+				authorId,
+			},
+		});
+	} catch (error) {
+		console.log(error);
+		throw new Error("Database error");
+	}
+	return;
+}
+
 export async function CreateExam(
 	term: string,
 	subject: string,
@@ -861,6 +896,44 @@ export const User = cache(async (userId: string): Promise<UserData> => {
 	const user = await prisma.user.findUnique({
 		where: {
 			id: userId,
+		},
+		include: {
+			student: {},
+			Assignment: {
+				orderBy: [
+					{
+						createdAt: "desc",
+					},
+				],
+			},
+			Quiz: {
+				orderBy: [
+					{
+						createdAt: "desc",
+					},
+				],
+			},
+			Schedule: {
+				orderBy: [
+					{
+						createdAt: "desc",
+					},
+				],
+			},
+			Post: {
+				orderBy: [
+					{
+						createdAt: "desc",
+					},
+				],
+			},
+			Document: {
+				orderBy: [
+					{
+						createdAt: "desc",
+					},
+				],
+			},
 		},
 	});
 

@@ -6,9 +6,9 @@ import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
 
 const LinkedAlert = () => {
-	const { user, student, liff } = useUser();
+	const { user, student, liff, isLiffLoading } = useUser();
 
-	if (!user) return;
+	if (!user || !isLiffLoading) return;
 	return (
 		!student && (
 			<Alert variant='destructive'>

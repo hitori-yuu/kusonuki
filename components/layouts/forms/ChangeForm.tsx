@@ -32,6 +32,7 @@ const formSchema = z.object({
 const ChangeForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
+	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -44,6 +45,7 @@ const ChangeForm = () => {
 	});
 
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true);
 		if (user && student) {
 			await CreateChange(
 				values.date,
@@ -54,11 +56,16 @@ const ChangeForm = () => {
 				values.isEvery,
 				user.id,
 			);
-			form.reset();
 			toast.success("授業変更を作成しました。");
-			router.refresh();
+		} else {
+			toast.error("ログイン時のみ実行できます。");
 		}
+		form.reset();
+		router.refresh();
+		setLoading(false);
 	}
+
+	if (!user) return;
 
 	return (
 		<Form {...form}>
@@ -155,8 +162,8 @@ const ChangeForm = () => {
 						</FormItem>
 					)}
 				/>
-				{user?.role === "ADMIN" ||
-					(user?.role === "EDITOR" && (
+				{user.role === "ADMIN" ||
+					(user.role === "EDITOR" && (
 						<FormField
 							control={form.control}
 							name='isEvery'
@@ -170,8 +177,8 @@ const ChangeForm = () => {
 							)}
 						/>
 					))}
-				<Button type='submit' className='w-full'>
-					授業変更作成
+				<Button type='submit' className='w-full' disabled={isLoading}>
+					{isLoading ? "作成中..." : <>作成</>}
 				</Button>
 			</form>
 		</Form>

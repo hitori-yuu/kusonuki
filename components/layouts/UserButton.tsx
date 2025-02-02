@@ -15,10 +15,19 @@ import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
 import { useUser } from "@/hooks/useUser";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function UserButton() {
 	const { setTheme, resolvedTheme } = useTheme();
-	const { user, student, liff } = useUser();
+	const { user, student, liff, isLiffLoading } = useUser();
+
+	const SkeletonLoader = () => (
+		<>
+			<Skeleton className='w-10 h-10 rounded-full' />
+		</>
+	);
+
+	if (isLiffLoading) return <SkeletonLoader />;
 
 	return (
 		<div className='flex gap-2 items-center'>

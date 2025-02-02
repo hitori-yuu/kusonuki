@@ -28,6 +28,7 @@ export interface UserData {
 	Post: PostData[];
 	Like: LikeData[];
 	View: ViewData[];
+	Document: DocumentData[];
 }
 
 export interface StudentData {

@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useLiff } from "@/components/layouts/LiffProvider";
 import { StudentData, UserData } from "@/types/types";
 import { CreateUser, Student, UpdateUser, User } from "@/lib/server/actions";
-import type { Profile } from "@liff/get-profile/lib/index.d.ts";
 import { toast } from "sonner";
 
 type CacheData = {

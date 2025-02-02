@@ -2104,6 +2104,11 @@
     file-type "^16.5.4"
     form-data "^4.0.0"
 
+"@line/liff-mock@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@line/liff-mock/-/liff-mock-1.0.3.tgz#38be3d6a25e51c8e5a66e92275ade289d7ce022c"
+  integrity sha512-9js4YXheVV4rTXvvLIMVSqC6ikmD7mRrpbFqFZBemqCmSu3YSfljQs1fzKVy9LVUCREmsESLwWqa57jS3LY45g==
+
 "@line/liff@^2.24.0":
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/@line/liff/-/liff-2.24.0.tgz#e08e3b6b32e1f16de316a1450f4ee1063f3a868e"

@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
 import { Liff } from "@line/liff";
+import { LiffMockPlugin } from "@line/liff-mock";
 
 const LiffContext = createContext<{
 	liff: Liff | null;

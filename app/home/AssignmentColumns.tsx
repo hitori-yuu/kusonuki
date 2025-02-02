@@ -14,6 +14,8 @@ const formatDate = (date: Date): string => {
 	return `${y + "-" + m + "-" + d}`;
 };
 
+const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
+
 export const columns: ColumnDef<AssignmentData>[] = [
 	{
 		accessorKey: "title",
@@ -32,6 +34,8 @@ export const columns: ColumnDef<AssignmentData>[] = [
 			const diff = dateFrom.diff(dateTo, "day");
 
 			let diffDays: string;
+			if (daysOfWeek[new Date().getDay()] == "日") diff + 1;
+			else if (daysOfWeek[new Date().getDay()] == "日") diff + 2;
 			if (diff == 0) {
 				diffDays = "今日";
 			} else if (diff == 1) {

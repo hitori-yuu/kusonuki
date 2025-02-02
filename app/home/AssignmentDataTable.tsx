@@ -15,11 +15,7 @@ import {
 	useReactTable,
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import AssignmentForm from "@/components/layouts/forms/AssignmentForm";
-import { DataTableFacetedFilter } from "@/components/layouts/table/FacetedFilter";
-import { Cross2Icon } from "@radix-ui/react-icons";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];

@@ -76,7 +76,9 @@ const TimetableForm = () => {
 				values.className,
 				user.id,
 			);
-			toast.success("時間割を作成しました。", { description: `${values.week}週${values.day}曜日` });
+			toast.success("時間割を作成しました。", {
+				description: `${values.week}週${values.day}曜日`,
+			});
 		} else {
 			toast.error("ログイン時のみ実行できます。");
 		}
@@ -88,7 +90,7 @@ const TimetableForm = () => {
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-8'>
-				<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+				<div className='grid grid-cols-2 gap-6'>
 					<FormField
 						control={form.control}
 						name='week'
@@ -140,7 +142,7 @@ const TimetableForm = () => {
 					/>
 				</div>
 
-				<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+				<div className='grid grid-cols-2 gap-6'>
 					<FormField
 						control={form.control}
 						name='grade'

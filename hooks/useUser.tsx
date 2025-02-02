@@ -13,23 +13,20 @@ type CacheData = {
 const CACHE_DURATION = 10 * 60 * 1000; // 10分
 
 const getUserData = async (userId: string): Promise<UserData | null> => {
-	console.log("Getting user data for userId:", userId);
-
 	try {
 		// まずキャッシュをチェック
 		const cachedUser = sessionStorage.getItem(`userData_${userId}`);
 		if (cachedUser) {
 			const { data, timestamp }: CacheData = JSON.parse(cachedUser);
 			if (Date.now() - timestamp < CACHE_DURATION) {
-				console.log("Returning cached user data:", data);
+				console.log("キャッシュからユーザー情報を取得");
 				return data as UserData;
 			}
 		}
 
 		// キャッシュがない場合はAPIから取得
-		console.log("Fetching user data from API");
+		console.log("APIからユーザー情報を取得");
 		const userData = await User(userId);
-		console.log("API returned user data:", userData);
 
 		if (userData) {
 			sessionStorage.setItem(`userData_${userId}`, JSON.stringify({ data: userData, timestamp: Date.now() }));
@@ -37,27 +34,24 @@ const getUserData = async (userId: string): Promise<UserData | null> => {
 		}
 		return null;
 	} catch (error) {
-		console.error("Error in getUserData:", error);
+		console.error("ユーザー情報取得中にエラーが発生しました:", error);
 		return null;
 	}
 };
 
 const getStudentData = async (studentId: number): Promise<StudentData | null> => {
-	console.log("Getting student data for studentId:", studentId);
-
 	try {
 		const cachedStudent = sessionStorage.getItem(`studentData_${studentId}`);
 		if (cachedStudent) {
 			const { data, timestamp }: CacheData = JSON.parse(cachedStudent);
 			if (Date.now() - timestamp < CACHE_DURATION) {
-				console.log("Returning cached student data:", data);
+				console.log("キャッシュから生徒情報を取得");
 				return data as StudentData;
 			}
 		}
 
-		console.log("Fetching student data from API");
+		console.log("APIから生徒情報を取得");
 		const studentData = await Student(studentId);
-		console.log("API returned student data:", studentData);
 
 		if (studentData) {
 			sessionStorage.setItem(
@@ -68,7 +62,7 @@ const getStudentData = async (studentId: number): Promise<StudentData | null> =>
 		}
 		return null;
 	} catch (error) {
-		console.error("Error in getStudentData:", error);
+		console.error("生徒情報取得中にエラーが発生しました:", error);
 		return null;
 	}
 };
@@ -76,22 +70,22 @@ const getStudentData = async (studentId: number): Promise<StudentData | null> =>
 export const useUser = () => {
 	const [user, setUser] = useState<UserData | null>(null);
 	const [student, setStudent] = useState<StudentData | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLiffLoading, setLiffLoading] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
 	const { liff } = useLiff();
 	const isInitialLoadDone = useRef(false);
 
 	const refreshData = useCallback(async () => {
-		console.log("refreshData called, LIFF status:", liff?.isLoggedIn());
+		console.log("情報を更新中 Liff:", liff?.isLoggedIn());
 
 		if (!liff || !liff.isLoggedIn()) {
 			console.log("LIFFが初期化されていないか、ログインされていません。");
-			setIsLoading(false);
+			setLiffLoading(false);
 			return;
 		}
 
 		try {
-			setIsLoading(true);
+			setLiffLoading(true);
 			setError(null);
 
 			// プロフィール取得
@@ -107,7 +101,7 @@ export const useUser = () => {
 
 			// 新規ユーザー作成
 			if (!userData && profile.pictureUrl) {
-				console.log("Creating new user");
+				console.log("新規ユーザーを作成中...");
 				try {
 					await CreateUser(profile.userId, profile.displayName, profile.pictureUrl);
 					console.log("新たなユーザーを作成。");
@@ -126,7 +120,7 @@ export const useUser = () => {
 				(userData.displayName !== profile.displayName || userData.pictureUrl !== profile.pictureUrl) &&
 				profile.pictureUrl
 			) {
-				console.log("Updating user");
+				console.log("ユーザーを更新中...");
 				try {
 					await UpdateUser(userData.id, profile.displayName, profile.pictureUrl);
 					userData = await getUserData(profile.userId);
@@ -144,18 +138,18 @@ export const useUser = () => {
 				setStudent(studentData);
 			}
 		} catch (error) {
-			console.error("Error in refreshData:", error);
+			console.error("情報更新中にエラーが発生しました", error);
 			const errorMessage = error instanceof Error ? error.message : "データ取得に失敗しました";
 			setError(new Error(errorMessage));
 			toast.error(errorMessage);
 		} finally {
-			setIsLoading(false);
+			setLiffLoading(false);
 		}
 	}, [liff]);
 
 	// 初回ロード時の処理
 	useEffect(() => {
-		console.log("useEffect triggered, isInitialLoadDone:", isInitialLoadDone.current);
+		console.log("useEffect発火 初回ロード:", isInitialLoadDone.current);
 
 		const initializeData = async () => {
 			if (!liff) {
@@ -176,13 +170,14 @@ export const useUser = () => {
 			});
 
 			if (isReady && !isInitialLoadDone.current) {
-				console.log("Starting initial data load");
+				console.log("初回ロードを開始します...");
 				await refreshData();
 				isInitialLoadDone.current = true;
 			}
 		};
 
 		void initializeData();
+		setLiffLoading(false);
 	}, [liff, refreshData]);
 
 	const manualRefresh = useCallback(async () => {
@@ -201,7 +196,7 @@ export const useUser = () => {
 		user,
 		student,
 		liff,
-		isLoading,
+		isLiffLoading,
 		error,
 		refreshData: manualRefresh,
 	};

@@ -31,6 +31,7 @@ const formSchema = z.object({
 const AssignmentForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
+	const [isLoading, setLoading] = useState<boolean>(false);
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -42,6 +43,7 @@ const AssignmentForm = () => {
 	});
 
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true);
 		if (user && student) {
 			await CreateAssignment(
 				values.name,
@@ -52,13 +54,19 @@ const AssignmentForm = () => {
 				values.isEvery,
 				user.id,
 			);
-			form.reset();
+
 			toast.success("課題を作成しました。", {
 				description: values.name,
 			});
-			router.refresh();
+		} else {
+			toast.error("ログイン時のみ実行できます。");
 		}
+		form.reset();
+		router.refresh();
+		setLoading(false);
 	}
+
+	if (!user) return;
 
 	return (
 		<Form {...form}>
@@ -165,8 +173,8 @@ const AssignmentForm = () => {
 							)}
 						/>
 					))}
-				<Button type='submit' className='w-full'>
-					課題作成
+				<Button type='submit' className='w-full' disabled={isLoading}>
+					{isLoading ? "作成中..." : <>作成</>}
 				</Button>
 			</form>
 		</Form>

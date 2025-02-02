@@ -40,6 +40,8 @@ const InformationForm = () => {
 		}
 	}
 
+	if (!user) return;
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(handleSubmit)} className='space-y-8'>

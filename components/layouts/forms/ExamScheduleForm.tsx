@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { CreateExamSchedule } from "@/lib/server/actions";
+import { useState } from "react";
 
 const formSchema = z.object({
 	period: z.enum(["前期中間", "前期期末", "後期期末", "後期中間", "学年末"]),
@@ -43,6 +44,7 @@ const formSchema = z.object({
 const ExamScheduleForm = () => {
 	const router = useRouter();
 	const { user, student } = useUser();
+	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -60,13 +62,19 @@ const ExamScheduleForm = () => {
 	});
 
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true);
 		if (user && student) {
 			await CreateExamSchedule(values.date, values.period, values.timetable, student.currentGrade, user.id);
-			form.reset();
 			toast.success("試験用時間割を作成しました。");
-			router.refresh();
+		} else {
+			toast.error("ログイン時のみ実行できます。");
 		}
+		form.reset();
+		router.refresh();
+		setLoading(false);
 	}
+
+	if (!user) return;
 
 	return (
 		<Form {...form}>
@@ -192,8 +200,8 @@ const ExamScheduleForm = () => {
 					)}
 				</div>
 
-				<Button type='submit' className='w-full'>
-					時間割作成
+				<Button type='submit' className='w-full' disabled={isLoading}>
+					{isLoading ? "作成中..." : <>作成</>}
 				</Button>
 			</form>
 		</Form>

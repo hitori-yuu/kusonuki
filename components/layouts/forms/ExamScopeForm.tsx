@@ -29,6 +29,7 @@ const formSchema = z.object({
 const ExamScopeForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
+	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -42,6 +43,7 @@ const ExamScopeForm = () => {
 	});
 
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true);
 		if (user && student) {
 			await CreateExam(
 				values.term,
@@ -51,16 +53,21 @@ const ExamScopeForm = () => {
 				student.currentGrade,
 				user.id,
 			);
-			form.reset();
 			toast.success("試験範囲を作成しました。");
-			router.refresh();
+		} else {
+			toast.error("ログイン時のみ実行できます。");
 		}
+		form.reset();
+		router.refresh();
+		setLoading(false);
 	}
 
 	const { fields, append, remove } = useFieldArray<any>({
 		control: form.control,
 		name: "scope",
 	});
+
+	if (!user) return;
 
 	return (
 		<Form {...form}>
@@ -149,7 +156,7 @@ const ExamScopeForm = () => {
 
 					{fields.length < 4 && (
 						<Button type='button' variant='secondary' onClick={() => append("数学α")} className='w-full'>
-							時間割追加
+							範囲追加
 						</Button>
 					)}
 				</div>
@@ -166,8 +173,8 @@ const ExamScopeForm = () => {
 						</FormItem>
 					)}
 				/>
-				<Button type='submit' className='w-full'>
-					試験範囲作成
+				<Button type='submit' className='w-full' disabled={isLoading}>
+					{isLoading ? "作成中..." : <>作成</>}
 				</Button>
 			</form>
 		</Form>

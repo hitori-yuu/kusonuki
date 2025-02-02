@@ -16,6 +16,7 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { CreateSchedule } from "@/lib/server/actions";
+import { useState } from "react";
 
 const formSchema = z.object({
 	content: z.string().min(2, {
@@ -28,6 +29,7 @@ const formSchema = z.object({
 const ScheduleForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
+	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -39,6 +41,7 @@ const ScheduleForm = () => {
 	});
 
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true);
 		if (user && student) {
 			await CreateSchedule(
 				values.date,
@@ -48,11 +51,16 @@ const ScheduleForm = () => {
 				values.isEvery,
 				user.id,
 			);
-			form.reset();
 			toast.success("予定を作成しました。", { description: values.content });
-			router.refresh();
+		} else {
+			toast.error("ログイン時のみ実行できます。");
 		}
+		form.reset();
+		router.refresh();
+		setLoading(false);
 	}
+
+	if (!user) return;
 
 	return (
 		<Form {...form}>
@@ -126,8 +134,8 @@ const ScheduleForm = () => {
 						/>
 					))}
 
-				<Button type='submit' className='w-full'>
-					予定作成
+				<Button type='submit' className='w-full' disabled={isLoading}>
+					{isLoading ? "作成中..." : <>作成</>}
 				</Button>
 			</form>
 		</Form>

@@ -34,6 +34,7 @@ const formSchema = z.object({
 const QuizForm = () => {
 	const router = useRouter();
 	const { user, student, liff } = useUser();
+	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -46,6 +47,7 @@ const QuizForm = () => {
 	});
 
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true);
 		if (user && student) {
 			await CreateQuiz(
 				values.name,
@@ -56,13 +58,18 @@ const QuizForm = () => {
 				values.isEvery,
 				user.id,
 			);
-			form.reset();
 			toast.success("小テストを作成しました。", {
 				description: values.name,
 			});
-			router.refresh();
+		} else {
+			toast.error("ログイン時のみ実行できます。");
 		}
+		form.reset();
+		router.refresh();
+		setLoading(false);
 	}
+
+	if (!user) return;
 
 	return (
 		<Form {...form}>
@@ -169,8 +176,8 @@ const QuizForm = () => {
 							)}
 						/>
 					))}
-				<Button type='submit' className='w-full'>
-					小テスト作成
+				<Button type='submit' className='w-full' disabled={isLoading}>
+					{isLoading ? "作成中..." : <>作成</>}
 				</Button>
 			</form>
 		</Form>

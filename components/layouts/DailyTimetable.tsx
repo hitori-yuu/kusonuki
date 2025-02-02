@@ -13,7 +13,7 @@ import { toast } from "sonner";
 const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
 
 const DailyTimetable = () => {
-	const { user, student, liff } = useUser();
+	const { user, student, liff, isLiffLoading } = useUser();
 	const [timetable, setTimetable] = useState<TimetableData | null>(null);
 	const [schedule, setSchedule] = useState<ScheduleData[] | null>([]);
 	const [examSchedule, setExamSchedule] = useState<ExamScheduleData | null>(null);
@@ -23,7 +23,7 @@ const DailyTimetable = () => {
 
 	useEffect(() => {
 		const fetchTimetable = async () => {
-			toast("時間割情報を取得しています。");
+			toast("時間割情報を取得しています...");
 			if (!student) {
 				setLoading(false);
 				return;
@@ -58,6 +58,7 @@ const DailyTimetable = () => {
 
 				setTimetable(timetableData[0]);
 				setExamSchedule(examScheduleData);
+				toast.success("時間割情報の取得が完了しました。");
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "Failed to fetch timetable");
 			} finally {
@@ -66,7 +67,7 @@ const DailyTimetable = () => {
 		};
 
 		const fetchSchedule = async () => {
-			toast("予定情報を取得しています。");
+			toast("予定情報を取得しています...");
 			if (!student) {
 				setLoading(false);
 				return;
@@ -89,6 +90,7 @@ const DailyTimetable = () => {
 					date,
 				)) as ScheduleData[];
 				setSchedule(scheduleData);
+				toast.success("予定情報の取得が完了しました。");
 			} catch (error) {
 				setError(error instanceof Error ? error.message : "Failed to fetch quiz");
 			} finally {

@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useUser } from "@/hooks/useUser";
 import { LinkUser, searchStudent } from "@/lib/server/actions";
 import { toast } from "sonner";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
 	firstName: z.string(),
@@ -22,7 +24,9 @@ const formSchema = z.object({
 });
 
 const LinkForm = () => {
+	const router = useRouter();
 	const { user, student, liff } = useUser();
+	const [isLoading, setLoading] = useState<boolean>(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -36,6 +40,7 @@ const LinkForm = () => {
 	});
 
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true);
 		const foundUser = await searchStudent(
 			values.lastName,
 			values.firstName,
@@ -57,11 +62,15 @@ const LinkForm = () => {
 		}
 		if (user) {
 			await LinkUser(values.lastName, values.firstName, values.grade, values.group, values.number, user?.id);
-			form.reset();
 			toast.success("生徒情報を連携しました。", {
 				description: values.lastName + values.firstName,
 			});
+		} else {
+			toast.error("ログイン時のみ実行できます。");
 		}
+		form.reset();
+		router.refresh();
+		setLoading(false);
 	}
 
 	if (!user) {
@@ -189,8 +198,8 @@ const LinkForm = () => {
 					/>
 				</div>
 
-				<Button type='submit' className='w-full'>
-					生徒連携
+				<Button type='submit' className='w-full' disabled={isLoading}>
+					{isLoading ? "連携中..." : <>連携</>}
 				</Button>
 			</form>
 		</Form>

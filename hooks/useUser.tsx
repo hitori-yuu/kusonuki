@@ -82,13 +82,13 @@ export const useUser = () => {
 			setLiffLoading(false);
 			return;
 		}
-
 		try {
 			setLiffLoading(true);
 			setError(null);
 
 			// プロフィール取得
 			console.log("LIFFのプロファイルを取得中...");
+
 			const profile = await liff.getProfile();
 
 			if (!profile) {

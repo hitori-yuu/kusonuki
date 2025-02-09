@@ -1,6 +1,6 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -22,21 +22,7 @@ const formSchema = z.object({
 	day: z.string().min(1, {
 		message: "曜日を選択してください。",
 	}),
-	first: z.string().min(1, {
-		message: "教科を選択してください。",
-	}),
-	second: z.string().min(1, {
-		message: "教科を選択してください。",
-	}),
-	third: z.string().min(1, {
-		message: "教科を選択してください。",
-	}),
-	fourth: z.string().min(1, {
-		message: "教科を選択してください。",
-	}),
-	fifth: z.string().min(1, {
-		message: "教科を選択してください。",
-	}),
+	timetable: z.array(z.string()),
 	grade: z.number(),
 	className: z.string(),
 });
@@ -51,11 +37,7 @@ const TimetableForm = () => {
 		defaultValues: {
 			week: "",
 			day: "",
-			first: "",
-			second: "",
-			third: "",
-			fourth: "",
-			fifth: "",
+			timetable: [""],
 			grade: 2,
 			className: "H",
 		},
@@ -64,18 +46,7 @@ const TimetableForm = () => {
 	async function handleSubmit(values: z.infer<typeof formSchema>) {
 		setLoading(true);
 		if (user && student) {
-			await CreateTimetable(
-				values.week,
-				values.day,
-				values.first,
-				values.second,
-				values.third,
-				values.fourth,
-				values.fifth,
-				values.grade,
-				values.className,
-				user.id,
-			);
+			await CreateTimetable(values.week, values.day, values.timetable, values.grade, values.className, user.id);
 			toast.success("時間割を作成しました。", {
 				description: `${values.week}週${values.day}曜日`,
 			});
@@ -86,6 +57,11 @@ const TimetableForm = () => {
 		router.refresh();
 		setLoading(false);
 	}
+
+	const { fields, append, remove } = useFieldArray<any>({
+		control: form.control,
+		name: "scope",
+	});
 
 	return (
 		<Form {...form}>
@@ -227,6 +203,63 @@ const TimetableForm = () => {
 							)}
 						/>
 					))}
+				</div>
+
+				<div>
+					<FormLabel>範囲</FormLabel>
+					{fields.map((field, index) => (
+						<div key={field.id} className='flex items-center gap-4 mb-4'>
+							<FormField
+								control={form.control}
+								name={`timetable.${index}`}
+								render={({ field }) => (
+									<FormItem className='w-full'>
+										<FormControl>
+											<Select onValueChange={field.onChange}>
+												<SelectTrigger>
+													<SelectValue placeholder='教科を選択' />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectItem value='数学'>数学</SelectItem>
+													<SelectItem value='英語コミュニケーション'>
+														英語コミュニケーション
+													</SelectItem>
+													<SelectItem value='論理表現'>論理表現</SelectItem>
+													<SelectItem value='古典探求'>古典探求</SelectItem>
+													<SelectItem value='論理国語'>論理国語</SelectItem>
+													<SelectItem value='歴史総合[日]'>歴史総合[日]</SelectItem>
+													<SelectItem value='歴史総合[世]'>歴史総合[世]</SelectItem>
+													<SelectItem value='物理'>物理</SelectItem>
+													<SelectItem value='生物'>生物</SelectItem>
+													<SelectItem value='化学'>化学</SelectItem>
+													<SelectItem value='家庭基礎'>家庭基礎</SelectItem>
+													<SelectItem value='体育'>体育</SelectItem>
+													<SelectItem value='保健'>保健</SelectItem>
+													<SelectItem value='ヴェリタス'>ヴェリタス</SelectItem>
+													<SelectItem value='H.R.'>H.R.</SelectItem>
+												</SelectContent>
+											</Select>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+
+							<Button
+								type='button'
+								variant='outline'
+								onClick={() => remove(index)}
+								disabled={fields.length === 1}
+							>
+								削除
+							</Button>
+						</div>
+					))}
+
+					{fields.length < 4 && (
+						<Button type='button' variant='secondary' onClick={() => append("数学α")} className='w-full'>
+							範囲追加
+						</Button>
+					)}
 				</div>
 
 				<Button type='submit' className='w-full' disabled={isLoading}>

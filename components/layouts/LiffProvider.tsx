@@ -20,7 +20,19 @@ export const LiffProvider: FC<PropsWithChildren<{ liffId: string }>> = ({ childr
 			const liff = liffModule.default;
 			console.log("LIFFを初期化中...");
 
-			await liff.init({ liffId });
+			liff.use(new LiffMockPlugin());
+
+			liff.$mock.set((p) => ({
+				...p,
+				getProfile: {
+					displayName: "ゆう",
+					pictureUrl:
+						"https://profile.line-scdn.net/0hqd_xr7vALktyAT4_zUNQNAJRLSFRcHdZX2ZkeUICJyscMTxOXG8zJE8Dc3oaMm8aWGJgfhUCJyx-ElktbFfSf3Uxc3pONG8ZV2ZhpA",
+					userId: "Ud713d7bf56b49d0f40c0712335f625ba",
+				},
+			}));
+
+			await liff.init({ liffId, mock: false });
 
 			console.log("LIFFの初期化が完了しました。");
 			setLiff(liff);

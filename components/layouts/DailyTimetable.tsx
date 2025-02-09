@@ -179,26 +179,14 @@ const DailyTimetable = () => {
 					</TableHeader>
 					{!examSchedule && timetable ? (
 						<TableBody>
-							<TableRow>
-								<TableHead>1.</TableHead>
-								<TableCell>{timetable.first}</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableHead>2.</TableHead>
-								<TableCell>{timetable.second}</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableHead>3.</TableHead>
-								<TableCell>{timetable.third}</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableHead>4.</TableHead>
-								<TableCell>{timetable.fourth}</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableHead>5.</TableHead>
-								<TableCell>{timetable.fifth}</TableCell>
-							</TableRow>
+							{timetable.timetable.map((data, i) => {
+								return (
+									<TableRow key={data}>
+										<TableHead>{i + 1}</TableHead>
+										<TableCell>{data}</TableCell>
+									</TableRow>
+								);
+							})}
 						</TableBody>
 					) : examSchedule ? (
 						examSchedule.timetable?.map((item, index) => (

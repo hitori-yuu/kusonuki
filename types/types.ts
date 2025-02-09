@@ -115,8 +115,8 @@ export interface ExamData {
 	id: number;
 	term: string;
 	subject: string;
-	scope: string;
-	exclusion?: string | null;
+	scope: string[];
+	exclusion?: string[] | null;
 	academicYear: number;
 	grade: number;
 	authorId: string;
@@ -184,11 +184,7 @@ export interface TimetableData {
 	academicYear: number;
 	grade: number;
 	className: string;
-	first: string;
-	second: string;
-	third: string;
-	fourth: string;
-	fifth: string;
+	timetable: string[];
 	authorId: string;
 	createdAt: Date;
 	updatedAt: Date;

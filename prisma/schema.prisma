@@ -215,11 +215,7 @@ model Timetable {
     week String
     day  String
 
-    first  String
-    second String
-    third  String
-    fourth String
-    fifth  String
+    timetable String[]
 
     academicYear Int    @default(2024)
     grade        Int    @default(2)

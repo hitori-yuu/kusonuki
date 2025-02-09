@@ -115,8 +115,8 @@ export interface ExamData {
 	id: number;
 	term: string;
 	subject: string;
-	scope: string;
-	exclusion?: string | null;
+	scope: string[];
+	exclusion?: string[] | null;
 	academicYear: number;
 	grade: number;
 	authorId: string;

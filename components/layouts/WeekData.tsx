@@ -202,28 +202,14 @@ const WeekData: React.FC = () => {
 								</TableHeader>
 								<TableBody>
 									{!selectedData.examSchedule && selectedData.timetable ? (
-										<>
-											<TableRow>
-												<TableHead>1.</TableHead>
-												<TableCell>{selectedData.timetable.first}</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableHead>2.</TableHead>
-												<TableCell>{selectedData.timetable.second}</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableHead>3.</TableHead>
-												<TableCell>{selectedData.timetable.third}</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableHead>4.</TableHead>
-												<TableCell>{selectedData.timetable.fourth}</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableHead>5.</TableHead>
-												<TableCell>{selectedData.timetable.fifth}</TableCell>
-											</TableRow>
-										</>
+										selectedData.timetable.timetable.map((data, i) => {
+											return (
+												<TableRow key={data}>
+													<TableHead>{i + 1}</TableHead>
+													<TableCell>{data}</TableCell>
+												</TableRow>
+											);
+										})
 									) : selectedData.examSchedule ? (
 										selectedData.examSchedule.timetable?.map((item, index) => (
 											<TableRow key={index}>

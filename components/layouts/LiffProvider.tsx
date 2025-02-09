@@ -32,7 +32,7 @@ export const LiffProvider: FC<PropsWithChildren<{ liffId: string }>> = ({ childr
 				},
 			}));
 
-			await liff.init({ liffId, mock: true });
+			await liff.init({ liffId, mock: false });
 
 			console.log("LIFFの初期化が完了しました。");
 			setLiff(liff);

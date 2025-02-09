@@ -77,20 +77,11 @@ export const useUser = () => {
 	const refreshData = useCallback(async () => {
 		console.log("情報を更新中 Liff:", liff?.isLoggedIn());
 
-		// if (!liff || !liff.isLoggedIn()) {
-		// 	console.log("LIFFが初期化されていないか、ログインされていません。");
-		// 	setLiffLoading(false);
-		// 	return;
-		// }
-
-		if (!liff) return;
-
-		if (!liff.isInClient()) {
-			liff.login();
-		} else {
-			liff.$mock.clear();
+		if (!liff || !liff.isLoggedIn()) {
+			console.log("LIFFが初期化されていないか、ログインされていません。");
+			setLiffLoading(false);
+			return;
 		}
-
 		try {
 			setLiffLoading(true);
 			setError(null);

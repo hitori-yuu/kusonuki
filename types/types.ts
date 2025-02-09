@@ -184,11 +184,7 @@ export interface TimetableData {
 	academicYear: number;
 	grade: number;
 	className: string;
-	first: string;
-	second: string;
-	third: string;
-	fourth: string;
-	fifth: string;
+	timetable: string[];
 	authorId: string;
 	createdAt: Date;
 	updatedAt: Date;

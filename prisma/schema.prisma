@@ -202,7 +202,6 @@ model ExamSchedule {
 
     academicYear Int    @default(2024)
     grade        Int    @default(2)
-    className    String @default("H")
 
     author   User   @relation(fields: [authorId], references: [id])
     authorId String
